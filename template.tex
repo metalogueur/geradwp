@@ -1,0 +1,110 @@
+\documentclass[gdpaper]{geradwp}
+
+% ------------------------------ %
+% Working paper default packages %
+% ----- DO NOT MODIFY! --------- %
+% ------------------------------ %
+
+\PassOptionsToPackage{hyphens}{url} % TODO: is the url pkg loaded by hyperref?
+
+% ---------------------------- %
+% Choose one algorithm package %
+% ---------------------------- %
+
+% \usepackage{algorithm}
+\usepackage{algorithm2e}
+
+\usepackage{hyperref}
+
+% ----------------------------- %
+% Working paper default options %
+% ----- DO NOT MODIFY! -------- %
+% ----------------------------- %
+
+\graphicspath{{Figures/}} % graphicx pkg setup
+\hypersetup{colorlinks,%
+	citecolor={blue}, % Change for "black" with natbib
+	urlcolor={blue},
+	linkcolor={blue},
+	breaklinks={true}%,
+	%pagebackref={true}, % Setting this option has no effect (?)
+	%hyperindex={true}, % Setting this option has no effect (?)
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Start of author commands %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add your commands
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% End of author commands %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ---------------------- %
+% Working paper metadata %
+% ---------------------- %
+\GDtitre{}
+\GDmois{Français}{English}
+\GDannee{AAAA}
+\GDnumero{XX}
+\GDauteursCourts{A. Name, B. Name, C. Name}
+\GDauteursCopyright{Name, Name, Name}
+\GDrevised{}
+
+\begin{document}	
+	
+	\GDpageCouverture
+	
+	\begin{GDpagetitre}
+		
+		\begin{GDauthlist}
+			\GDauthitem{John LastName \ref{affil:ref}}
+		\end{GDauthlist}
+		
+		\begin{GDaffillist}
+			\GDaffilitem{affil:ref}{John LastName's affiliation}
+		\end{GDaffillist}
+	
+		\begin{GDemaillist}
+			\GDemailitem{john.lastname@university.edu}
+		\end{GDemaillist}
+	
+	\end{GDpagetitre}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%% Abstract, keywords, acknowledgements **FILL OUT**%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\GDabstract
+	
+	\paragraph{Abstract: }
+	%Here
+	Here
+	
+	\paragraph{Keywords: }
+	%Here
+	Here
+	\vspace*{2cm}
+	
+	
+	\paragraph{R\'esum\'e\,: }
+	%Here
+	Here
+	
+	\paragraph{Mots cl\'es\,: }
+	%Here
+	Here
+	
+	\GDacknowledgements
+	%Here
+	Here
+	
+	\GDwpstart
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%% Article **FILL OUT** %%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%Here
+	Once upon a time there was a Working paper...
+
+\end{document}

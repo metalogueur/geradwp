@@ -1,0 +1,14 @@
+# Folders to ignore
+
+exemples/
+Figures/
+
+# Files to ignore
+
+*.aux
+*.log
+*.out
+*.pdf
+*.synctex.gz
+notes_gabarits.md
+tests.*
