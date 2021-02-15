@@ -11,6 +11,7 @@
 %% -------- %
 \newboolean{GD@isWebVersion}
 \newboolean{GD@isPaperVersion}
+\newboolean{GD@isPlainVersion}
 \newboolean{GD@needsBigHeadSep}
 \newboolean{GD@isFinalImpression}
 \newboolean{GD@isPostPublication}
@@ -18,6 +19,7 @@
 
 \setboolean{GD@isWebVersion}{false}
 \setboolean{GD@isPaperVersion}{true}
+\setboolean{GD@isPlainVersion}{false}
 \setboolean{GD@needsBigHeadSep}{false}
 \setboolean{GD@isFinalImpression}{false}
 \setboolean{GD@isPostPublication}{false}
@@ -29,12 +31,20 @@
 \DeclareOption{gdweb}{%
 	\setboolean{GD@isWebVersion}{true}
 	\setboolean{GD@isPaperVersion}{false}
+	\setboolean{GD@isPlainVersion}{false}
 	\PassOptionsToClass{oneside}{article}
 }
 \DeclareOption{gdpaper}{%
 	\setboolean{GD@isWebVersion}{false}
 	\setboolean{GD@isPaperVersion}{true}
+	\setboolean{GD@isPlainVersion}{false}
 	\PassOptionsToClass{twoside}{article}
+}
+\DeclareOption{gdplain}{%
+	\setboolean{GD@isWebVersion}{false}
+	\setboolean{GD@isPaperVersion}{false}
+	\setboolean{GD@isPlainVersion}{true}
+	\PassOptionsToClass{oneside}{article}
 }
 \DeclareOption{gdbighead}{%
 	\setboolean{GD@needsBigHeadSep}{true}
@@ -82,6 +92,25 @@
 
 \definecolor{gris}{rgb}{0.44,0.44,0.44} % color pkg setup
 \captionsetup[table]{skip=5pt} % caption pkg setup
+
+%% ------- %
+%% Lengths %
+%% ------- %
+\newlength{\GD@authitemsep}
+\newlength{\GD@authtopsep}
+\newlength{\GD@affilitemsep}
+\newlength{\GD@affiltopsep}
+\ifthenelse{\boolean{GD@isPlainVersion}}{%
+	\setlength{\GD@authitemsep}{0pt}
+	\setlength{\GD@authtopsep}{12pt}
+	\setlength{\GD@affilitemsep}{0pt}
+	\setlength{\GD@affiltopsep}{9pt}
+}{%
+	\setlength{\GD@authitemsep}{8pt}
+	\setlength{\GD@authtopsep}{24pt}
+	\setlength{\GD@affilitemsep}{6pt}
+	\setlength{\GD@affiltopsep}{9pt}
+}
 
 %% ------ %
 %% Layout %
@@ -140,6 +169,8 @@
 \newcommand{\gd@titre}{}
 \newcommand{\gd@auteurs@short}{}
 \newcommand{\gd@auteurs@copyright}{}
+\newcommand{\gd@postpubcitation}{}
+\newcommand{\gd@postpubcitation@url}{}
 \newcommand{\gd@revised}{}
 
 %% -------------- %
@@ -233,11 +264,19 @@
 \newcommand{\GDauteursCopyright}[1]{%
 	\renewcommand{\gd@auteurs@copyright}{#1}
 }
+\newcommand{\GDpostpubcitation}[2]{%
+	\renewcommand{\gd@postpubcitation}{#1}
+	\renewcommand{\gd@postpubcitation@url}{#2}
+}
 \newcommand{\GDrevised}[1]{%
 	\renewcommand{\gd@revised}{#1}
 }
 
 \newcommand{\GDpageCouverture}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{}{\GD@cover}
+}
+
+\newcommand{\GD@cover}{%
 	\ifthenelse{\boolean{GD@isFinalImpression}}{}{%
 		\overfullrule=5pt
 	}
@@ -254,9 +293,8 @@
 		
 		\vspace*{7.5cm} \hspace*{240pt}
 		\begin{minipage}[c][5.4cm][c]{7cm}
-			{\begin{tabular}{p{.5cm}|p{6cm}}
-					\multicolumn{2}{l}{\bfseries }\\
-					\multicolumn{2}{l}{\bfseries }\\*[10pt]
+			{\begin{tabular}{p{.5cm}|p{5.5cm}}
+					\multicolumn{2}{p{6.5cm}}{\bfseries \gd@titre}\\*[10pt]
 					& \gd@auteurs@short \\ %Initials. Name
 					& \\*[12pt]
 					&G--\gd@annee--\gd@numero\\*[8pt]
@@ -274,10 +312,7 @@
 			\GDcover@bottom@postpub
 		}{%
 			\GDcover@bottom@regular
-		}
-		
-		
-		
+		}		
 	\end{titlepage}
 }
 
@@ -382,7 +417,7 @@
 		\textbf{CITATION ORIGINALE / ORIGINAL CITATION}
 		\smallskip
 		
-		Cherkesly, M., Desaulniers, G., Laporte, G., A population-based metaheuristic for the pickup and delivery problem with time windows and LIFO loading, Computers \& Operations Research, 62, 23-35, 2015, \url{http://dx.doi.org/10.1016/j.cor.2015.04.002}.
+		\gd@postpubcitation@url\ \url{\gd@postpubcitation@url}.
 	\end{minipage}
 	
 	\bigskip
@@ -444,15 +479,28 @@
 }
 
 \newenvironment{GDpagetitre}{
+	\ifthenelse{\boolean{GD@isPlainVersion}}{\GD@plain@titlepage@begin}{\GD@titlepage@begin}	
+}{
+	\ifthenelse{\boolean{GD@isPlainVersion}}{\GD@plain@pagetitle@end}{\GD@titlepage@end}	
+}
+
+\newcommand{\GD@titlepage@begin}{%	
 	\newpage\cleardoublepage
 	\parindent=0pt
-	\sffamily
 	\vspace*{1cm}
+	\sffamily
 	{\LARGE\bfseries \gd@titre\par} %Title
 	\begin{minipage}[t][13cm][l]{7.5cm}	
 		\vspace*{55pt}
-	}{
-		\vfill
+}
+
+\newcommand{\GD@plain@titlepage@begin}{%
+	\thispagestyle{empty}
+	{\LARGE\bfseries\noindent\gd@titre\par}
+}
+
+\newcommand{\GD@titlepage@end}{%
+	\vfill
 	\end{minipage}
 	\vfill
 	{\bfseries \gd@month\ \gd@annee}\\*%\\ 
@@ -467,32 +515,38 @@
 	
 	\noindent
 	\begin{minipage}[t][][l]{7.5cm}
-		\begin{scriptsize}
-			Les textes publi\'es dans la s\'erie des rapports de recherche \textit{Les Cahiers du GERAD} n'engagent que la responsabilit\'e de leurs auteurs. Les auteurs conservent leur droit d'auteur et leurs droits moraux sur leurs publications et les utilisateurs s'engagent \`{a} reconna\^{\i}tre et respecter les exigences l\'{e}gales associ\'{e}es \`{a} ces droits. Ainsi, les utilisateurs:
-			\begin {itemize}
-			\item Peuvent t\'{e}l\'{e}charger et imprimer une copie de toute publication du portail public aux fins d'\'{e}tude ou de recherche priv\'{e}e;
-			\item Ne peuvent pas distribuer le mat\'{e}riel ou l'utiliser pour une activit\'{e} \`{a} but lucratif ou pour un gain commercial;
-			\item Peuvent distribuer gratuitement l'URL identifiant la publication.
-		\end{itemize}
-		Si vous pensez que ce document enfreint le droit d'auteur, contactez-nous en fournissant des d\'{e}tails. Nous supprimerons imm\'{e}diatement l'acc\`{e}s au travail et enqu\^{e}terons sur votre demande.\par
-	\end{scriptsize}
-\end{minipage}
-\hfill
-\begin{minipage}[t][][l]{7.5cm}
 	\begin{scriptsize}
-		The authors are exclusively responsible for the content of their research papers published in the series \textit{Les Cahiers du GERAD}. Copyright and moral rights for the publications are retained by the authors and the users must commit themselves to recognize and abide the legal requirements associated with these rights. Thus, users:
-		\begin{itemize}
-			\item June download and print one copy of any publication from the public portal for the purpose of private study or research;
-			\item June not further distribute the material or use it for any profit-making activity or commercial gain;
-			\item June freely distribute the URL identifying the publication.
-		\end{itemize}
-		If you believe that this document breaches copyright please contact us providing details, and we will remove access to the work immediately and investigate your claim.\par
+		Les textes publi\'es dans la s\'erie des rapports de recherche \textit{Les Cahiers du GERAD} n'engagent que la responsabilit\'e de leurs auteurs. Les auteurs conservent leur droit d'auteur et leurs droits moraux sur leurs publications et les utilisateurs s'engagent \`{a} reconna\^{\i}tre et respecter les exigences l\'{e}gales associ\'{e}es \`{a} ces droits. Ainsi, les utilisateurs:
+		\begin {itemize}
+		\item Peuvent t\'{e}l\'{e}charger et imprimer une copie de toute publication du portail public aux fins d'\'{e}tude ou de recherche priv\'{e}e;
+		\item Ne peuvent pas distribuer le mat\'{e}riel ou l'utiliser pour une activit\'{e} \`{a} but lucratif ou pour un gain commercial;
+		\item Peuvent distribuer gratuitement l'URL identifiant la publication.
+	\end{itemize}
+	Si vous pensez que ce document enfreint le droit d'auteur, contactez-nous en fournissant des d\'{e}tails. Nous supprimerons imm\'{e}diatement l'acc\`{e}s au travail et enqu\^{e}terons sur votre demande.\par
 	\end{scriptsize}
-\end{minipage}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t][][l]{7.5cm}
+	\begin{scriptsize}
+	The authors are exclusively responsible for the content of their research papers published in the series \textit{Les Cahiers du GERAD}. Copyright and moral rights for the publications are retained by the authors and the users must commit themselves to recognize and abide the legal requirements associated with these rights. Thus, users:
+	\begin{itemize}
+		\item May download and print one copy of any publication from the public portal for the purpose of private study or research;
+		\item May not further distribute the material or use it for any profit-making activity or commercial gain;
+		\item May freely distribute the URL identifying the publication.
+	\end{itemize}
+	If you believe that this document breaches copyright please contact us providing details, and we will remove access to the work immediately and investigate your claim.\par
+	\end{scriptsize}
+	\end{minipage}
+	
+	\thispagestyle{empty}
+	\parindent=15pt
+	\newpage
+}
 
-\thispagestyle{empty}
-\parindent=15pt
-\newpage
+\newcommand{\GD@plain@pagetitle@end}{%
+	\vspace*{12pt}
+	{\noindent\Large\gd@mois\ \gd@annee}
+	\vspace*{30pt}
 }
 
 \newcommand{\GDabstract}{%
@@ -538,13 +592,20 @@
 }
 
 \newlist{GDauthlist}{itemize}{1}
-\setlist[GDauthlist]{label={}, left=0pt .. 0pt, itemsep=8pt, topsep=24pt}
+\setlist[GDauthlist]{label={}, left=0pt .. 0pt, itemsep=\GD@authitemsep, topsep=\GD@authtopsep}
 \newlist{GDaffillist}{enumerate}{1}
-\setlist[GDaffillist]{label=\textsuperscript{\emph{\alph*}}, ref=\textsuperscript{\emph{\alph*}}, wide, itemsep=6pt, topsep=18pt}
+\setlist[GDaffillist]{label=\textsuperscript{\emph{\alph*}}, ref=\textsuperscript{\emph{\alph*}}, wide,
+	left=0pt .. 1em, itemsep=\GD@affilitemsep, topsep=\GD@affiltopsep}
 \newlist{GDemaillist}{itemize}{1}
 \setlist[GDemaillist]{label={}, left=0pt .. 0pt, itemsep=0pt, parsep=0pt}
 \newcommand{\GDrefsep}{\textsuperscript{,~}}
-\newcommand{\GDauthitem}[1]{\item {\Large\bfseries #1}}
+\newcommand{\GDauthitem}[1]{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{%
+		\item {\large\bfseries #1}
+	}{%
+		\item {\Large\bfseries #1}
+	}
+}
 \newcommand{\GDaffilitem}[2]{\item \label{#1}{\itshape #2}}
 \newcommand{\GDemailitem}[1]{\item {\small\ttfamily #1}}
 
