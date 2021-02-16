@@ -100,6 +100,7 @@
 \newlength{\GD@authtopsep}
 \newlength{\GD@affilitemsep}
 \newlength{\GD@affiltopsep}
+\newlength{\GD@titleminipage@hspace}
 \ifthenelse{\boolean{GD@isPlainVersion}}{%
 	\setlength{\GD@authitemsep}{0pt}
 	\setlength{\GD@authtopsep}{12pt}
@@ -111,6 +112,12 @@
 	\setlength{\GD@affilitemsep}{6pt}
 	\setlength{\GD@affiltopsep}{9pt}
 }
+\ifthenelse{\boolean{GD@isPaperVersion}}{%
+	\setlength{\GD@titleminipage@hspace}{240pt}
+}{}
+\ifthenelse{\boolean{GD@isWebVersion}}{%
+	\setlength{\GD@titleminipage@hspace}{227pt}
+}{}
 
 %% ------ %
 %% Layout %
@@ -291,10 +298,10 @@
 		{\noindent{\large\bfseries Les Cahiers du GERAD}\hfill ISSN:\quad
 			0711--2440}
 		
-		\vspace*{7.5cm} \hspace*{240pt}
+		\vspace*{7.5cm} \hspace*{\GD@titleminipage@hspace}
 		\begin{minipage}[c][5.4cm][c]{7cm}
 			{\begin{tabular}{p{.5cm}|p{5.5cm}}
-					\multicolumn{2}{p{6.5cm}}{\bfseries \gd@titre}\\*[10pt]
+					\multicolumn{2}{p{6.5cm}}{\bfseries \gd@titre \vspace*{10pt}}\\
 					& \gd@auteurs@short \\ %Initials. Name
 					& \\*[12pt]
 					&G--\gd@annee--\gd@numero\\*[8pt]
@@ -485,7 +492,13 @@
 }
 
 \newcommand{\GD@titlepage@begin}{%	
-	\newpage\cleardoublepage
+	\ifthenelse{\boolean{GD@isWebVersion}}{%
+		\newpage\clearpage
+	}{%
+		\ifthenelse{\boolean{GD@isPaperVersion}}{%
+			\newpage\cleardoublepage
+		}{}
+	}
 	\parindent=0pt
 	\vspace*{1cm}
 	\sffamily
@@ -549,46 +562,80 @@
 	\vspace*{30pt}
 }
 
-\newcommand{\GDabstract}{%
-\setcounter{page}{2}
-\renewcommand{\thepage}{\roman{page}}
-\pagestyle{fancy}
-\lhead[
-\textcolor{gris}{\sffamily{\,}\thepage}\hfill
-\textcolor{gris}{\sffamily G--\gd@annee--\gd@numero}\hfill % { -- \itshape Revised}
-\textcolor{gris}{\sffamily Les Cahiers du GERAD}
-{\large\strut}\color{gris}{\hrule}
-]
-{
-	\textcolor{gris}{\sffamily{\,} Les Cahiers du GERAD}\hfill
-	\textcolor{gris}{\sffamily G--\gd@annee--\gd@numero}\hfill % { -- \itshape Revised}
-	\textcolor{gris}{\sffamily\thepage}
-	{\large\strut}\color{gris}{\hrule}
-}
-\chead[]{}
-\rhead[]{}
-\lfoot[]{}
-\cfoot[]{}
-\rfoot[]{}	
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
-\rmfamily
-\vspace*{5pt}	
+\newenvironment{GDabstract}[1]{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{%
+		\small
+		\begin{center}
+			{\bfseries #1\vspace{-.5em}\vspace{\z@}}
+		\end{center}
+		\begin{quotation}		
+	}{%
+		\paragraph{#1 : }
+	}
+}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{%
+		\end{quotation}
+	}{%
+		\vspace*{2cm}
+	}
 }
 
-\newcommand{\GDacknowledgements}{%
-\vfill
-\hrule
-\smallskip
-\paragraph{Acknowledgements: }
+\newcommand{\GDabstracts}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{}{%
+		\setcounter{page}{2}
+		\renewcommand{\thepage}{\roman{page}}
+		\pagestyle{fancy}
+		\lhead[
+		\textcolor{gris}{\sffamily{\,}\thepage}\hfill
+		\textcolor{gris}{\sffamily G--\gd@annee--\gd@numero}\hfill % { -- \itshape Revised}
+		\textcolor{gris}{\sffamily Les Cahiers du GERAD}
+		{\large\strut}\color{gris}{\hrule}
+		]
+		{
+			\textcolor{gris}{\sffamily{\,} Les Cahiers du GERAD}\hfill
+			\textcolor{gris}{\sffamily G--\gd@annee--\gd@numero}\hfill % { -- \itshape Revised}
+			\textcolor{gris}{\sffamily\thepage}
+			{\large\strut}\color{gris}{\hrule}
+		}
+		\chead[]{}
+		\rhead[]{}
+		\lfoot[]{}
+		\cfoot[]{}
+		\rfoot[]{}	
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+		\rmfamily
+		\vspace*{5pt}	
+	}
 }
 
-\newcommand{\GDwpstart}{%
-\newpage
-\setcounter{page}{1}
-\renewcommand{\thepage}{\arabic{page}}
-\baselineskip=12.5pt 
-\rmfamily
+\newenvironment{GDacknowledgements}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{%
+		\small
+		\begin{quote}
+			\hrulefill\par
+			{\bfseries Acknowledgements : }
+	}{%
+		\vfill
+		\hrule
+		\smallskip
+		\paragraph{Acknowledgements: }
+	}
+}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{%
+		\end{quote}
+	}{}
+}
+
+
+\newcommand{\GDarticlestart}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{}{%
+		\newpage
+		\setcounter{page}{1}
+		\renewcommand{\thepage}{\arabic{page}}
+		\baselineskip=12.5pt 
+		\rmfamily
+	}
 }
 
 \newlist{GDauthlist}{itemize}{1}
