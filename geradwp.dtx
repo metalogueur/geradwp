@@ -1,0 +1,1472 @@
+% \iffalse
+%
+% Copyright 2021 GERAD, HEC Montreal
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3c
+% of this license or (at your option) any later version.
+%
+% The latest version of this license is in
+% http://www.latex-project.org/lppl.txt
+% and version 1.3c or later is part of all distributions of LaTeX
+% version 2008/05/04 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Benoit Hamel
+% <benoit.2.hamel@hec.ca>.
+%
+% This work consists of the files geradwp.dtx, gerad.ins
+% and the derived files listed in the README file.
+%
+% \fi
+% \iffalse
+%<*dtx>
+\ProvidesFile{geradwp.dtx}
+%</dtx>
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\ProvidesClass{geradwp}[2021/04/30 v1.0 Class for the Cahiers du GERAD series]
+%<*driver>
+\documentclass[10pt,oneside,english,french]{ltxdoc}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage[autolanguage]{numprint}
+\usepackage{fontawesome}
+\usepackage{framed}
+\usepackage{url}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{iflang}
+\usepackage{makeidx}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+
+\definecolor{liens}{rgb}{0,0.35,0.65}
+\definecolor{shadecolor}{rgb}{0.93,0.97,0.99}
+\definecolor{TFFrameColor}{rgb}{0,0.235,0.443}
+\definecolor{TFTitleColor}{rgb}{1,1,1}
+\hypersetup{
+	colorlinks=true,
+	allcolors=liens,
+	pdftitle={Classe de documents LaTeX pour la collection des Cahiers du GERAD},
+	pdfauthor={Benoit Hamel, HEC Montr\'{e}al}
+}
+\setlength{\parskip}{6pt}
+\MakeShortVerb{\+}
+\lstset{%
+	basicstyle=\footnotesize\ttfamily,
+	stringstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\footnotesize\ttfamily,
+	backgroundcolor=\color{shadecolor}
+}
+\renewcommand{\lstlistingname}{Code source}
+
+\newcommand{\gdwp}{\texttt{geradwp}}
+\newcommand{\cahiers}{\emph{Les Cahiers du GERAD}}
+\newcommand{\lien}[2]{%
+	\href{#1}{\bfseries #2 \faExternalLink}
+}
+\newcommand{\oui}{\color{green}\faCheck}
+
+\makeindex
+\makeglossary
+
+\begin{document}
+	\DocInput{geradwp.dtx}
+\end{document}
+%</driver>
+% \fi
+% \CheckSum{880}
+% \changes{1.0}{2021-02-23}{Initial release}
+% \title{Classe de documents \LaTeX\ pour la collection \cahiers}
+% \author{Benoit Hamel\thanks{Biblioth\`eque, HEC Montr\'eal} \and Karine Hébert\thanks{GERAD, HEC Montr\'eal}}
+% \date{\today}
+% \maketitle
+%
+% \tableofcontents
+%
+% \begin{abstract}
+%	La classe de documents \gdwp\ a \'et\'e con\c{c}ue dans le but de permettre aux chercheurs
+%	membres du \lien{https://www.gerad.ca/fr}{GERAD} de r\'ediger leurs documents de travail, 
+%   leurs pr\'eimpressions et leurs	rapports techniques selon les normes de pr\'esentation de la 
+%   collection de rapports de recherche \cahiers. Cette classe et les fichiers associ\'es remplacent 
+%   le gabarit initialement	distribu\'e par le GERAD.
+% \end{abstract}
+%
+% \section{Installation de la classe}
+%
+% \subsection{Pr\'erequis}
+%
+% L'utilisation de cette classe suppose que vous avez d\'ej\`a install\'e une distribution \TeX\ et
+% un \'editeur de code int\'egr\'e. Pour la conception de \gdwp, la distribution 
+% \lien{https://www.tug.org/texlive/}{TeX Live 2020} et l'\'editeur de code 
+% \lien{https://www.texstudio.org/}{TeXstudio} ont \'et\'e utilis\'es.
+%
+% Si vous utilisez la distribution TeXLive ou \lien{http://www.tug.org/mactex/}{MacTeX} et que la compilation 
+% de votre document vous renvoie des bogues, assurez-vous que votre installation est à jour avant d'investiguer plus loin.
+%
+% Si vous utilisez la distribution \lien{https://miktex.org/}{MikTeX}, assurez-vous d'installer les derni\`eres versions des 
+% \emph{packages} indiqu\'es dans le \autoref{tab:pre-loaded-pkgs} avant d'utiliser la classe \gdwp.
+%
+% Les utilisateurs d'\lien{https://www.overleaf.com/}{Overleaf} peuvent \'egalement utiliser cette classe 
+% [en demandant les fichiers n\'ecessaires
+% au GERAD].
+%
+% \subsection{Installation}
+% 
+% L'archive +.zip+ que vous avez t\'el\'echarg\'ee contient les fichiers suivants :
+%
+% \begin{enumerate}
+%	\item \textbf{geradwp.ins} : le fichier d'installation de la classe;
+%	\item \textbf{geradwp.dtx} : le code source document\'e de la classe;
+%	\item \textbf{geradwp.pdf} : la documentation de la classe;
+%	\item \textbf{README.md} : le fichier n\'ecessaire \`a l'affichage de la description de la classe 
+%	sur le site du \lien{https://www.ctan.org/}{CTAN}.
+%\end{enumerate}
+%
+% Suivez les \'etapes suivantes pour installer la classe sur votre poste de travail.
+%
+%\begin{enumerate}
+%	\item Cr\'eez-vous un r\'epertoire de travail;
+%	\item D\'ecompressez l'archive +.zip+ dans votre r\'epertoire de travail;
+%	\item Ouvrez un \'editeur de ligne de commande \`a partir du r\'epertoire;
+%	\item Saisissez la commande suivante dans l'\'{e}diteur : \\
+%		\begin{shaded*}
+%			+latex geradwp.ins+
+%		\end{shaded*}	
+% \end{enumerate}
+%
+% La commande cr\'eera le fichier de classe +geradwp.cls+ ainsi que le gabarit +template.tex+ \`a
+% partir duquel vous pourrez r\'ediger votre rapport de recherche.
+%
+% \section{Utilisation de la classe}
+%
+% La classe \gdwp\ est d\'eriv\'ee de la classe de base \lien{https://www.ctan.org/pkg/article}{article}. 
+% Vous pouvez donc vous servir de toutes les fonctionnalit\'es de cette derni\`ere. Cependant, 
+% quelques options de la classe +article+ sont d\'efinies par d\'efaut dans la class \gdwp\ et 
+% celles-ci ne peuvent pas être modifi\'ees :
+% 
+% \begin{itemize}
+%	\item La taille de la police de caract\`eres est de +10pt+;
+%	\item la taille du papier est +letterpaper+;
+%	\item l'impression est recto seulement (+oneside+) pour les versions +gdweb+ et +gdplain+ du gabarit;
+%	\item l'impression est recto-verso (+twoside+) pour la version +gdpaper+ du gabarit.
+% \end{itemize}
+%
+% Ces options \'etant d\'efinies dans le fichier de classe, vous ne risquez pas de les supprimer de la
+% commande +documentclass+ du gabarit. Assurez-vous seulement de ne pas y inscrire des options qui pourraient
+% entrer en conflit avec les options ci-haut mentionn\'ees.
+%
+% \subsection{Options}
+%  Outre les options disponibles via la classe +article+, quelques options sont disponibles pour \gdwp.
+%
+% \begin{DescribeMacro}{gdweb}
+%	La version Web d'un cahier de recherche destin\'ee \`a \^etre publi\'ee sur le site Web du GERAD. L'option
+%	+oneside+ est pass\'ee \`a la classe +article+.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{gdpaper}
+%	La version papier d'un cahier de recherche destin\'ee \`a \^etre imprim\'ee et plac\'ee dans le centre
+%	de documentation du GERAD. L'option +twoside+
+%	est pass\'ee \`a la classe +article+.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{gdplain}
+%	La version sans mise en forme d'un cahier de recherche, semblable \`a un article \LaTeX\ de base et
+%	destin\'ee à la distribution par l'auteur. L'option +oneside+ est pass\'ee \`a la classe +article+.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{gdrevised}
+%	Lorsqu'un cahier de recherche fait l'objet d'une r\'evision par ses auteurs, cette option
+%	est utilis\'ee pour afficher la date de r\'evision sur la page couverture du cahier.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{gdfinal}
+%	Pendant la r\'edaction et la r\'evision d'un cahier, une +overfullrule+ de 5pt s'affiche dans la
+%	marge de droite pour indiquer quels \'el\'ements du cahier d\'epassent de la marge. Une fois
+%	la r\'edaction et la r\'evision termin\'ees, cette option est utilis\'ee pour retirer l'+overfullrule+
+%	du document.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{gdbighead}
+%	Certains \emph{packages} s'amusent \`a nos d\'epens en modifiant l'ent\^ete d'un cahier. L'option
+%	+gdbighead+ vient corriger cet affront en r\'etablissant l'ent\^ete voulu.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{gdpostpub}
+%	Une fois le contenu du cahier de recherche publi\'e chez un \'editeur, le cahier lui-m\^eme doit
+%	\^etre mis \`a jour afin d'afficher ces nouvelles informations de publication sur la page
+%	couverture du cahier. L'option +gdpostpub+ substitue la citation officielle de l'\'editeur \`a
+%	celle du cahier et l'URL de l'article \`a celui du cahier.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{gdminitabs}
+%	Il arrive parfois que des auteurs cr\'eent des tableaux si grands que ceux-ci d\'epassent d'une
+%	ou plusieurs marges. Dans de tels cas, l'option +gdneedsminitabs+ est utilis\'ee pour mettre les
+%	tableaux du document en +footnotesize+.
+% \end{DescribeMacro}
+%
+% \subsection{Utilisation des \emph{packages}}
+%
+% Le but de cette classe \'etant d'assurer une coh\'esion dans la mise en forme des rapports de recherche,
+% tr\`es peu de \emph{packages} sont pr\'echarg\'es --- le \autoref{tab:pre-loaded-pkgs} recense ceux-ci
+% avec le fichier o\`u les trouver de m\^eme que leurs options, le cas \'ech\'eant --- et les chercheurs 
+% auront le loisir d'utiliser ceux dont ils auront besoin en prenant en compte les particularit\'es 
+% ci-dessous et en \'evitant de recharger des \emph{packages} ou d'en modifier les options par d\'efaut.
+%
+% \begin{table}[tbh]
+%	\begin{tabularx}{\textwidth}{Xccl}
+%		\hline
+%		\textbf{\emph{Package}}		& \textbf{Fichier de classe}	& \textbf{Gabarit}		& \textbf{Options} \\
+%		\hline
+%		amssymb						& \oui							&						& \\
+%		amsmath						& \oui							&						& \\
+%		amsfonts					& \oui							&						& \\
+%		latexsym					& \oui							&						& \\
+%		graphicx					& \oui							&						& graphicspath=Figures \\
+%		mathrsfs					& \oui							&						& \\
+%		geometry					& \oui							&						& \\
+%		fancyhdr					& \oui							&						& \\
+%		booktabs					& \oui							&						& \\
+%		multirow					& \oui							&						& \\
+%		array						& \oui							&						& \\
+%		caption						& \oui							&						& font=\{footnotesize,bf,sf\} \\
+%		color						& \oui							&						& \\
+%		enumitem					& \oui							&						& \\
+%		float						& \oui 							& 						& \\
+%		algorithm					&								& \oui					& \\
+%		algorithm2e					&								& \oui					& \\
+%		hyperref					&								& \oui					& colorlinks \\
+%									&								&						& citecolor=\{blue\} \\
+%									&								&						& urlcolor=\{blue\} \\
+%									&								&						& breaklinks=\{true\} \\
+%		\hline
+%	\end{tabularx}
+%	\caption{Liste des \emph{packages} pr\'echarg\'es avec la classe, leur localisation et leurs options}
+% 	\label{tab:pre-loaded-pkgs}
+% \end{table}
+%
+% \subsubsection{babel}
+% L'auteur de ces lignes ayant \'et\'e inform\'e par la maintenanci\`ere du gabarit originel que l'utilisation de babel
+% avec ce dernier causait de nombreux probl\`emes, il vous serait gr\'e de \textbf{ne pas utiliser le
+% \emph{package} babel avec ce nouveau gabarit}, et ce, jusqu'\`a ce que lesdits probl\`emes lui soient pr\'esent\'es
+% afin d'\^etre corrig\'es. Une version ult\'erieure de la classe vous permettra peut-\^etre de vous en servir.
+%
+% \subsubsection{algorithm et algorithm2e}
+%
+% \lien{https://www.ctan.org/pkg/algorithms}{algorithm} et \lien{https://www.ctan.org/pkg/algorithm2e}{algorithm2e} sont
+% deux \emph{packages} ayant leurs aficionados respectifs parmi les auteurs de \emph{Cahiers du GERAD}. Tous deux sont
+% accept\'es et charg\'es dans le pr\'eambule du gabarit. Il suffit de mettre en commentaire celui des deux qui ne
+% sera pas utilis\'e.
+%
+% Les deux \emph{packages} ne peuvent cependant pas \^etre charg\'es ensemble puisqu'ils entrent en conflit et cr\'eent
+% des bogues.
+%
+% \subsubsection{float}
+%
+% Le \emph{package} +float+ est charg\'e avec la classe \textbf{uniquement lorsque l'option +gdminitabs+ est utilis\'ee}, et ce,
+% afin de transformer les tableaux en +footnotesize+. Si vous avez besoin de ce \emph{package} et que vos tableaux
+% sont raisonnablement petits, chargez-le dans le pr\'eambule de votre document.
+%
+% \subsection{Commandes}
+%
+% Les quelques commandes publiques qui ont \'et\'e cr\'e\'ees pour cette classe ont deux fonctions : renseigner les
+% m\'etadonn\'ees du cahier de recherche et faire de la mise en page.
+%
+% \subsubsection{M\'etadonn\'ees}
+%	\label{sec:metadonnees}
+%
+% Toutes situ\'ees dans le pr\'eambule, les commandes de m\'etadonn\'ees permettent aux auteurs et \`a l'\'equipe du
+% GERAD d'inscrire les informations bibliographiques qui se retrouveront sur la page couverture et la page titre
+% du cahier.
+%
+% \begin{DescribeMacro}{\GDtitre}
+%	Le titre du cahier de recherche. Celui-ci se retrouve \`a la fois sur la page couverture et la page titre.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDauteursCourts}
+%	La liste des auteurs du cahier sous la forme \emph{[Initiale du pr\'enom] [Nom de famille]} 
+%	(ex. : B Hamel, K H\'ebert). Le contenu de cette commande se retrouve sur la page couverture, sous le titre.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDauteursCopyright}
+%	La liste des noms de famille des auteurs \`a la mention des droits d'auteurs au bas de la page titre.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDmois}
+%	Le mois de publication du cahier de recherche dans ses formes fran\c{c}aise et anglaise. Le mois en fran\c{c}ais
+%	est inscrit entre les premi\`eres accolades, celui en anglais, entre les deuxi\`emes.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDannee}
+%	L'ann\'ee de publication du cahier sous la forme \emph{AAAA}.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDnumero}
+%	Le num\'ero du cahier de recherche. Ce num\'ero est assign\'e par l'\'equipe du GERAD.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDrevised}
+%	Lorsqu'un cahier de recherche fait l'objet d'une r\'evision par ses auteurs, la date de r\'evision
+%	est inscrite dans cette commande pour \^etre affich\'ee sur la page couverture.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDpostpubcitation}
+%	Lorsque le contenu du cahier de recherche est publi\'e chez un \'editeur, l'\'equipe du GERAD
+%	substitue la citation officielle de l'article \`a celle du cahier de recherche et l'URL de l'\'editeur
+%	\`a celle du site Web du GERAD en utilisant cette commande, la citation devant \^etre inscrite dans
+%	les premi\`eres accolades et l'URL, dans les secondes.
+% \end{DescribeMacro}
+%
+% \subsubsection{Mise en page}
+%
+% Afin de d\'esembourber le gabarit et d'\'eviter que des commandes essentielles de mise en page soient 
+% supprim\'ees par des auteurs, des commandes ont \'et\'e cr\'e\'ees. Celles-ci marquent en m\^eme temps
+% les subdivisions du document.
+%
+% \begin{DescribeMacro}{\GDpageCouverture}
+%	Toute la page couverture d'un cahier de recherche est g\'en\'er\'ee \`a partir de cette commande.
+%	Elle est entre autres mise en forme avec les m\'etadonn\'ees des commandes cit\'ees \`a la
+%	\autoref{sec:metadonnees}. La page titre qui suit la page couverture est quant \`a elle g\'en\'er\'ee
+%	par l'environnement +GDpagetitre+ d\'ecrit \`a la \autoref{sec:environnements}.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDabstracts}
+%	Cette commande repr\'esente le d\'ebut de la section \og contenu \fg\ du cahier de recherche, commen\c{c}ant
+% 	avec les r\'esum\'es anglais et fran\c{c}ais. C'est elle
+%	qui configure les ent\^etes et pieds de pages qui seront effectifs jusqu'\`a la fin du cahier et qui
+%	comprennent, notamment, les m\'etadonn\'ees d\'ecrites \`a la \autoref{sec:metadonnees}. Les r\'esum\'es
+%	sont quant \`a eux r\'edig\'es \`a l'int\'erieur de l'environnement +GDabstract+ d\'ecrit \`a la
+% 	\autoref{sec:environnements}.
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDarticlestart}
+%	Le cahier de recherche en tant que tel d\'ebute \`a partir de cette commande. Celle-ci fait quelques derniers
+%	petits r\'eglages au niveau de la mise en page.
+% \end{DescribeMacro}
+%
+% \subsection{Environnements}
+%	\label{sec:environnements}
+%
+% Les quelques environnements qui ont \'et\'e cr\'e\'es l'ont \'et\'e pour mettre en forme rapidement la page titre
+% et la section des r\'esum\'es.
+%
+% \subsubsection{Page titre}
+%
+% \begin{DescribeEnv}{GDpagetitre}
+%	Toute la page titre est g\'en\'er\'ee par le biais de cet environnement. Les auteurs n'ont qu'\`a inscrire 
+%	leurs informations personnelles dans les environnements +GDauthlist+, +GDaffillist+ et +GDemaillist+ d\'ecrits
+%	ci-dessous pour compl\'eter la page.
+% \end{DescribeEnv}
+%
+% \begin{DescribeEnv}{GDauthlist}
+% \end{DescribeEnv}
+% \begin{DescribeMacro}{\GDauthitem}
+% \end{DescribeMacro}
+% \begin{DescribeMacro}{\GDrefsep}
+%	L'environnement +GDauthlist+ est une liste personnalis\'ee dans laquelle les auteurs y saisissent leur nom
+%	complet \`a l'aide de la commande +\GDauthitem+, \`a raison d'un auteur par ligne. Les auteurs peuvent y
+%	r\'ef\'erencer leurs affiliations avec la commande +\ref{}+, tel que d\'emontr\'e dans le \autoref{lst:gdauthlist}. 
+%   Dans le cas o\`u un auteur a plus d'une affiliation, il doit saisir une commande +\ref{}+
+% 	par affiliation en s\'eparant chacune d'entre elles par la commande +\GDrefsep+.
+% \end{DescribeMacro}
+%
+% \iffalse
+%<*exampleone>
+% \fi
+% \begin{lstlisting}[name=pgtitlelists,float=h,caption={Un exemple de liste d'auteurs},label=lst:gdauthlist]
+\begin{GDauthlist}
+ \GDauthitem{Benoit Hamel\ref{affil:hec}}
+ \GDauthitem{Karine H\'ebert\ref{affil:gerad}\GDrefsep\ref{affil:hec}}
+\end{GDauthlist}
+\end{lstlisting}
+% \iffalse
+%</exampleone>
+% \fi
+%
+% \begin{DescribeEnv}{GDaffillist}
+% \end{DescribeEnv}
+% \begin{DescribeMacro}{\GDaffilitem}
+%	L'environnement +GDaffillist+ est une liste personnalis\'ee dans laquelle sont recens\'ees toutes les affiliations
+%	des auteurs sans aucun ordre d'importance pr\'ed\'efini. Chaque affiliation est inscrite dans une commande
+%	+\GDaffilitem+, le \emph{label} de l'affiliation \'etant inscrit entre les premi\`eres accolades, l'affiliation en tant que telle,
+%	entre les secondes, tel qu'illustr\'e dans le \autoref{lst:gdaffillist}.
+% \end{DescribeMacro}
+%
+% \iffalse
+%<*exampletwo>
+% \fi
+\begin{lstlisting}[name=pgtitlelists,float=h,caption={Un exemple de liste d'affiliations},label=lst:gdaffillist]
+\begin{GDaffillist}
+  \GDaffilitem{affil:hec}{HEC Montr\'eal}
+  \GDaffilitem{affil:gerad}{GERAD}
+\end{GDauthlist}
+\end{lstlisting}
+% \iffalse
+%</exampletwo>
+% \fi
+%
+% \begin{DescribeEnv}{GDemaillist}
+% \end{DescribeEnv}
+% \begin{DescribeMacro}{\GDemailitem}
+%	La derni\`ere liste personnalis\'ee cr\'e\'ee pour la page titre d'un cahier de recherche
+%	est l'environnement +GDemaillist+ dans lequel sont recens\'ees les adresses courriel des
+%	auteurs, \`a raison d'une adresse par commande +\GDemailitem+.
+% \end{DescribeMacro}
+%
+% \iffalse
+%<*examplethree>
+% \fi
+\begin{lstlisting}[name=pgtitlelists,float=h,caption={Un exemple de liste d'adresses courriel},label=lst:gdemaillist]
+\begin{GDemaillist}
+  \GDemailitem{benoit.2.hamel@hec.ca}
+  \GDemailitem{karine.hebert@gerad.ca}
+\end{GDauthlist}
+\end{lstlisting}
+% \iffalse
+%</examplethree>
+% \fi
+%
+% \subsubsection{Section des r\'esum\'es}
+%
+% \begin{DescribeEnv}{GDabstract}
+%	\`A l'int\'erieur d'un cahier de recherche du GERAD, les r\'esum\'es fran\c{c}ais et anglais sont r\'edig\'es
+%	dans un +paragraph+. M\^eme s'il aurait \'et\'e plus simple de n'inscrire qu'une commande +\paragraph+ par
+%	r\'esum\'e dans le gabarit, les auteurs de cette classe ont choisi de conserver le format \og environnement \fg\
+%	afin d'y ajouter de la mise en page et de reproduire le comportement de l'environnement +abstract+.
+% \end{DescribeEnv}
+%
+% \begin{DescribeEnv}{GDacknowledgements}
+%	Dans les cahiers de recherche du GERAD, les remerciements sont un bloc de texte distinct qui ne correspond pas
+%	\`a ce que la commande +\thanks+ donne en terme de mise en forme. Les auteurs r\'edigent donc leurs
+%	remerciements dans leur ensemble dans l'environnement +GDacknowledgements+ et la classe +geradwp+ les
+%	disposera en fonction du type de version choisie.
+% \end{DescribeEnv}
+%
+% \section{Le gabarit \texttt{geradwp.tex}}
+% \label{sec:gabarit}
+%
+%	Le gabarit +geradwp.tex+ a \'et\'e con\c{c}u afin d'\^etre le plus simple possible et divis\'e de sorte que
+% 	le code source de chaque cahier soit uniforme. Voici une br\`eve pr\'esentation de ses diff\'erentes sections.
+%
+% \subsection{\emph{Packages} par d\'efaut du cahier}
+%
+%	Tous les \emph{packages} qui ne sont pas charg\'es par d\'efaut dans le fichier de classe (voir le
+%	\autoref{tab:pre-loaded-pkgs}) sont charg\'es dans cette section. C'est dans cette section que vous pourrez
+%	choisir entre les \emph{packages} +algorithm+ et +algorithm2e+. C'est \'egalement ici que
+%	vous devrez charger les \emph{packages} qui ont tendance \`a ne pas fonctionner ad\'equatement s'ils sont
+% 	charg\'es apr\`es le \emph{package} +hyperref+.
+%
+% \subsection{Options par d\'efaut du cahier}
+%
+%	Si vous nommez le r\'epertoire dans lequel vous compilerez vos figures diff\'eremment que le nom que nous
+% 	lui avons donn\'e par d\'efaut ou si vous avez plus d'un r\'epertoire de figures, vous pourrez inscrire
+%	ces informations ici.
+%
+%	Si vous voulez \textbf{ajouter sans modifier ou supprimer} des options de +hypersetup+, vous pouvez
+%	\'egalement les inscrire ici.
+%
+%	Dans tous les autres cas, veuillez ne pas modifier cette section.
+%
+% \subsection{Commandes de l'auteur}
+%
+%	Cette section vous appartient enti\`erement. Vous pouvez y charger les \emph{packages} n\'ecessaires \`a
+%	votre r\'edaction de m\^eme que leurs options.
+%
+%	C'est \'egalement dans cette section que vous pouvez inscrire vos commandes, environnements et
+%	th\'eor\`emes personnalis\'es.
+%
+% \subsection{Métadonn\'ees du cahier}
+%
+%	Cette section, dont une partie est à la fin du pr\'eambule et l'autre dans l'environnement +GDpagetitre+, au
+%	d\'ebut du document, est l'endroit o\`u vous devrez inscrire toutes les m\'etadonn\'ees bibliographiques
+%	de votre cahier.
+%
+% \subsection{R\'esum\'es, mots-cl\'es, remerciements, article}
+%
+%	Ces deux derni\`eres sections sont, bien entendu, les endroits o\`u vous r\'edigerez votre cahier de
+%	recherche...
+%
+% \StopEventually{
+%	\clearpage
+%	\printindex
+%	\clearpage
+%	\PrintChanges
+% }
+%
+%
+% \appendix
+%
+% \section{Code source de la classe}
+%
+% 	Vous retrouverez dans cette annexe le code source de la classe +geradwp+.
+%	Si vous avez envie de voir comment elle est programm\'ee, d'aider \`a la d\'eboguer,
+%	\`a l'am\'eliorer, etc., cette section est pour vous!
+%
+% \subsection{Tests et valeurs bool\'eennes}
+%
+%	Pour effectuer les tests conditionnels, la classe utilise le \emph{package} +ifthen+. Les variables
+% 	bool\'eennes servent \`a d\'eterminer quelle version d'un cahier on souhaite g\'en\'erer, \`a quelle
+%	\'etape de publication le cahier est rendu de m\^eme qu'\`a configurer des portions de mise en page.
+%	Une fois les variables cr\'e\'ees, des valeurs par d\'efaut leur sont attribu\'ees.
+%
+%    \begin{macrocode}
+%<*class>
+\RequirePackage{ifthen}
+
+% Booleans %
+\newboolean{GD@isWebVersion}
+\newboolean{GD@isPaperVersion}
+\newboolean{GD@isPlainVersion}
+\newboolean{GD@needsBigHeadSep}
+\newboolean{GD@isFinalImpression}
+\newboolean{GD@isPostPublication}
+\newboolean{GD@isRevised}
+\newboolean{GD@needsminitabs}
+
+\setboolean{GD@isWebVersion}{false}
+\setboolean{GD@isPaperVersion}{true}
+\setboolean{GD@isPlainVersion}{false}
+\setboolean{GD@needsBigHeadSep}{false}
+\setboolean{GD@isFinalImpression}{false}
+\setboolean{GD@isPostPublication}{false}
+\setboolean{GD@isRevised}{false}
+\setboolean{GD@needsminitabs}{false}
+%    \end{macrocode}
+%
+% \subsection{Options de la classe}
+%
+% Les quelques options de la classe sont d\'eclar\'ees ci-dessous. Elles servent essentiellement
+% \`a changer des valeurs bool\'eennes et \`a passer des options \`a la classe +article+.
+%
+%    \begin{macrocode}
+
+% Class Options %
+\DeclareOption{gdweb}{%
+	\setboolean{GD@isWebVersion}{true}
+	\setboolean{GD@isPaperVersion}{false}
+	\setboolean{GD@isPlainVersion}{false}
+	\PassOptionsToClass{oneside}{article}
+}
+\DeclareOption{gdpaper}{%
+	\setboolean{GD@isWebVersion}{false}
+	\setboolean{GD@isPaperVersion}{true}
+	\setboolean{GD@isPlainVersion}{false}
+	\PassOptionsToClass{twoside}{article}
+}
+\DeclareOption{gdplain}{%
+	\setboolean{GD@isWebVersion}{false}
+	\setboolean{GD@isPaperVersion}{false}
+	\setboolean{GD@isPlainVersion}{true}
+	\PassOptionsToClass{oneside}{article}
+}
+\DeclareOption{gdbighead}{%
+	\setboolean{GD@needsBigHeadSep}{true}
+}
+\DeclareOption{gdfinal}{%
+	\setboolean{GD@isFinalImpression}{true}
+}
+\DeclareOption{gdpostpub}{%
+	\setboolean{GD@isPostPublication}{true}
+}
+\DeclareOption{gdrevised}{%
+	\setboolean{GD@isRevised}{true}
+}
+\DeclareOption{gdminitabs}{%
+	\setboolean{GD@needsminitabs}{true}
+}
+%    \end{macrocode}
+%
+% \subsection{Chargement de la classe}
+%
+% 	La classe est charg\'ee dans le document avec toutes les options
+%	d\'eclar\'ees par l'utilisateur et celles par d\'efaut.
+%
+%    \begin{macrocode}
+
+% Standard Class Loading %
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\ProcessOptions\relax
+\LoadClass[letterpaper,10pt]{article}
+%    \end{macrocode}
+%
+% \subsection{\emph{Packages} charg\'es par d\'efaut et leurs options}
+%
+%	Tr\`es peu de \emph{packages} sont charg\'es avec la classe afin de vous permettre
+%	de r\'ediger avec la plus grande flexibilit\'e possible. Ceux qui le sont, cependant,
+%	le sont pour des fins d'harmonisation entre les diff\'erents cahiers de la collection.
+%
+%    \begin{macrocode}
+
+% Required Packages %
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}
+\RequirePackage{amsfonts}
+\RequirePackage{latexsym}
+\RequirePackage{graphicx}
+\RequirePackage{mathrsfs}
+\RequirePackage{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{booktabs}
+\RequirePackage{multirow}
+\RequirePackage{array}
+\RequirePackage[font={footnotesize,bf,sf}]{caption}
+\RequirePackage{color}
+\RequirePackage{enumitem}
+\ifthenelse{\boolean{GD@needsminitabs}}{%
+	\RequirePackage{float}
+}{}
+
+% Required Packages Setup %
+\definecolor{gris}{rgb}{0.44,0.44,0.44} % color pkg setup
+\captionsetup[table]{skip=5pt} % caption pkg setup
+%    \end{macrocode}
+%
+% \subsection{Mise en page}
+%
+%	Nous commen\c{c}ons d'abord par d\'efinir les \emph{lengths} du document.
+%	Celles-ci peuvent changer d'une version \`a l'autre d'un cahier.
+%
+%    \begin{macrocode}
+
+% Lengths %
+\newlength{\GD@authitemsep}
+\newlength{\GD@authtopsep}
+\newlength{\GD@affilitemsep}
+\newlength{\GD@affiltopsep}
+\newlength{\GD@titleminipage@hspace}
+\ifthenelse{\boolean{GD@isPlainVersion}}{%
+	\setlength{\GD@authitemsep}{0pt}
+	\setlength{\GD@authtopsep}{12pt}
+	\setlength{\GD@affilitemsep}{0pt}
+	\setlength{\GD@affiltopsep}{9pt}
+}{%
+	\setlength{\GD@authitemsep}{8pt}
+	\setlength{\GD@authtopsep}{24pt}
+	\setlength{\GD@affilitemsep}{6pt}
+	\setlength{\GD@affiltopsep}{9pt}
+}
+\ifthenelse{\boolean{GD@isPaperVersion}}{%
+	\setlength{\GD@titleminipage@hspace}{240pt}
+}{}
+\ifthenelse{\boolean{GD@isWebVersion}}{%
+	\setlength{\GD@titleminipage@hspace}{227pt}
+}{}
+%    \end{macrocode}
+%
+%	Nous \'etablissons ensuite la g\'eom\'etrie du document,
+%	qui diff\`ere d'une version \`a l'autre.
+%
+%    \begin{macrocode}
+
+% Geometry %
+\ifthenelse{\boolean{GD@isWebVersion}}{%
+	\geometry{tmargin=1.5cm,%
+				bmargin=2cm,%
+				lmargin=3cm,%
+				rmargin=3cm,%
+				nofoot,%
+				headsep=15pt,%
+				includehead}
+}{}
+\ifthenelse{\boolean{GD@isPaperVersion}}{%
+	\geometry{tmargin=1.5cm,%
+				bmargin=2cm,%
+				lmargin=3cm,%
+				rmargin=2cm,%
+				nofoot,%
+				headsep=15pt,%
+				includehead}
+}{}
+\ifthenelse{\boolean{GD@needsBigHeadSep}}{%
+	\headsep=30pt
+}{}
+\parindent=15pt
+\parskip=7pt plus 1pt minus 1pt
+\g@addto@macro\@floatboxreset\centering
+\widowpenalty=10000
+\clubpenalty=10000
+\raggedbottom
+\allowdisplaybreaks
+%    \end{macrocode}
+%
+%	Nous ajoutons une touche d'uniformit\'e en modifiant les ent\^etes de sections, en descendant
+%	la hi\'erarchie jusqu'au +\paragraph+. Entres autres, nous assignons la police +\sffamily+
+%	aux ent\^etes, police que nous utiliserons \'egalement pour les th\'eor\`emes et +proof+.
+%
+%    \begin{macrocode}
+
+% Section headings %
+\renewcommand{\section}{\@startsection {section}{1}{\z@}%
+	{-2ex \@plus -1ex \@minus -.2ex}%
+	{1ex \@plus.2ex}%
+	{\normalfont\Large\sffamily\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+	{-1.25ex\@plus -1ex \@minus -.2ex}%
+	{.75ex \@plus .2ex}%
+	{\normalfont\large\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}%
+	{\z@}%
+	{-1.25ex\@plus -1ex \@minus -.2ex}%
+	{.75ex \@plus .2ex}%
+	{\normalfont\normalsize\sffamily\bfseries}}
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}%
+	{-1.25ex \@plus 1ex \@minus -.2ex}%
+	{-.5em \@plus -.1em}%
+	{\normalfont\normalsize\sffamily\bfseries}}
+\setlength{\partopsep}{.5ex \@plus .1ex} %% to reduce spaces 
+\def\@listI{\leftmargin\leftmargini    %% above, between and under 
+	\parsep .25ex \@plus .1ex  %% lists - itemize 
+	\topsep .25ex \@plus .1ex  %% description - enumerate
+	\itemsep \parsep}
+\let\@listi\@listI
+\@listi
+%    \end{macrocode}
+%
+%	Nous redimensionnons les immenses tableaux qui dépassent des marges.
+%
+%    \begin{macrocode}
+
+% Resizing of huge tables %
+\ifthenelse{\boolean{GD@needsminitabs}}{%
+	\floatstyle{plaintop}
+	\restylefloat{table}
+	\let\oldtabular\tabular
+	\renewcommand{\tabular}{\footnotesize\oldtabular}
+	\let\oldtable\table
+}{}
+%    \end{macrocode}
+%
+%	Finalement, nous ajustons la mise en forme des th\'eor\`emes et de
+%	l'environnement +proof+ afin qu'elle soit uniforme avec tout le reste.
+%
+%    \begin{macrocode}
+
+% Theorems and proof layout %
+\newtheoremstyle{gerad}%
+{3pt}% Space above
+{3pt}% Space below
+{}{}%
+{\sffamily\bfseries}% head font
+{.}% Punctuation
+{.5em}% Space after theorem head
+{}
+\theoremstyle{gerad}
+
+\renewenvironment{proof}[1][\proofname]{\par
+	\pushQED{\qed}%
+	\normalfont \topsep6\p@\@plus6\p@\relax
+	\trivlist
+	\item\relax
+	{\bfseries\sffamily
+		#1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+	\popQED\endtrivlist\@endpefalse
+}
+%    \end{macrocode}
+%
+% \subsection{Commandes privées de la classe}
+%
+%	Les commandes priv\'ees jouent deux r\^oles distincts : 1) stocker et 
+%	r\'eutiliser les m\'etadonn\'ees du document; 2) d\'ecortiquer de
+%	larges portions de codes afin d'en \'eviter la r\'ep\'etition.
+%
+% \subsubsection{M\'etadonn\'ees}
+% \label{ann:private-meta}
+%
+%	Les commandes ci-dessous stockent les m\'etadonn\'ees inscrites dans
+%	les commandes publiques correspondantes et populent diff\'erentes
+%	parties du cahier, comme les ent\^etes, la page couverture et la page
+% 	titre.
+%
+%    \begin{macrocode}
+
+% Class Private Commands %
+% Metadata %
+\newcommand{\gd@annee}{}
+\newcommand{\gd@mois}{}
+\newcommand{\gd@month}{}
+\newcommand{\gd@numero}{}
+\newcommand{\gd@titre}{}
+\newcommand{\gd@auteurs@short}{}
+\newcommand{\gd@auteurs@copyright}{}
+\newcommand{\gd@postpubcitation}{}
+\newcommand{\gd@postpubcitation@url}{}
+\newcommand{\gd@revised}{}
+%    \end{macrocode}
+%
+% \subsubsection{Page couverture et page titre}
+%
+%	La page couverture et la page titre changent en fonction non seulement
+%	de la version du cahier qui est g\'en\'er\'ee, mais aussi en fonction
+%	de l'\'etape de publication. Plut\^ot que de r\'ep\'eter le m\^eme code
+%	plus d'une fois, les pages couverture et titre ont \'et\'e d\'cortiqu\'ees
+% 	en sections qui sont appel\'ees en fonction des crit\`eres mentionn\'es
+%	ci-dessus.
+%
+%	La page couverture s'affiche dans toutes les versions du cahier, \`a
+%	l'exception de +gdplain+. Les commandes suivantes servent \`a son affichage.
+%	La portion inf\'erieure de la page est diff\'erente si l'option
+% 	+gdpostpub+ est utilis\'ee.
+%
+%    \begin{macrocode}
+
+% Cover page
+\newcommand{\GD@cover}{%
+	\ifthenelse{\boolean{GD@isFinalImpression}}{}{%
+		\overfullrule=5pt
+	}
+	
+	\pagestyle{empty}
+	\begin{titlepage}
+		\sffamily
+		\ifthenelse{\boolean{GD@needsBigHeadSep}}{%
+			\vspace*{-35pt}
+		}{}
+		
+		{\noindent{\large\bfseries Les Cahiers du GERAD}\hfill ISSN:\quad
+			0711--2440}
+		
+		\vspace*{7.5cm} \hspace*{\GD@titleminipage@hspace}
+		\begin{minipage}[c][5.4cm][c]{7cm}
+			{\begin{tabular}{p{.5cm}|p{5.5cm}}
+					\multicolumn{2}{p{6.5cm}}{\normalsize\bfseries \gd@titre 
+						\ifthenelse{\boolean{GD@needsminitabs}}%
+							{\vspace*{12.5pt}}%
+							{\vspace*{10pt}}}\\
+					& \normalsize\gd@auteurs@short \\ %Initials. Name
+					& \ifthenelse{\boolean{GD@needsminitabs}}%
+						{\\*[15pt]}%
+						{\\*[12pt]}
+					&\normalsize G--\gd@annee--\gd@numero
+					\ifthenelse{\boolean{GD@needsminitabs}}%
+						{\\*[10pt]}%
+						{\\*[8pt]}
+					&\normalsize\gd@month\ \gd@annee
+					\ifthenelse{\boolean{GD@isRevised}}{%
+						\\
+						&\normalsize Revised: \gd@revised
+					}{}
+			\end{tabular}}
+		\end{minipage}
+		
+		\vfill
+		
+		\ifthenelse{\boolean{GD@isPostPublication}}{%
+			\GDcover@bottom@postpub
+		}{%
+			\GDcover@bottom@regular
+		}		
+	\end{titlepage}
+}
+
+% Regular cover page bottom
+\newcommand{\GDcover@bottom@regular}{%	
+	\hrule
+	\smallskip
+	
+	\noindent\begin{minipage}[t][][l]{7.5cm}
+		\scriptsize
+		La collection \textit{Les Cahiers du GERAD} est constitu\'{e}e des 
+		travaux de recherche men\'{e}s par nos membres. La plupart de ces 
+		documents de travail a \'{e}t\'{e} soumis \`{a} des revues avec 
+		comit\'{e} de r\'{e}vision. Lorsqu'un document est accept\'{e} et 
+		publi\'{e}, le pdf original est retir\'{e} si c'est n\'{e}cessaire et 
+		un lien vers l'article publi\'{e} est ajout\'{e}.\\ 
+		
+		\medskip
+		\scriptsize
+		\textbf{Citation sugg\'{e}r\'{e}e :} \gd@auteurs@short~(\gd@mois\ 
+		\gd@annee). \gd@titre, Rapport technique, Les Cahiers du GERAD G--
+		\gd@annee--\gd@numero, GERAD, HEC Montr\'{e}al, Canada.\\
+		
+		\textbf{Avant de citer ce rapport technique,} veuillez visiter notre 
+		site Web (\url{https://www.gerad.ca/fr/papers/G-\gd@annee-\gd@numero}) 
+		afin de mettre \`a jour vos donn\'ees de r\'ef\'erence, s'il a \'et\'e 
+		publi\'e dans une revue scientifique.\par
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t][][l]{7.5cm}
+		\scriptsize
+		The series \textit{Les Cahiers du GERAD} consists of working papers 
+		carried out by our members. Most of these pre-prints have been submitted
+		to peer-reviewed journals. When accepted and published, if necessary, 
+		the original pdf is removed and a link to the published article is 
+		added.\\ \\
+		
+		\scriptsize
+		\textbf{Suggested citation:} \gd@auteurs@short~(\gd@month\ \gd@annee). 
+		\gd@titre, Technical report, Les Cahiers du GERAD G--\gd@annee--
+		\gd@numero, GERAD, HEC Montr\'{e}al, Canada.\\
+		
+		\textbf{Before citing this technical report,} please visit our website 
+		(\url{https://www.gerad.ca/en/papers/G-\gd@annee-\gd@numero}) to update 
+		your reference data, if it has been published in a scientific journal.
+		\par
+	\end{minipage}
+	
+	\bigskip
+	\hrule
+	\smallskip
+	
+	\noindent\begin{minipage}[t][2.1cm][l]{7.5cm}
+		\scriptsize
+		La publication de ces rapports de recherche est rendue possible gr\^ace
+		au soutien de HEC Montr\'eal, Polytechnique Montr\'eal, Universit\'e 
+		McGill, Universit\'e du Qu\'ebec \`a Montr\'eal, ainsi que du Fonds de 
+		recherche du Qu\'ebec -- Nature et technologies. 
+		
+		\medskip
+		D\'ep\^ot l\'egal -- Biblioth\`eque et Archives nationales du Qu\'ebec,
+		\gd@annee\\
+		\phantom{Depot legal} -- Biblioth\`eque et Archives Canada, \gd@annee
+		\par
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t][2.1cm][l]{7.5cm}
+		\scriptsize
+		The publication of these research reports is made possible
+		thanks to the support of HEC Montr\'eal, Polytechnique Montr\'eal, 
+		McGill University, Universit\'e du Qu\'ebec \`a Montr\'eal, as well as 
+		the Fonds de recherche du Qu\'ebec -- Nature et technologies. 
+		
+		\medskip
+		Legal deposit -- Biblioth\`eque et Archives nationales du Qu\'ebec, 
+		\gd@annee\\
+		\phantom{Legal deposit} -- Library and Archives Canada, \gd@annee\par
+	\end{minipage}
+	
+	\hrule
+	\smallskip
+	
+	\noindent
+	\begin{minipage}[t][1cm][l]{7.5cm}
+		\begin{scriptsize}\raggedleft
+			\textbf{GERAD} HEC Montr\'eal
+			
+			3000, chemin de la C\^ote-Sainte-Catherine
+			
+			Montr\'eal (Qu\'ebec) Canada H3T 2A7\par
+		\end{scriptsize}
+	\end{minipage}
+	\hspace*{.35cm}\vrule\hfill
+	\begin{minipage}[t][1cm][l]{7.5cm}
+		\begin{scriptsize}
+			\textbf{T\'el.\,: 514 340-6053}
+			
+			T\'el\'ec.\,: 514 340-5665
+			
+			info@gerad.ca
+			
+			www.gerad.ca\par
+		\end{scriptsize}
+	\end{minipage}
+	
+	\bigskip
+	\hrule
+}
+
+% Post-publication cover page bottom
+\newcommand{\GDcover@bottom@postpub}{%
+	\hrule
+	\smallskip
+	
+	\noindent
+	\begin{minipage}[t][][l]{7.5cm}
+		\scriptsize
+		La collection \textit{Les Cahiers du GERAD} est constitu\'{e}e des 
+		travaux de recherche men\'{e}s par nos membres. La plupart de ces 
+		documents de travail a \'{e}t\'{e} soumis \`{a} des revues avec comit\'e
+		de r\'{e}vision. Lorsqu'un document est accept\'{e} et publi\'{e}, le 
+		pdf original est retir\'{e} si c'est n\'{e}cessaire et un lien vers 
+		l'article publi\'{e} est ajout\'{e}.\par
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t][][l]{7.5cm}
+		\scriptsize
+		The series \textit{Les Cahiers du GERAD} consists of working papers
+		carried out by our members. Most of these pre-prints have been submitted
+		to peer-reviewed journals. When accepted and published, if necessary, 
+		the original pdf is removed and a link to the published article is 
+		added.\par
+	\end{minipage}
+	
+	\noindent
+	\begin{minipage}[t][][l]{\textwidth}
+		\footnotesize
+		\textbf{CITATION ORIGINALE / ORIGINAL CITATION}
+		\smallskip
+		
+		\gd@postpubcitation\ \url{\gd@postpubcitation@url}.
+	\end{minipage}
+	
+	\bigskip
+	
+	\hrule
+	\smallskip
+	
+	\noindent
+	\begin{minipage}[t][2.1cm][l]{7.5cm}
+		\scriptsize
+		\medskip
+		La publication de ces rapports de recherche est rendue possible gr\^ace
+		au soutien de HEC Montr\'eal, Polytechnique Montr\'eal, Universit\'e 
+		McGill, Universit\'e du Qu\'ebec \`a Montr\'eal, ainsi que du Fonds de 
+		recherche du Qu\'ebec -- Nature et technologies. 
+		
+		\medskip
+		D\'ep\^ot l\'egal -- Biblioth\`eque et Archives nationales du Qu\'ebec,
+		2020\\
+		\phantom{Depot legal} -- Biblioth\`eque et Archives Canada, 2020\par
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t][2.1cm][l]{7.5cm}
+		\scriptsize
+		\medskip
+		The publication of these research reports is made possible
+		thanks to the support of HEC Montr\'eal, Polytechnique Montr\'eal, 
+		McGill University, Universit\'e du Qu\'ebec \`a Montr\'eal, as well as 
+		the Fonds de recherche du Qu\'ebec -- Nature et technologies. 
+		
+		\medskip
+		Legal deposit -- Biblioth\`eque et Archives nationales du Qu\'ebec, 
+		2020\\
+		\phantom{Legal deposit} -- Library and Archives Canada, 2020\par
+	\end{minipage}
+	
+	\hrule
+	\smallskip
+	
+	\noindent
+	\begin{minipage}[t][1cm][l]{7.5cm}
+		\begin{scriptsize}\raggedleft
+			\textbf{GERAD} HEC Montr\'eal
+			
+			3000, chemin de la C\^ote-Sainte-Catherine
+			
+			Montr\'eal (Qu\'ebec) Canada H3T 2A7\par
+		\end{scriptsize}
+	\end{minipage}
+	\hspace*{.35cm}\vrule\hfill
+	\begin{minipage}[t][1cm][l]{7.5cm}
+		\begin{scriptsize}
+			\textbf{T\'el.\,: 514 340-6053}
+			
+			T\'el\'ec.\,: 514 340-5665
+			
+			info@gerad.ca
+			
+			www.gerad.ca\par
+		\end{scriptsize}
+	\end{minipage}
+	
+	\bigskip
+	\hrule
+}
+%    \end{macrocode}
+%
+%	La page titre s'affiche dans toutes les versions du cahier, mais
+% 	diffère en fonction des versions. Étant donné qu'elle est contenue
+%	dans l'environnement +GDpagetitre+, les commandes internes pour son
+% 	affichage sont divisées en deux parties +@begin+ et +@end+.
+%
+%    \begin{macrocode}
+
+% 	Regular title page
+\newcommand{\GD@titlepage@begin}{%	
+	\ifthenelse{\boolean{GD@isWebVersion}}{%
+		\newpage\clearpage
+	}{%
+		\ifthenelse{\boolean{GD@isPaperVersion}}{%
+			\newpage\cleardoublepage
+		}{}
+	}
+	\parindent=0pt
+	\vspace*{1cm}
+	\sffamily
+	{\LARGE\bfseries \gd@titre\par} %Title
+	\begin{minipage}[t][13cm][l]{7.5cm}	
+		\vspace*{55pt}
+}
+
+\newcommand{\GD@titlepage@end}{%
+	\vfill
+\end{minipage}
+\vfill
+{\bfseries \gd@month\ \gd@annee}\\*%\\ 
+%\revised\\
+{\bfseries Les Cahiers du GERAD}\\
+{\bfseries G--\gd@annee--\gd@numero}\\
+{\footnotesize Copyright \copyright\ \gd@annee\ GERAD, 
+	\gd@auteurs@copyright}
+\vspace*{0.05cm}
+
+\hrule
+\smallskip
+
+\noindent
+\begin{minipage}[t][][l]{7.5cm}
+	\begin{scriptsize}
+		Les textes publi\'es dans la s\'erie des rapports de recherche 
+		\textit{Les Cahiers du GERAD} n'engagent que la responsabilit\'e de 
+		leurs auteurs. Les auteurs conservent leur droit d'auteur et leurs 
+		droits moraux sur leurs publications et les utilisateurs s'engagent \`a
+		reconna\^{\i}tre et respecter les exigences l\'{e}gales associ\'{e}es 
+		\`{a} ces droits. Ainsi, les utilisateurs:
+		\begin {itemize}
+		\item Peuvent t\'{e}l\'{e}charger et imprimer une copie de toute 
+			publication du portail public aux fins d'\'{e}tude ou de recherche
+			priv\'{e}e;
+		\item Ne peuvent pas distribuer le mat\'{e}riel ou l'utiliser pour une 
+			activit\'{e} \`{a} but lucratif ou pour un gain commercial;
+		\item Peuvent distribuer gratuitement l'URL identifiant la publication.
+	\end{itemize}
+	Si vous pensez que ce document enfreint le droit d'auteur, contactez-
+	nous en fournissant des d\'etails. Nous supprimerons imm\'{e}diatement
+	l'acc\`es au travail et enqu\^{e}terons sur votre demande.\par
+\end{scriptsize}
+\end{minipage}
+\hfill
+\begin{minipage}[t][][l]{7.5cm}
+\begin{scriptsize}
+	The authors are exclusively responsible for the content of their 
+	research papers published in the series \textit{Les Cahiers du GERAD}. 
+	Copyright and moral rights for the publications are retained by the 
+	authors and the users must commit themselves to recognize and abide the
+	legal requirements associated with these rights. Thus, users:
+	\begin{itemize}
+		\item May download and print one copy of any publication from the public
+			portal for the purpose of private study or research;
+		\item May not further distribute the material or use it for any 
+			profit-making activity or commercial gain;
+		\item May freely distribute the URL identifying the publication.
+	\end{itemize}
+	If you believe that this document breaches copyright please contact us 
+	providing details, and we will remove access to the work immediately and 
+	investigate your claim.\par
+\end{scriptsize}
+\end{minipage}
+
+\thispagestyle{empty}
+\parindent=15pt
+\newpage
+}
+
+% Plain title page
+\newcommand{\GD@plain@titlepage@begin}{%
+	\thispagestyle{empty}
+	\sffamily
+	{\LARGE\bfseries\noindent\gd@titre\par}
+}
+
+\newcommand{\GD@plain@pagetitle@end}{%
+	\vspace*{12pt}
+	{\noindent\Large\gd@mois\ \gd@annee}
+	\vspace*{30pt}
+}
+%    \end{macrocode} 
+%
+% \subsection{Commandes et environnements publics de la classe}
+%
+%	Les commandes publiques sont celles directement accessibles à l'utilisateur.
+%	Cependant, elles sont toutes li\'ees \`a une partie du cahier et ne peuvent
+%	donc pas \^etre r\'eutilis\'ees ou d\'eplac\'ees.
+%
+% \subsubsection{M\'etadonn\'ees}
+% 	Les commandes suivantes sont celles o\`u l'utilisateur saisit les donn\'ees
+%	bibliographiques de son cahier. Elles modifient la valeur des commandes
+% 	priv\'ees correspondantes (voir la \autoref{ann:private-meta}).
+%
+%    \begin{macrocode}
+
+% Metadata public commands
+\newcommand{\GDannee}[1]{%
+	\renewcommand{\gd@annee}{#1}
+}
+\newcommand{\GDmois}[2]{%
+	\renewcommand{\gd@mois}{#1}
+	\renewcommand{\gd@month}{#2}
+}
+\newcommand{\GDnumero}[1]{%
+	\renewcommand{\gd@numero}{#1}
+}
+\newcommand{\GDtitre}[1]{%
+	\renewcommand{\gd@titre}{#1}
+}
+\newcommand{\GDauteursCourts}[1]{%
+	\renewcommand{\gd@auteurs@short}{#1}
+}
+\newcommand{\GDauteursCopyright}[1]{%
+	\renewcommand{\gd@auteurs@copyright}{#1}
+}
+\newcommand{\GDpostpubcitation}[2]{%
+	\renewcommand{\gd@postpubcitation}{#1}
+	\renewcommand{\gd@postpubcitation@url}{#2}
+}
+\newcommand{\GDrevised}[1]{%
+	\renewcommand{\gd@revised}{#1}
+}
+%    \end{macrocode}
+%
+% \subsubsection{Subdivisions du document}
+%
+%	Chaque partie d'un cahier de recherche a ses particularit\'es, tant au niveau
+%	de la géométrie que de la mise en page (ent\^etes, pieds de page, etc.) Plut\^ot
+%	que d'engorger le gabarit avec de multiples lignes de code, quelques commandes
+% 	et environnements ont \'et\'e cr\'e\'es afin de les regrouper.
+%
+%    \begin{macrocode}
+
+% Cover page
+\newcommand{\GDpageCouverture}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{}{\GD@cover}
+}
+
+% Title page
+\newenvironment{GDpagetitre}{
+	\ifthenelse{\boolean{GD@isPlainVersion}}%
+		{\GD@plain@titlepage@begin}%
+		{\GD@titlepage@begin}	
+}{
+	\ifthenelse{\boolean{GD@isPlainVersion}}%
+		{\GD@plain@pagetitle@end}%
+		{\GD@titlepage@end}	
+}
+
+% Title page lists and list items
+\newlist{GDauthlist}{itemize}{1}
+\setlist[GDauthlist]{label={},%
+	left=0pt .. 0pt,%
+	itemsep=\GD@authitemsep,%
+	topsep=\GD@authtopsep}
+\newlist{GDaffillist}{enumerate}{1}
+\setlist[GDaffillist]{label=\textsuperscript{\emph{\alph*}},%
+	ref=\textsuperscript{\emph{\alph*}},%
+	wide,%
+	left=0pt .. 1em,%
+	itemsep=\GD@affilitemsep,%
+	topsep=\GD@affiltopsep}
+\newlist{GDemaillist}{itemize}{1}
+\setlist[GDemaillist]{label={},%
+	left=0pt .. 0pt,%
+	itemsep=0pt,%
+	parsep=0pt}
+\newcommand{\GDrefsep}{\textsuperscript{,\,}}
+\newcommand{\GDauthitem}[1]{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{%
+		\item {\large\bfseries #1}
+	}{%
+		\item {\Large\bfseries #1}
+	}
+}
+\newcommand{\GDaffilitem}[2]{\item \label{#1}{\itshape #2}}
+\newcommand{\GDemailitem}[1]{\item {\small\ttfamily #1}}
+
+% Abstracts section
+\newcommand{\GDabstracts}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{}{%
+		\setcounter{page}{2}
+		\renewcommand{\thepage}{\roman{page}}
+		\pagestyle{fancy}
+		\lhead[
+		\textcolor{gris}{\sffamily{\,}\thepage}\hfill
+		\textcolor{gris}{\sffamily G--\gd@annee--\gd@numero}\hfill %
+		\ifthenelse{\boolean{GD@isRevised}}%
+			{{ -- \itshape Revised}}%
+			{}
+		\textcolor{gris}{\sffamily Les Cahiers du GERAD}
+		{\large\strut}\color{gris}{\hrule}
+		]
+		{
+			\textcolor{gris}{\sffamily{\,} Les Cahiers du GERAD}\hfill
+			\textcolor{gris}{\sffamily G--\gd@annee--\gd@numero}\hfill %
+			\ifthenelse{\boolean{GD@isRevised}}%
+				{{ -- \itshape Revised}}%
+				{}
+			\textcolor{gris}{\sffamily\thepage}
+			{\large\strut}\color{gris}{\hrule}
+		}
+		\chead[]{}
+		\rhead[]{}
+		\lfoot[]{}
+		\cfoot[]{}
+		\rfoot[]{}	
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+		\rmfamily
+		\vspace*{5pt}	
+	}
+}
+
+% Custom abstract environment
+\newenvironment{GDabstract}[1]{%
+	\paragraph{#1 : }
+}{%
+	\vspace*{2cm}
+}
+
+% Acknowledgements section
+\newenvironment{GDacknowledgements}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{%
+		\small
+		\begin{quote}
+			\hrulefill\par
+			{\bfseries Acknowledgements : }
+		}{%
+			\vfill
+			\hrule
+			\smallskip
+			\paragraph{Acknowledgements: }
+		}
+	}{%
+		\ifthenelse{\boolean{GD@isPlainVersion}}{%
+		\end{quote}
+	}{}
+}
+
+% Article section
+\newcommand{\GDarticlestart}{%
+	\ifthenelse{\boolean{GD@isPlainVersion}}{}{%
+		\newpage
+		\setcounter{page}{1}
+		\renewcommand{\thepage}{\arabic{page}}
+		\baselineskip=12.5pt 
+		\rmfamily
+	}
+}
+%</class>
+%    \end{macrocode}
+%
+% ^^A Fin du code de la classe
+% \Finale
+%
+% \iffalse
+% ^^A Code du gabarit
+%<*template>
+\documentclass[gdweb,gdbighead]{geradwp}
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%% Packages par défaut du cahier  %%%%%%%%%%%%%%
+%% %%% ----- NE PAS MODIFIER! ------- %%%%%%%%%%%%%%
+%% %%% Working paper default packages %%%%%%%%%%%%%%
+%% %%% ----- DO NOT MODIFY! --------- %%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\PassOptionsToPackage{hyphens}{url} % TODO: is the url pkg loaded by hyperref?
+
+%% Choose one of the two following algorithm packages
+%% \usepackage{algorithm}
+\usepackage{algorithm2e}
+\usepackage{hyperref}
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%% Options par défaut du cahier  %%%%%%%%%%%%%%%
+%% %%% ----- NE PAS MODIFIER! ------ %%%%%%%%%%%%%%%
+%% %%% Working paper default options %%%%%%%%%%%%%%%
+%% %%% ----- DO NOT MODIFY! -------- %%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\graphicspath{{Figures/}} % graphicx pkg setup
+\hypersetup{colorlinks,%
+	citecolor={blue}, % Change for "black" with natbib
+	urlcolor={blue},
+	linkcolor={blue},
+	breaklinks={true}
+}
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%% Début - commandes de l'auteur %%%%%%%%%%%%
+%% %%%%%%%% Start of author commands %%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%% Fin - commandes de l'auteur %%%%%%%%%%%%%
+%% %%%%%%%%% End of author commands %%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%% Métadonnées du cahier  %%%%%%%%%%%%%%%
+%% %%%%%%%%%% Working paper metadata %%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\GDtitre{This is a title}
+\GDmois{Mai}{May}
+\GDannee{2021}
+\GDnumero{XX}
+\GDauteursCourts{B Hamel, K H\'ebert}
+\GDauteursCopyright{Hamel, H\'ebert}
+\GDpostpubcitation{Hamel, Benoit, Karine H\'ebert (2021). \og Un exemple de citation \fg, \emph{Journal of Journals}, vol. X issue Y, p. n-m}{https://www.gerad.ca/fr}
+\GDrevised{Mai 2021}
+
+\begin{document}	
+	
+	\GDpageCouverture
+	
+	\begin{GDpagetitre}
+		
+		\begin{GDauthlist}
+			\GDauthitem{Benoit Hamel \ref{affil:bib}}
+			\GDauthitem{Karine H\'ebert \ref{affil:gerad}\GDrefsep\ref{affil:hec}}
+		\end{GDauthlist}
+		
+		\begin{GDaffillist}
+			\GDaffilitem{affil:bib}{Biblioth\`eque, HEC Montr\'eal, Montr\'eal (Qc), Canada, H3T 2A7}
+			\GDaffilitem{affil:gerad}{GERAD, Montr\'eal (Qc), Canada, H3T 1J4}
+			\GDaffilitem{affil:hec}{HEC Montr\'eal, Montr\'eal (Qc), Canada, H3T 2A7}
+		\end{GDaffillist}
+		
+		\begin{GDemaillist}
+			\GDemailitem{benoit.2.hamel@hec.ca}
+			\GDemailitem{karine.hebert@gerad.ca}
+		\end{GDemaillist}
+		
+	\end{GDpagetitre}
+	
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%% Résumés, mots-clés, remerciements %%%%%%%%%%%
+%% %%%%%%% Abstract, keywords, acknowledgements %%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\GDabstracts
+	
+	\begin{GDabstract}{Abstract}
+		Write your abstract here...
+		
+		\paragraph{Keywords: }
+		%Here
+		Here
+	\end{GDabstract}
+	
+	\begin{GDabstract}{R\'esum\'e}
+		R\'edigez votre r\'esum\'e ici...
+		
+		\paragraph{Mots cl\'es\,: }
+		%Here
+		Here
+		
+	\end{GDabstract}	
+	
+	
+	\begin{GDacknowledgements}
+		Here
+		
+	\end{GDacknowledgements}
+	
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%% Article %%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\GDarticlestart
+	%Here
+	Write your article article.
+	
+\end{document}
+%</template>
+% \fi
