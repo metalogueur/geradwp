@@ -7,13 +7,13 @@ Figures/
 
 *.aux
 *.cls
+*.docx
 *.glo
 *.idx
 *.ilg
 *.ind
 *.log
 *.out
-*.pdf
 *.synctex.gz
 *.toc
 notes_gabarits.md

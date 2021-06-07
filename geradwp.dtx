@@ -677,6 +677,15 @@
 				headsep=15pt,%
 				includehead}
 }{}
+\ifthenelse{\boolean{GD@isPlainVersion}}{%
+	\geometry{tmargin=1.5cm,%
+		bmargin=2cm,%
+		lmargin=3cm,%
+		rmargin=3cm,%
+		nofoot,%
+		headsep=15pt,%
+		includehead}
+}{}
 \ifthenelse{\boolean{GD@isPaperVersion}}{%
 	\geometry{tmargin=1.5cm,%
 				bmargin=2cm,%
@@ -1090,10 +1099,9 @@
 		}{}
 	}
 	\parindent=0pt
-	\vspace*{1cm}
 	\sffamily
 	{\LARGE\bfseries \gd@titre\par} %Title
-	\begin{minipage}[t][13cm][l]{7.5cm}	
+	\begin{minipage}[t][10cm][l]{7.5cm}	
 		\vspace*{55pt}
 }
 
@@ -1101,8 +1109,10 @@
 	\vfill
 \end{minipage}
 \vfill
-{\bfseries \gd@month\ \gd@annee}\\*%\\ 
-%\revised\\
+{\bfseries \gd@month\ \gd@annee}\\*
+\ifthenelse{\boolean{GD@isRevised}}%
+	{\\ \gd@revised \\}%
+	{}
 {\bfseries Les Cahiers du GERAD}\\
 {\bfseries G--\gd@annee--\gd@numero}\\
 {\footnotesize Copyright \copyright\ \gd@annee\ GERAD, 
@@ -1164,12 +1174,12 @@
 \newcommand{\GD@plain@titlepage@begin}{%
 	\thispagestyle{empty}
 	\sffamily
-	{\LARGE\bfseries\noindent\gd@titre\par}
+	{\sffamily\LARGE\bfseries\noindent\gd@titre\par}
 }
 
 \newcommand{\GD@plain@pagetitle@end}{%
 	\vspace*{12pt}
-	{\noindent\Large\gd@mois\ \gd@annee}
+	{\noindent\gd@mois\ \gd@annee}
 	\vspace*{30pt}
 }
 %    \end{macrocode} 
@@ -1262,7 +1272,7 @@
 \newcommand{\GDrefsep}{\textsuperscript{,\,}}
 \newcommand{\GDauthitem}[1]{%
 	\ifthenelse{\boolean{GD@isPlainVersion}}{%
-		\item {\large\bfseries #1}
+		\item {\sffamily\large\bfseries #1}
 	}{%
 		\item {\Large\bfseries #1}
 	}
@@ -1310,27 +1320,20 @@
 \newenvironment{GDabstract}[1]{%
 	\paragraph{#1 : }
 }{%
-	\vspace*{2cm}
+	\ifthenelse{\boolean{GD@isPlainVersion}}{}{\vspace*{2cm}}
 }
 
 % Acknowledgements section
 \newenvironment{GDacknowledgements}{%
 	\ifthenelse{\boolean{GD@isPlainVersion}}{%
-		\small
-		\begin{quote}
-			\hrulefill\par
-			{\bfseries Acknowledgements : }
+		\paragraph{Acknowledgements: }
 		}{%
 			\vfill
 			\hrule
 			\smallskip
 			\paragraph{Acknowledgements: }
 		}
-	}{%
-		\ifthenelse{\boolean{GD@isPlainVersion}}{%
-		\end{quote}
-	}{}
-}
+}{}
 
 % Article section
 \newcommand{\GDarticlestart}{%
@@ -1351,6 +1354,78 @@
 % \iffalse
 % ^^A Code du gabarit
 %<*template>
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%% Notes pour les auteurs %%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% La commande pour accéder aux images du document est: \graphicspath{{Figures/}}.
+%% Vous pouvez l'utiliser ou le changer dans la section "Options par défaut 
+%% du cahier".
+%% Ajouter toutes commandes additionnelles dans la section "Commandes de 
+%% l'auteur".
+%% Inscrire les champs manquants (titre, noms, coordonnées, résumé, mots-clés, 
+%% remerciements, etc.).
+%% Inscrire tous les titres en minuscules (sauf la première lettre du 
+%% premier mot).
+%% Section, Table, Figure prennent une majuscule en anglais, 
+%% mais pas en français.
+%% Les tableaux se font avec Booktabs et ils sont écrits en \footnotesize. 
+%% (Booktabs crée des tableaux avec des lignes horizontales seulement et 
+%% plus d'espaces entre les lignes.)
+%% Pour éviter que des références ne se retrouvent seules au début d'une ligne, 
+%% on doit faire précéder les "\ref{...}" par "~", donc "~\ref{...}". 
+%% On fait de même avec "\cite{...}" qui devrait plutôt s'écrire "~\cite{...}".
+%% Vérifier que les chiffres (références ou non) n'apparaissent pas seuls 
+%% au début d'une ligne.
+%% Enlever toutes les commandes d'espacement (\smallskip, \vspace, \\) à la fin 
+%% des lignes et des paragraphes.
+%% "et al." ne s'écrit pas en italiques et a un point.
+%% Les titres des figures, tableaux et algorithmes prennent un point ou non, 
+%% mais ils doivent être tous identiques.
+%% Pour les Tables, les titres sont placés en haut.
+%% Pour les Figures, les titres sont placés en-dessous.
+%% S'assurer que le chiffre de la note de bas de page soit après la ponctuation
+%% en anglais.
+%% Bibliographie : ajouter "\small" après le \begin{thebibliography}.
+%% Bibliographie : transférer le .bbl dans le fichier lui-même 
+%% s'il y a un fichier .bib.
+%% Bibliographie : vérifier qu'il y a bien deux tirets (--) entre les numéros 
+%% de pages quand c'est nécessaire.
+%% Bibliographie : éviter les caractères en italique et en gras. Enlever 
+%% les \em et \it.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% Notes for Authors  %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The graphics path is {{Figures/}}. You either use it or change it in the 
+%% "Working paper default options" section below.
+%% Add any additional commands in the "Author commands" section.
+%% Fill out the missing fields (title, names, contact info, abstract, 
+%% keywords, acknowledgements, etc.).
+%% Write all titles in lowercase letters (aside from the first letter of the
+%% first word).
+%% Section, Table, Figure are capitalized in English, but not in French.
+%% Tables are done with Booktabs and are written in \footnotesize.
+%% (With Booktabs there's only horizontal lines and more space between
+%% the lines).
+%% To make sure references don't end up alone at the start of a line, 
+%% before each "\ref{...}" use "~", therefore:  "~\ref{...}". 
+%% The same thing applies to "\cite{...}", which should instead 
+%% be written "~\cite{...}".
+%% Check that numbers (references or other) do not appear by themselves 
+%% at the start of a line .
+%% Remove all spacing commands (\smallskip, \vspace, \\) at the end of 
+%% lines and paragraphs.
+%% "et al." must not be written in italics and must include a period after "al".
+%% Figure, table and algorithm titles may use a period or not, but must do so 
+%% consistently throughout.
+%% Table titles are placed above the table.
+%% Figure titles are placed below the figure.
+%% Make sure footnote numbers are positioned after the punctuation in English.
+%% Bibliography: transfer the .bbl into the file itself if there is a .bib file.
+%% Bibliography: add "\small" after \begin{thebibliography}.
+%% Bibliography: check that there are two dashes (--) between page numbers where
+%% necessary.
+%% Bibliography: avoid using italics and bold. Remove instances of \em and \it.
 \documentclass[gdweb,gdbighead]{geradwp}
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
