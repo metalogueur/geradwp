@@ -32,8 +32,8 @@ presentation standards required by the _Cahiers du GERAD_ series.
 - geradwp.ins : the installation file of the
   class;
 - geradwp.dtx : the bilingual documented source code of the class;
-- geradwp.pdf : the French version of the class' documentation;
-- geradwp-en.pdf : the English version of the class' documentation;
+- geradwp.pdf : the English version of the class' documentation;
+- geradwp-fr.pdf : the French version of the class' documentation;
 - README.md : this file.
 
 ## CLASS INSTALLATION
@@ -71,8 +71,8 @@ présentation en vigueur pour la collection _Les Cahiers du GERAD_.
 
 - geradwp.ins : le fichier d'installation de la classe;
 - geradwp.dtx : le code source documenté bilingue de la classe;
-- geradwp.pdf : la version française de la documentation de la classe;
-- geradwp-en.pdf : la version anglaise de la documentation de la classe;
+- geradwp.pdf : la version anglaise de la documentation de la classe;
+- geradwp-fr.pdf : la version française de la documentation de la classe;
 - README.md : le présent fichier.
 
 ## INSTALLATION DE LA CLASSE

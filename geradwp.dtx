@@ -25,9 +25,9 @@
 \ProvidesFile{geradwp.dtx}
 %</dtx>
 %<class>\NeedsTeXFormat{LaTeX2e}
-%<class>\ProvidesClass{geradwp}[2021/04/30 v1.0 Class for the Cahiers du GERAD series]
+%<class>\ProvidesClass{geradwp}[2021/06/16 v1.0a1 Class for the Cahiers du GERAD series]
 %<*driver>
-\documentclass[10pt,oneside,english,french]{ltxdoc}
+\documentclass[10pt,oneside,french,english]{ltxdoc}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{babel}
@@ -43,9 +43,21 @@
 \usepackage{listings}
 \usepackage{hyperref}
 
+\newcommand{\frenchdoc}{%
+	\IfLanguageName{english}{0}{1}
+}
+
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
+
+\ifnum\frenchdoc=1
+	\GlossaryPrologue{\section*{Historique des versions}%
+		\addcontentsline{toc}{section}{Historique des versions}}
+	\else
+	\GlossaryPrologue{\section*{Change History}%
+		\addcontentsline{toc}{section}{Change History}}
+\fi
 
 \definecolor{liens}{rgb}{0,0.35,0.65}
 \definecolor{shadecolor}{rgb}{0.93,0.97,0.99}
@@ -58,6 +70,15 @@
 	pdfauthor={Benoit Hamel, HEC Montr\'{e}al}
 }
 \setlength{\parskip}{6pt}
+\ifnum\frenchdoc=1
+	\frenchbsetup{
+		og=«, fg=»
+	}
+	
+	\addto\captionsfrench{%
+		\renewcommand{\tablename}{Tableau}
+	}
+\fi
 \MakeShortVerb{\+}
 \lstset{%
 	basicstyle=\footnotesize\ttfamily,
@@ -66,12 +87,22 @@
 	numberstyle=\footnotesize\ttfamily,
 	backgroundcolor=\color{shadecolor}
 }
-\renewcommand{\lstlistingname}{Code source}
+\ifnum\frenchdoc=1
+	\renewcommand{\lstlistingname}{Code source}
+	\newcommand{\lstcaptionone}{Un exemple de liste d'auteurs}
+	\newcommand{\lstcaptiontwo}{Un exemple de liste d'affiliations}
+	\newcommand{\lstcaptionthree}{Un exemple de liste d'adresses courriel}
+\else
+	\renewcommand{\lstlistingname}{Source Code}
+	\newcommand{\lstcaptionone}{Authors list example}
+	\newcommand{\lstcaptiontwo}{Affiliations list example}
+	\newcommand{\lstcaptionthree}{Email list example}
+\fi
 
 \newcommand{\gdwp}{\texttt{geradwp}}
 \newcommand{\cahiers}{\emph{Les Cahiers du GERAD}}
 \newcommand{\lien}[2]{%
-	\href{#1}{\bfseries #2 \faExternalLink}
+	\href{#1}{\bfseries #2~\faExternalLink}
 }
 \newcommand{\oui}{\color{green}\faCheck}
 
@@ -83,27 +114,51 @@
 \end{document}
 %</driver>
 % \fi
-% \CheckSum{880}
-% \changes{1.0}{2021-02-23}{Initial release}
-% \title{Classe de documents \LaTeX\ pour la collection \cahiers}
-% \author{Benoit Hamel\thanks{Biblioth\`eque, HEC Montr\'eal} \and Karine Hébert\thanks{GERAD, HEC Montr\'eal}}
+% \CheckSum{918}
+% \changes{1.0}{2021-06-16}{Initial release}
+% \ifnum\frenchdoc=1
+% 	\title{Classe de documents \LaTeX\ pour la collection \cahiers}
+% 	\author{Benoit Hamel\thanks{Biblioth\`eque, HEC Montr\'eal} \and Karine Hébert\thanks{GERAD, HEC Montr\'eal}}
+% \else
+%	\title{\LaTeX\ document class for \cahiers\ series}
+% 	\author{%
+%		Benoit Hamel\thanks{Library, HEC Montr\'eal}%
+%		\and Karine Hébert\thanks{GERAD, HEC Montr\'eal}%
+%		\thanks{English translation by Jos\'ee Lafreni\`ere}%
+%	}
+% \fi
 % \date{\today}
 % \maketitle
 %
 % \tableofcontents
 %
 % \begin{abstract}
+% \ifnum\frenchdoc=1
 %	La classe de documents \gdwp\ a \'et\'e con\c{c}ue dans le but de permettre aux chercheurs
 %	membres du \lien{https://www.gerad.ca/fr}{GERAD} de r\'ediger leurs documents de travail, 
 %   leurs pr\'eimpressions et leurs	rapports techniques selon les normes de pr\'esentation de la 
 %   collection de rapports de recherche \cahiers. Cette classe et les fichiers associ\'es remplacent 
 %   le gabarit initialement	distribu\'e par le GERAD.
+% \else
+%	The \gdwp\ document class was designed to allow researchers who are 
+% 	\lien{https://www.gerad.ca/fr}{GERAD} members to write 
+%	their working papers, preprints and technical reports in line with the presentation 
+%	standards of \cahiers\ working paper series. This class and the 
+%	associated files replace the template that GERAD initially distributed.
+% \fi
 % \end{abstract}
 %
+% \ifnum\frenchdoc=1
 % \section{Installation de la classe}
 %
 % \subsection{Pr\'erequis}
+% \else
+% \section{Installing the class}
 %
+% \subsection{Prerequisites}
+% \fi
+%
+% \ifnum\frenchdoc=1
 % L'utilisation de cette classe suppose que vous avez d\'ej\`a install\'e une distribution \TeX\ et
 % un \'editeur de code int\'egr\'e. Pour la conception de \gdwp, la distribution 
 % \lien{https://www.tug.org/texlive/}{TeX Live 2020} et l'\'editeur de code 
@@ -118,15 +173,32 @@
 % Les utilisateurs d'\lien{https://www.overleaf.com/}{Overleaf} peuvent \'egalement utiliser cette classe 
 % [en demandant les fichiers n\'ecessaires
 % au GERAD].
+% \else
+% Using this class assumes you’ve already installed a \TeX\ distribution with an integrated code editor. 
+% In designing \gdwp, the \lien{https://www.tug.org/texlive/}{TeX Live 2020} distribution and the 
+% \lien{https://www.texstudio.org/}{TeXstudio} editor were used. 
+%
+% If you are using TeXLive or \lien{http://www.tug.org/mactex/}{MacTeX} and your document compilation 
+% is buggy, begin by making sure 
+% your installation is up to date before investigating any further.
+%
+% If you are using the \lien{https://miktex.org/}{MikTeX} distribution, make sure you install the latest 
+% versions of the packages 
+% indicated in \autoref{tab:pre-loaded-pkgs} before using the \gdwp\ class.
+%
+% Users of \lien{https://www.overleaf.com/}{Overleaf} can also use this class by requesting the necessary files from GERAD.
+% \fi
 %
 % \subsection{Installation}
 % 
+% \ifnum\frenchdoc=1
 % L'archive +.zip+ que vous avez t\'el\'echarg\'ee contient les fichiers suivants :
 %
 % \begin{enumerate}
 %	\item \textbf{geradwp.ins} : le fichier d'installation de la classe;
 %	\item \textbf{geradwp.dtx} : le code source document\'e de la classe;
-%	\item \textbf{geradwp.pdf} : la documentation de la classe;
+%	\item \textbf{geradwp.pdf} : la version anglaise de la documentation de la classe;
+%	\item \textbf{geradwp-fr.pdf} : la version fran\c{c}aise de la documentation de la classe;
 %	\item \textbf{README.md} : le fichier n\'ecessaire \`a l'affichage de la description de la classe 
 %	sur le site du \lien{https://www.ctan.org/}{CTAN}.
 %\end{enumerate}
@@ -145,9 +217,41 @@
 %
 % La commande cr\'eera le fichier de classe +geradwp.cls+ ainsi que le gabarit +template.tex+ \`a
 % partir duquel vous pourrez r\'ediger votre rapport de recherche.
+% \else
+% The +.zip+ archive you downloaded contains these files:
 %
+% \begin{enumerate}
+%	\item \textbf{geradwp.ins}: class installation file;
+%	\item \textbf{geradwp.dtx}: documented source code for the class;
+%	\item \textbf{geradwp.pdf}: the english version of the class' documentation;
+%	\item \textbf{geradwp-fr.pdf} : the french version of the class' documentation;
+%	\item \textbf{README.md}: file needed to display the class description on the 
+%	\lien{https://www.ctan.org/}{CTAN} website.
+%\end{enumerate}
+%
+% Follow these steps to install the class on your workstation.
+%
+%\begin{enumerate}
+%	\item Create a working directory;
+%	\item unzip the +.zip+ archive in your working directory;
+%	\item open a command line terminal from the directory;
+%	\item enter the following command: \\
+%		\begin{shaded*}
+%			+latex geradwp.ins+
+%		\end{shaded*}	
+% \end{enumerate}
+%
+% This command will create the +geradwp.cls+ class file and the 
+% +template.tex+ template from which you can draft your working paper.
+% \fi
+%
+% \ifnum\frenchdoc=1
 % \section{Utilisation de la classe}
+% \else
+% \section{Using the class}
+% \fi
 %
+% \ifnum\frenchdoc=1
 % La classe \gdwp\ est d\'eriv\'ee de la classe de base \lien{https://www.ctan.org/pkg/article}{article}. 
 % Vous pouvez donc vous servir de toutes les fonctionnalit\'es de cette derni\`ere. Cependant, 
 % quelques options de la classe +article+ sont d\'efinies par d\'efaut dans la class \gdwp\ et 
@@ -163,68 +267,145 @@
 % Ces options \'etant d\'efinies dans le fichier de classe, vous ne risquez pas de les supprimer de la
 % commande +documentclass+ du gabarit. Assurez-vous seulement de ne pas y inscrire des options qui pourraient
 % entrer en conflit avec les options ci-haut mentionn\'ees.
+% \else
+% The \gdwp\ class is derived from the basic \lien{https://www.ctan.org/pkg/article}{article} class. 
+% You can therefore use all of that 
+% class’ functionalities. However, a few of the article class options are defined by default in the 
+% \gdwp\ class and cannot be modified:
+% 
+% \begin{itemize}
+%	\item The font size is +10pt+;
+%	\item the paper size is +letterpaper+;
+%	\item printing is one-sided only (+oneside+) for the +gdweb+ and +gdplain+ versions of the template;
+%	\item printing is two-sided (+twoside+) for the +gdpaper+ version of the template.
+% \end{itemize}
+%
+% Since these options are defined in the class file, there is no risk of you deleting them from the 
+% template’s +documentclass+ command. Just make sure not to enter any options that might conflict with 
+% the above-mentioned options.
+% \fi
 %
 % \subsection{Options}
+% \ifnum\frenchdoc=1
 %  Outre les options disponibles via la classe +article+, quelques options sont disponibles pour \gdwp.
+% \else
+% In addition to the options available via the +article+ class, there are a few options available for \gdwp.
+% \fi
 %
 % \begin{DescribeMacro}{gdweb}
+% \ifnum\frenchdoc=1
 %	La version Web d'un cahier de recherche destin\'ee \`a \^etre publi\'ee sur le site Web du GERAD. L'option
 %	+oneside+ est pass\'ee \`a la classe +article+.
+% \else
+%	The Web version of a paper that is to be posted on the GERAD website. The +oneside+ option is passed on to 
+%	the +article+ class.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{gdpaper}
+% \ifnum\frenchdoc=1
 %	La version papier d'un cahier de recherche destin\'ee \`a \^etre imprim\'ee et plac\'ee dans le centre
 %	de documentation du GERAD. L'option +twoside+
 %	est pass\'ee \`a la classe +article+.
+% \else
+% 	The paper version of an article that is to be printed and placed in the GERAD documentation centre. 
+%	The +twoside+ option is passed on to the article class.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{gdplain}
+% \ifnum\frenchdoc=1
 %	La version sans mise en forme d'un cahier de recherche, semblable \`a un article \LaTeX\ de base et
 %	destin\'ee à la distribution par l'auteur. L'option +oneside+ est pass\'ee \`a la classe +article+.
+% \else
+%	The unformatted version of a paper, similar to a basic \LaTeX\ article, that is to be distributed by 
+%	the author. The +oneside+ option is passed on to the article class.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{gdrevised}
+% \ifnum\frenchdoc=1
 %	Lorsqu'un cahier de recherche fait l'objet d'une r\'evision par ses auteurs, cette option
 %	est utilis\'ee pour afficher la date de r\'evision sur la page couverture du cahier.
+% \else
+%	When a paper is revised by the authors, this option is used to display the revision date 
+%	on the paper’s cover page.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{gdfinal}
+% \ifnum\frenchdoc=1
 %	Pendant la r\'edaction et la r\'evision d'un cahier, une +overfullrule+ de 5pt s'affiche dans la
 %	marge de droite pour indiquer quels \'el\'ements du cahier d\'epassent de la marge. Une fois
 %	la r\'edaction et la r\'evision termin\'ees, cette option est utilis\'ee pour retirer l'+overfullrule+
 %	du document.
+% \else
+%	During the drafting and revision process, a 5 pt +overfullrule+ is printed in the right-hand 
+%	margin to indicate any parts of the paper that go outside the margin. Once these two processes are 
+%	done, this option is used to remove the document’s  +overfullrule+.
+% \fi
 % \end{DescribeMacro}
 %
-% \begin{DescribeMacro}{gdbighead}
+% \begin{DescribeMacro}{gdsmallhead}
+% \ifnum\frenchdoc=1
 %	Certains \emph{packages} s'amusent \`a nos d\'epens en modifiant l'ent\^ete d'un cahier. L'option
-%	+gdbighead+ vient corriger cet affront en r\'etablissant l'ent\^ete voulu.
+%	+gdsmallhead+ vient corriger cet affront en r\'etablissant l'ent\^ete voulu.
+% \else
+%	Some packages have fun at our expense by modifying the paper’s header. The 
+%	+gdsmallhead+ option corrects this by resetting the proper header.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{gdpostpub}
+% \ifnum\frenchdoc=1
 %	Une fois le contenu du cahier de recherche publi\'e chez un \'editeur, le cahier lui-m\^eme doit
 %	\^etre mis \`a jour afin d'afficher ces nouvelles informations de publication sur la page
 %	couverture du cahier. L'option +gdpostpub+ substitue la citation officielle de l'\'editeur \`a
 %	celle du cahier et l'URL de l'article \`a celui du cahier.
+% \else
+%	Once a paper’s content is published by a publisher, the paper must be updated to show the new 
+%	publication’s information on the cover page. The +gdpostpub+ option swaps out the \emph{Cahier}’s 
+%	citation for the publisher's official one and the article URL for the \emph{Cahier}’s
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{gdminitabs}
+% \ifnum\frenchdoc=1
 %	Il arrive parfois que des auteurs cr\'eent des tableaux si grands que ceux-ci d\'epassent d'une
 %	ou plusieurs marges. Dans de tels cas, l'option +gdneedsminitabs+ est utilis\'ee pour mettre les
 %	tableaux du document en +footnotesize+.
+% \else
+%	Authors sometimes create tables so large that they extend beyond the margins. To solve this issue, 
+%	the +gdneedsminitabs+ option can be used to set the tables in the document to +footnotesize+.
+% \fi
 % \end{DescribeMacro}
 %
+% \ifnum\frenchdoc=1
 % \subsection{Utilisation des \emph{packages}}
 %
-% Le but de cette classe \'etant d'assurer une coh\'esion dans la mise en forme des rapports de recherche,
-% tr\`es peu de \emph{packages} sont pr\'echarg\'es --- le \autoref{tab:pre-loaded-pkgs} recense ceux-ci
-% avec le fichier o\`u les trouver de m\^eme que leurs options, le cas \'ech\'eant --- et les chercheurs 
-% auront le loisir d'utiliser ceux dont ils auront besoin en prenant en compte les particularit\'es 
-% ci-dessous et en \'evitant de recharger des \emph{packages} ou d'en modifier les options par d\'efaut.
+% 	Le but de cette classe \'etant d'assurer une coh\'esion dans la mise en forme des rapports de recherche,
+% 	tr\`es peu de \emph{packages} sont pr\'echarg\'es --- le \autoref{tab:pre-loaded-pkgs} recense ceux-ci
+% 	avec le fichier o\`u les trouver de m\^eme que leurs options, le cas \'ech\'eant --- et les chercheurs 
+% 	auront le loisir d'utiliser ceux dont ils auront besoin en prenant en compte les particularit\'es 
+% 	ci-dessous et en \'evitant de recharger des \emph{packages} ou d'en modifier les options par d\'efaut.
+% \else
+% \subsection{Using packages}
+%	
+% 	Since the goal of this class is to make sure that working papers use a consistent layout, 
+%	very few packages are preloaded. \autoref{tab:pre-loaded-pkgs} lists those that are preloaded, 
+%	along with the files where you will find them (and their options, where applicable). Researchers 
+%	can choose to use whichever packages they will need, taking into account their features (see below). Care should 
+%	be taken not to reload any of them or to change any of the default options.
+% \fi
 %
 % \begin{table}[tbh]
 %	\begin{tabularx}{\textwidth}{Xccl}
 %		\hline
+% \ifnum\frenchdoc=1
 %		\textbf{\emph{Package}}		& \textbf{Fichier de classe}	& \textbf{Gabarit}		& \textbf{Options} \\
+% \else
+%		\textbf{Package}			& \textbf{Class file}			& \textbf{Template}		& \textbf{Options} \\
+% \fi
 %		\hline
 %		amssymb						& \oui							&						& \\
 %		amsmath						& \oui							&						& \\
@@ -249,121 +430,242 @@
 %									&								&						& breaklinks=\{true\} \\
 %		\hline
 %	\end{tabularx}
+% \ifnum\frenchdoc=1
 %	\caption{Liste des \emph{packages} pr\'echarg\'es avec la classe, leur localisation et leurs options}
+% \else
+%	\caption{List of the class' preloaded packages along with their location and options}
+% \fi
 % 	\label{tab:pre-loaded-pkgs}
 % \end{table}
 %
 % \subsubsection{babel}
-% L'auteur de ces lignes ayant \'et\'e inform\'e par la maintenanci\`ere du gabarit originel que l'utilisation de babel
-% avec ce dernier causait de nombreux probl\`emes, il vous serait gr\'e de \textbf{ne pas utiliser le
-% \emph{package} babel avec ce nouveau gabarit}, et ce, jusqu'\`a ce que lesdits probl\`emes lui soient pr\'esent\'es
-% afin d'\^etre corrig\'es. Une version ult\'erieure de la classe vous permettra peut-\^etre de vous en servir.
+% \ifnum\frenchdoc=1
+% 	L'auteur de ces lignes ayant \'et\'e inform\'e par la maintenanci\`ere du gabarit originel que l'utilisation de babel
+% 	avec ce dernier causait de nombreux probl\`emes, il vous serait gr\'e de \textbf{ne pas utiliser le
+% 	\emph{package} babel avec ce nouveau gabarit}, et ce, jusqu'\`a ce que lesdits probl\`emes lui soient pr\'esent\'es
+% 	afin d'\^etre corrig\'es. Une version ult\'erieure de la classe vous permettra peut-\^etre de vous en servir.
+% \else
+%	The person maintaining the original template advised the author of this document class that using babel with the template 
+%	causes a number of problems, 
+%	so \textbf{please do not use the babel package with this new template}, until these issues have been fixed. 
+%	A future release of the class may allow you to use it.
+% \fi
 %
-% \subsubsection{algorithm et algorithm2e}
+% \subsubsection{algorithm, algorithm2e}
 %
-% \lien{https://www.ctan.org/pkg/algorithms}{algorithm} et \lien{https://www.ctan.org/pkg/algorithm2e}{algorithm2e} sont
-% deux \emph{packages} ayant leurs aficionados respectifs parmi les auteurs de \emph{Cahiers du GERAD}. Tous deux sont
-% accept\'es et charg\'es dans le pr\'eambule du gabarit. Il suffit de mettre en commentaire celui des deux qui ne
-% sera pas utilis\'e.
+% \ifnum\frenchdoc=1
+% 	\lien{https://www.ctan.org/pkg/algorithms}{algorithm} et \lien{https://www.ctan.org/pkg/algorithm2e}{algorithm2e} sont
+% 	deux \emph{packages} ayant leurs aficionados respectifs parmi les auteurs de \emph{Cahiers du GERAD}. Tous deux sont
+% 	accept\'es et charg\'es dans le pr\'eambule du gabarit. Il suffit de mettre en commentaire celui des deux qui ne
+% 	sera pas utilis\'e.
 %
-% Les deux \emph{packages} ne peuvent cependant pas \^etre charg\'es ensemble puisqu'ils entrent en conflit et cr\'eent
-% des bogues.
+% 	Les deux \emph{packages} ne peuvent cependant pas \^etre charg\'es ensemble puisqu'ils entrent en conflit et cr\'eent
+% 	des bogues.
+% \else
+%	\lien{https://www.ctan.org/pkg/algorithms}{algorithm} and \lien{https://www.ctan.org/pkg/algorithm2e}{algorithm2e} are 
+%	two different packages, each of which has its fans among the \emph{Cahiers du GERAD} authors. Both are accepted and 
+%	loaded in the preamble of the template. Simply comment out the one that will not be used.
+%
+%	The two packages are mutually exclusive and cannot both be loaded at once without causing bugs.
+% \fi
 %
 % \subsubsection{float}
 %
-% Le \emph{package} +float+ est charg\'e avec la classe \textbf{uniquement lorsque l'option +gdminitabs+ est utilis\'ee}, et ce,
-% afin de transformer les tableaux en +footnotesize+. Si vous avez besoin de ce \emph{package} et que vos tableaux
-% sont raisonnablement petits, chargez-le dans le pr\'eambule de votre document.
+% \ifnum\frenchdoc=1
+% 	Le \emph{package} +float+ est charg\'e avec la classe \textbf{uniquement lorsque l'option +gdminitabs+ est utilis\'ee}, et ce,
+% 	afin de transformer les tableaux en +footnotesize+. Si vous avez besoin de ce \emph{package} et que vos tableaux
+% 	sont raisonnablement petits, chargez-le dans le pr\'eambule de votre document.
+% \else
+%	The +float+ package is loaded with the class \textbf{only when the +gdminitabs+ option is enabled}. When loaded, it resizes 
+%	the tables in +footnotesize+. If you need this package and the tables are reasonably small, you can load it in the preamble 
+%	of the document.
+% \fi
 %
+% \ifnum\frenchdoc=1
 % \subsection{Commandes}
+% \else
+% \subsection{Commands}
+% \fi
 %
-% Les quelques commandes publiques qui ont \'et\'e cr\'e\'ees pour cette classe ont deux fonctions : renseigner les
-% m\'etadonn\'ees du cahier de recherche et faire de la mise en page.
+% \ifnum\frenchdoc=1
+% 	Les quelques commandes publiques qui ont \'et\'e cr\'e\'ees pour cette classe ont deux fonctions : renseigner les
+% 	m\'etadonn\'ees du cahier de recherche et faire de la mise en page.
+% \else
+% 	The handful of public commands that were created for this class have two purposes: formatting and filling in metadata 
+%	for the working paper.
+% \fi
 %
+% \ifnum\frenchdoc=1
 % \subsubsection{M\'etadonn\'ees}
+% \else
+% \subsubsection{Metadata}
+% \fi
 %	\label{sec:metadonnees}
 %
-% Toutes situ\'ees dans le pr\'eambule, les commandes de m\'etadonn\'ees permettent aux auteurs et \`a l'\'equipe du
-% GERAD d'inscrire les informations bibliographiques qui se retrouveront sur la page couverture et la page titre
-% du cahier.
+% \ifnum\frenchdoc=1
+% 	Toutes situ\'ees dans le pr\'eambule, les commandes de m\'etadonn\'ees permettent aux auteurs et \`a l'\'equipe du
+% 	GERAD d'inscrire les informations bibliographiques qui se retrouveront sur la page couverture et la page titre
+% 	du cahier.
+% \else
+%	All located in the preamble, the metadata commands allow authors and the GERAD team to insert the bibliographical
+%	data that will be found on the cover and title pages of the paper.
+% \fi
 %
 % \begin{DescribeMacro}{\GDtitre}
+% \ifnum\frenchdoc=1
 %	Le titre du cahier de recherche. Celui-ci se retrouve \`a la fois sur la page couverture et la page titre.
+% \else
+%	Title of the working paper. The title is on both the cover and title pages.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{\GDauteursCourts}
+% \ifnum\frenchdoc=1
 %	La liste des auteurs du cahier sous la forme \emph{[Initiale du pr\'enom] [Nom de famille]} 
 %	(ex. : B Hamel, K H\'ebert). Le contenu de cette commande se retrouve sur la page couverture, sous le titre.
+% \else
+%	List of authors, formatted as \emph{[First initial] [Last name]} (e.g.: B Hamel, K H\'ebert). 
+%	The contents of this command will be found on the title page, under the title.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{\GDauteursCopyright}
+% \ifnum\frenchdoc=1
 %	La liste des noms de famille des auteurs \`a la mention des droits d'auteurs au bas de la page titre.
+% \else
+% 	List of the authors’ last names for the authors’ copyright notice at the bottom of the title page.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{\GDmois}
+% \ifnum\frenchdoc=1
 %	Le mois de publication du cahier de recherche dans ses formes fran\c{c}aise et anglaise. Le mois en fran\c{c}ais
 %	est inscrit entre les premi\`eres accolades, celui en anglais, entre les deuxi\`emes.
+% \else
+%	Publication month of the working paper in both French and English. The month for the French version is in the 
+%	first set of curly brackets and the English one in the second.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{\GDannee}
+% \ifnum\frenchdoc=1
 %	L'ann\'ee de publication du cahier sous la forme \emph{AAAA}.
+% \else
+%	The year the paper was published, formatted as YYYY.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{\GDnumero}
+% \ifnum\frenchdoc=1
 %	Le num\'ero du cahier de recherche. Ce num\'ero est assign\'e par l'\'equipe du GERAD.
+% \else
+%	Number assigned to the working paper by the GERAD team.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{\GDrevised}
+% \ifnum\frenchdoc=1
 %	Lorsqu'un cahier de recherche fait l'objet d'une r\'evision par ses auteurs, la date de r\'evision
 %	est inscrite dans cette commande pour \^etre affich\'ee sur la page couverture.
+% \else
+%	When a working paper is revised by its authors, this command is used to display the revision date 
+% 	on the cover page.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{\GDpostpubcitation}
+% \ifnum\frenchdoc=1
 %	Lorsque le contenu du cahier de recherche est publi\'e chez un \'editeur, l'\'equipe du GERAD
 %	substitue la citation officielle de l'article \`a celle du cahier de recherche et l'URL de l'\'editeur
 %	\`a celle du site Web du GERAD en utilisant cette commande, la citation devant \^etre inscrite dans
 %	les premi\`eres accolades et l'URL, dans les secondes.
+% \else
+%	When the working paper is officially published, the GERAD team will replace the \emph{Cahier}’s citation 
+%	with the official journal citation and replace the link to the GERAD website with the URL from the 
+%	publisher. The citation must be placed in the first set of curly brackets and the URL in the second.
+% \fi
 % \end{DescribeMacro}
 %
+% \ifnum\frenchdoc=1
 % \subsubsection{Mise en page}
 %
-% Afin de d\'esembourber le gabarit et d'\'eviter que des commandes essentielles de mise en page soient 
-% supprim\'ees par des auteurs, des commandes ont \'et\'e cr\'e\'ees. Celles-ci marquent en m\^eme temps
-% les subdivisions du document.
+% 	Afin de d\'esembourber le gabarit et d'\'eviter que des commandes essentielles de mise en page soient 
+% 	supprim\'ees par des auteurs, des commandes ont \'et\'e cr\'e\'ees. Celles-ci marquent en m\^eme temps
+% 	les subdivisions du document.
+% \else
+% \subsubsection{Formatting}
+%
+%	To keep the template from getting cluttered and to keep authors from deleting critical formatting commands, 
+%	commands were created to mark each subdivision of the document.
+% \fi
 %
 % \begin{DescribeMacro}{\GDpageCouverture}
+% \ifnum\frenchdoc=1
 %	Toute la page couverture d'un cahier de recherche est g\'en\'er\'ee \`a partir de cette commande.
 %	Elle est entre autres mise en forme avec les m\'etadonn\'ees des commandes cit\'ees \`a la
 %	\autoref{sec:metadonnees}. La page titre qui suit la page couverture est quant \`a elle g\'en\'er\'ee
 %	par l'environnement +GDpagetitre+ d\'ecrit \`a la \autoref{sec:environnements}.
+% \else
+% 	The entire cover page is generated with this command. It is largely formatted with the formatting 
+%	commands listed in \autoref{sec:metadonnees}. The title page that follows the cover is generated 
+%	by the +GDpagetitre+ environment described in \autoref{sec:environnements}.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{\GDabstracts}
+% \ifnum\frenchdoc=1
 %	Cette commande repr\'esente le d\'ebut de la section \og contenu \fg\ du cahier de recherche, commen\c{c}ant
 % 	avec les r\'esum\'es anglais et fran\c{c}ais. C'est elle
 %	qui configure les ent\^etes et pieds de pages qui seront effectifs jusqu'\`a la fin du cahier et qui
 %	comprennent, notamment, les m\'etadonn\'ees d\'ecrites \`a la \autoref{sec:metadonnees}. Les r\'esum\'es
 %	sont quant \`a eux r\'edig\'es \`a l'int\'erieur de l'environnement +GDabstract+ d\'ecrit \`a la
 % 	\autoref{sec:environnements}.
+% \else
+%	This command marks the beginning of the ``content'' section, beginning with the English and French abstracts. 
+%	It configures the page headers and footers, which are used throughout the paper, including the metadata 
+%	described in \autoref{sec:metadonnees}. The abstracts are written in the +GDabstract+ environment described 
+%	in \autoref{sec:environnements}.
+% \fi
 % \end{DescribeMacro}
 %
 % \begin{DescribeMacro}{\GDarticlestart}
+% \ifnum\frenchdoc=1
 %	Le cahier de recherche en tant que tel d\'ebute \`a partir de cette commande. Celle-ci fait quelques derniers
 %	petits r\'eglages au niveau de la mise en page.
+% \else
+%	The working paper begins with this command. It handles some final fine-tuning of the formatting settings.
+% \fi
 % \end{DescribeMacro}
 %
+% \ifnum\frenchdoc=1
 % \subsection{Environnements}
+% \else
+% \subsection{Environments}
+% \fi
 %	\label{sec:environnements}
 %
-% Les quelques environnements qui ont \'et\'e cr\'e\'es l'ont \'et\'e pour mettre en forme rapidement la page titre
-% et la section des r\'esum\'es.
+% \ifnum\frenchdoc=1
+% 	Les quelques environnements qui ont \'et\'e cr\'e\'es l'ont \'et\'e pour mettre en forme rapidement la page titre
+% 	et la section des r\'esum\'es.
+% \else
+%	A few environments were created to quickly format the title page and the abstracts section.
+% \fi
 %
+% \ifnum\frenchdoc=1
 % \subsubsection{Page titre}
+% \else
+% \subsubsection{Title page}
+% \fi
 %
 % \begin{DescribeEnv}{GDpagetitre}
+% \ifnum\frenchdoc=1
 %	Toute la page titre est g\'en\'er\'ee par le biais de cet environnement. Les auteurs n'ont qu'\`a inscrire 
 %	leurs informations personnelles dans les environnements +GDauthlist+, +GDaffillist+ et +GDemaillist+ d\'ecrits
 %	ci-dessous pour compl\'eter la page.
+% \else
+%	The entire title page is generated via this environment. To create the page, authors only need to type 
+%	their personal information in the +GDauthlist+, +GDaffillist+, and +GDemaillist+ environments described below.
+% \fi
 % \end{DescribeEnv}
 %
 % \begin{DescribeEnv}{GDauthlist}
@@ -371,17 +673,24 @@
 % \begin{DescribeMacro}{\GDauthitem}
 % \end{DescribeMacro}
 % \begin{DescribeMacro}{\GDrefsep}
+% \ifnum\frenchdoc=1
 %	L'environnement +GDauthlist+ est une liste personnalis\'ee dans laquelle les auteurs y saisissent leur nom
 %	complet \`a l'aide de la commande +\GDauthitem+, \`a raison d'un auteur par ligne. Les auteurs peuvent y
 %	r\'ef\'erencer leurs affiliations avec la commande +\ref{}+, tel que d\'emontr\'e dans le \autoref{lst:gdauthlist}. 
 %   Dans le cas o\`u un auteur a plus d'une affiliation, il doit saisir une commande +\ref{}+
 % 	par affiliation en s\'eparant chacune d'entre elles par la commande +\GDrefsep+.
+% \else
+%	The +GDauthlist+ environment is a customized list in which the authors enter their full name using the +\GDauthitem+
+%	command (NB: one author per line). The authors can link their affiliations with the +\ref{}+ command, as demonstrated 
+%	in \autoref{lst:gdauthlist}. In the event that an author has more than one affiliation, they must use one +\ref{}+ 
+%	command per affiliation, separating each one with a +\GDrefsep+ command.
+% \fi
 % \end{DescribeMacro}
 %
 % \iffalse
 %<*exampleone>
 % \fi
-% \begin{lstlisting}[name=pgtitlelists,float=h,caption={Un exemple de liste d'auteurs},label=lst:gdauthlist]
+% \begin{lstlisting}[name=pgtitlelists,float=h,caption=\lstcaptionone,label=lst:gdauthlist]
 \begin{GDauthlist}
  \GDauthitem{Benoit Hamel\ref{affil:hec}}
  \GDauthitem{Karine H\'ebert\ref{affil:gerad}\GDrefsep\ref{affil:hec}}
@@ -394,16 +703,22 @@
 % \begin{DescribeEnv}{GDaffillist}
 % \end{DescribeEnv}
 % \begin{DescribeMacro}{\GDaffilitem}
+% \ifnum\frenchdoc=1
 %	L'environnement +GDaffillist+ est une liste personnalis\'ee dans laquelle sont recens\'ees toutes les affiliations
 %	des auteurs sans aucun ordre d'importance pr\'ed\'efini. Chaque affiliation est inscrite dans une commande
 %	+\GDaffilitem+, le \emph{label} de l'affiliation \'etant inscrit entre les premi\`eres accolades, l'affiliation en tant que telle,
 %	entre les secondes, tel qu'illustr\'e dans le \autoref{lst:gdaffillist}.
+% \else
+%	The +GDaffillist+ environment is a customized list of all the authors’ affiliations, in no predefined order of 
+%	importance. Each affiliation is written with a +\GDaffilitem+ command with the label of the affiliation entered 
+%	between the first set of curly brackets, and the affiliation itself in the second, as shown in \autoref{lst:gdaffillist}.
+% \fi
 % \end{DescribeMacro}
 %
 % \iffalse
 %<*exampletwo>
 % \fi
-\begin{lstlisting}[name=pgtitlelists,float=h,caption={Un exemple de liste d'affiliations},label=lst:gdaffillist]
+\begin{lstlisting}[name=pgtitlelists,float=h,caption=\lstcaptiontwo,label=lst:gdaffillist]
 \begin{GDaffillist}
   \GDaffilitem{affil:hec}{HEC Montr\'eal}
   \GDaffilitem{affil:gerad}{GERAD}
@@ -416,15 +731,20 @@
 % \begin{DescribeEnv}{GDemaillist}
 % \end{DescribeEnv}
 % \begin{DescribeMacro}{\GDemailitem}
+% \ifnum\frenchdoc=1
 %	La derni\`ere liste personnalis\'ee cr\'e\'ee pour la page titre d'un cahier de recherche
 %	est l'environnement +GDemaillist+ dans lequel sont recens\'ees les adresses courriel des
 %	auteurs, \`a raison d'une adresse par commande +\GDemailitem+.
+% \else
+%	The final customized list created for the title page of a \emph{Cahier} is the +GDemaillist+ environment, 
+%	where the authors’ email addresses are listed, with one email address per +\GDemailitem+ command.
+% \fi
 % \end{DescribeMacro}
 %
 % \iffalse
 %<*examplethree>
 % \fi
-\begin{lstlisting}[name=pgtitlelists,float=h,caption={Un exemple de liste d'adresses courriel},label=lst:gdemaillist]
+\begin{lstlisting}[name=pgtitlelists,float=h,caption=\lstcaptionthree,label=lst:gdemaillist]
 \begin{GDemaillist}
   \GDemailitem{benoit.2.hamel@hec.ca}
   \GDemailitem{karine.hebert@gerad.ca}
@@ -434,65 +754,134 @@
 %</examplethree>
 % \fi
 %
+% \ifnum\frenchdoc=1
 % \subsubsection{Section des r\'esum\'es}
+% \else
+% \subsubsection{Abstracts section}
+% \fi
 %
 % \begin{DescribeEnv}{GDabstract}
+% \ifnum\frenchdoc=1
 %	\`A l'int\'erieur d'un cahier de recherche du GERAD, les r\'esum\'es fran\c{c}ais et anglais sont r\'edig\'es
 %	dans un +paragraph+. M\^eme s'il aurait \'et\'e plus simple de n'inscrire qu'une commande +\paragraph+ par
 %	r\'esum\'e dans le gabarit, les auteurs de cette classe ont choisi de conserver le format \og environnement \fg\
 %	afin d'y ajouter de la mise en page et de reproduire le comportement de l'environnement +abstract+.
+% \else
+%	In a GERAD working paper, the French and English abstracts are written in a single paragraph. 
+%	Even though it would have been simpler to write only one +\paragraph+ command per abstract in the template, 
+%	the authors of the class chose to use the ``environment'' format in order to add formatting and remain consistent 
+%	with the behaviour of the abstract environment.
+% \fi
 % \end{DescribeEnv}
 %
 % \begin{DescribeEnv}{GDacknowledgements}
+% \ifnum\frenchdoc=1
 %	Dans les cahiers de recherche du GERAD, les remerciements sont un bloc de texte distinct qui ne correspond pas
 %	\`a ce que la commande +\thanks+ donne en terme de mise en forme. Les auteurs r\'edigent donc leurs
-%	remerciements dans leur ensemble dans l'environnement +GDacknowledgements+ et la classe +geradwp+ les
+%	remerciements dans leur ensemble dans l'environnement +GDacknowledgements+ et la classe \gdwp\ les
 %	disposera en fonction du type de version choisie.
+% \else
+%	In a GERAD working paper, the acknowledgements are in a distinct block of text that does not match what the 
+%	+\thanks+ command yields in terms of formatting. The authors therefore must write all their acknowledgements 
+%	in the GDacknowledgements environment, and the \gdwp\ class will handle the layout according to the chosen version.
+% \fi
 % \end{DescribeEnv}
 %
+% \ifnum\frenchdoc=1
 % \section{Le gabarit \texttt{geradwp.tex}}
+% \else
+% \section{The \texttt{geradwp.tex} template}
+% \fi
 % \label{sec:gabarit}
 %
+% \ifnum\frenchdoc=1
 %	Le gabarit +geradwp.tex+ a \'et\'e con\c{c}u afin d'\^etre le plus simple possible et divis\'e de sorte que
 % 	le code source de chaque cahier soit uniforme. Voici une br\`eve pr\'esentation de ses diff\'erentes sections.
+% \else
+%	The +geradwp.tex+ template was designed to be as simple as possible and is divided in a way that makes the 
+%	source code of each paper uniform. Here is a brief presentation of the different sections.
+% \fi
 %
-% \subsection{\emph{Packages} par d\'efaut du cahier}
+% \ifnum\frenchdoc=1
+% \subsection{\emph{Packages} par d\'efaut du cahier (lignes 104-117)}
 %
 %	Tous les \emph{packages} qui ne sont pas charg\'es par d\'efaut dans le fichier de classe (voir le
 %	\autoref{tab:pre-loaded-pkgs}) sont charg\'es dans cette section. C'est dans cette section que vous pourrez
 %	choisir entre les \emph{packages} +algorithm+ et +algorithm2e+. C'est \'egalement ici que
 %	vous devrez charger les \emph{packages} qui ont tendance \`a ne pas fonctionner ad\'equatement s'ils sont
 % 	charg\'es apr\`es le \emph{package} +hyperref+.
+% \else
+% \subsection{Default packages (lines 104-117)}
 %
-% \subsection{Options par d\'efaut du cahier}
+%	All the packages that are not loaded by default in the class (see \autoref{tab:pre-loaded-pkgs}) 
+%	are loaded in this section. It’s in this section that the choice between the +algorithm+ and +algorithm2e+ 
+%	packages is made. Also, this is where you should load the packages that tend to malfunction if they are 
+%	loaded after the +hyperref+ package.
+% \fi
+%
+% \ifnum\frenchdoc=1
+% \subsection{Options par d\'efaut du cahier (lignes 118-132)}
 %
 %	Si vous nommez le r\'epertoire dans lequel vous compilerez vos figures diff\'eremment que le nom que nous
 % 	lui avons donn\'e par d\'efaut ou si vous avez plus d'un r\'epertoire de figures, vous pourrez inscrire
 %	ces informations ici.
 %
-%	Si vous voulez \textbf{ajouter sans modifier ou supprimer} des options de +hypersetup+, vous pouvez
-%	\'egalement les inscrire ici.
+%	Si vous voulez ajouter des options de +hypersetup+, vous pouvez
+%	\'egalement les inscrire ici, en prenant soin de ne pas supprimer ou modifier celles d\'ej\`a inscrites.
 %
 %	Dans tous les autres cas, veuillez ne pas modifier cette section.
+% \else
+% \subsection{Default options (lines 118-132)}
 %
-% \subsection{Commandes de l'auteur}
+%	If the name of your folder containing your paper’s figures is named differently than the default name, 
+%	or if there are multiple folders with figures in them, this is where you can enter that information. 
+%
+%	If you want to add +hypersetup+ options without modifying or removing the default ones, you can do that here.
+%
+%	In all other cases, this section should remain unchanged.
+% \fi
+%
+% \ifnum\frenchdoc=1
+% \subsection{Commandes de l'auteur (lignes 133-141)}
 %
 %	Cette section vous appartient enti\`erement. Vous pouvez y charger les \emph{packages} n\'ecessaires \`a
 %	votre r\'edaction de m\^eme que leurs options.
 %
 %	C'est \'egalement dans cette section que vous pouvez inscrire vos commandes, environnements et
 %	th\'eor\`emes personnalis\'es.
+% \else
+% \subsection{Author commands (lines 133-141)}
 %
-% \subsection{Métadonn\'ees du cahier}
+%	This section belongs entirely to the author. This is where all the packages needed for the paper can be loaded, 
+%	as well as their options.
+%
+%	This is also where customized commands, environments, and theorems can be entered.
+% \fi
+%
+% \ifnum\frenchdoc=1
+% \subsection{Métadonn\'ees du cahier (lignes 143-155)}
 %
 %	Cette section, dont une partie est à la fin du pr\'eambule et l'autre dans l'environnement +GDpagetitre+, au
 %	d\'ebut du document, est l'endroit o\`u vous devrez inscrire toutes les m\'etadonn\'ees bibliographiques
 %	de votre cahier.
+% \else
+% \subsection{Metadata (lines 143-155)}
 %
-% \subsection{R\'esum\'es, mots-cl\'es, remerciements, article}
+%	This section is divided in two: the first is at the end of the preamble, and the second in the +GDpagetitre+ 
+%	environment located at the beginning of the document. This is where all the bibliographical metadata for the 
+%	paper should be.
+% \fi
+%
+% \ifnum\frenchdoc=1
+% \subsection{R\'esum\'es, mots-cl\'es, remerciements, article (lignes 156 et suivantes)}
 %
 %	Ces deux derni\`eres sections sont, bien entendu, les endroits o\`u vous r\'edigerez votre cahier de
 %	recherche...
+% \else
+% \subsection{Abstracts, keywords, acknowledgements, article (starting at line 156)}
+%
+%	These last two sections are, of course, where the body of the article will be.
+% \fi
 %
 % \StopEventually{
 %	\clearpage
@@ -504,18 +893,35 @@
 %
 % \appendix
 %
+% \ifnum\frenchdoc=1
 % \section{Code source de la classe}
 %
-% 	Vous retrouverez dans cette annexe le code source de la classe +geradwp+.
+% 	Vous retrouverez dans cette annexe le code source de la classe \gdwp.
 %	Si vous avez envie de voir comment elle est programm\'ee, d'aider \`a la d\'eboguer,
 %	\`a l'am\'eliorer, etc., cette section est pour vous!
+% \else
+% \section{Class source code}
 %
+%	In this appendix, you will find the source code for the \gdwp\ class. 
+%	If you’re interested to see how it’s programmed, or help with debugging or improving the class,
+%	this section is for you.
+% \fi
+%
+% \ifnum\frenchdoc=1
 % \subsection{Tests et valeurs bool\'eennes}
 %
 %	Pour effectuer les tests conditionnels, la classe utilise le \emph{package} +ifthen+. Les variables
 % 	bool\'eennes servent \`a d\'eterminer quelle version d'un cahier on souhaite g\'en\'erer, \`a quelle
 %	\'etape de publication le cahier est rendu de m\^eme qu'\`a configurer des portions de mise en page.
 %	Une fois les variables cr\'e\'ees, des valeurs par d\'efaut leur sont attribu\'ees.
+% \else
+% \subsection{Tests and boolean values}
+%
+%	To do conditional tests, the class uses the +ifthen+ package. The boolean variables 
+%	identify which version of the paper to generate, how far in the publication process the paper is and 
+%	it configures some parts of the formatting. Once the variables have been created, default values 
+%	are set.
+% \fi
 %
 %    \begin{macrocode}
 %<*class>
@@ -525,7 +931,7 @@
 \newboolean{GD@isWebVersion}
 \newboolean{GD@isPaperVersion}
 \newboolean{GD@isPlainVersion}
-\newboolean{GD@needsBigHeadSep}
+\newboolean{GD@needsSmallHeadSep}
 \newboolean{GD@isFinalImpression}
 \newboolean{GD@isPostPublication}
 \newboolean{GD@isRevised}
@@ -534,17 +940,24 @@
 \setboolean{GD@isWebVersion}{false}
 \setboolean{GD@isPaperVersion}{true}
 \setboolean{GD@isPlainVersion}{false}
-\setboolean{GD@needsBigHeadSep}{false}
+\setboolean{GD@needsSmallHeadSep}{false}
 \setboolean{GD@isFinalImpression}{false}
 \setboolean{GD@isPostPublication}{false}
 \setboolean{GD@isRevised}{false}
 \setboolean{GD@needsminitabs}{false}
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 % \subsection{Options de la classe}
 %
-% Les quelques options de la classe sont d\'eclar\'ees ci-dessous. Elles servent essentiellement
-% \`a changer des valeurs bool\'eennes et \`a passer des options \`a la classe +article+.
+% 	Les quelques options de la classe sont d\'eclar\'ees ci-dessous. Elles servent essentiellement
+% 	\`a changer des valeurs bool\'eennes et \`a passer des options \`a la classe +article+.
+% \else
+% \subsection{Class options}
+%
+%	The few class options are declared here. They essentially change some boolean values 
+%	and pass some options to the +article+ class.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -567,8 +980,8 @@
 	\setboolean{GD@isPlainVersion}{true}
 	\PassOptionsToClass{oneside}{article}
 }
-\DeclareOption{gdbighead}{%
-	\setboolean{GD@needsBigHeadSep}{true}
+\DeclareOption{gdsmallhead}{%
+	\setboolean{GD@needsSmallHeadSep}{true}
 }
 \DeclareOption{gdfinal}{%
 	\setboolean{GD@isFinalImpression}{true}
@@ -584,10 +997,16 @@
 }
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 % \subsection{Chargement de la classe}
 %
 % 	La classe est charg\'ee dans le document avec toutes les options
 %	d\'eclar\'ees par l'utilisateur et celles par d\'efaut.
+% \else
+% \subsection{Loading the class}
+%
+%	The class is loaded in the document with all the user-defined or default values.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -597,11 +1016,19 @@
 \LoadClass[letterpaper,10pt]{article}
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 % \subsection{\emph{Packages} charg\'es par d\'efaut et leurs options}
 %
 %	Tr\`es peu de \emph{packages} sont charg\'es avec la classe afin de vous permettre
 %	de r\'ediger avec la plus grande flexibilit\'e possible. Ceux qui le sont, cependant,
 %	le sont pour des fins d'harmonisation entre les diff\'erents cahiers de la collection.
+% \else
+% \subsection{Defaut packages and their options}
+%
+%	Very few packages are loaded with the class in order to allow the user to write with 
+%	the greatest possible flexibility. The packages that are loaded, however, ensure that 
+%	all the papers in the collection have consistent formatting.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -630,10 +1057,17 @@
 \captionsetup[table]{skip=5pt} % caption pkg setup
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 % \subsection{Mise en page}
 %
 %	Nous commen\c{c}ons d'abord par d\'efinir les \emph{lengths} du document.
 %	Celles-ci peuvent changer d'une version \`a l'autre d'un cahier.
+% \else
+% \subsection{Formatting}
+%
+%	We begin by defining the lengths of the document. These can change from 
+%	one version of the paper to another.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -643,6 +1077,7 @@
 \newlength{\GD@affilitemsep}
 \newlength{\GD@affiltopsep}
 \newlength{\GD@titleminipage@hspace}
+\newlength{\GD@titleminipage@upper@vspace}
 \ifthenelse{\boolean{GD@isPlainVersion}}{%
 	\setlength{\GD@authitemsep}{0pt}
 	\setlength{\GD@authtopsep}{12pt}
@@ -660,10 +1095,17 @@
 \ifthenelse{\boolean{GD@isWebVersion}}{%
 	\setlength{\GD@titleminipage@hspace}{227pt}
 }{}
+\ifthenelse{\boolean{GD@isWebVersion}}%
+{\setlength{\GD@titleminipage@upper@vspace}{75pt}}%
+{\setlength{\GD@titleminipage@upper@vspace}{197pt}}
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 %	Nous \'etablissons ensuite la g\'eom\'etrie du document,
 %	qui diff\`ere d'une version \`a l'autre.
+% \else
+%	We then set up the geometry of the document, which varies from one version to another.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -674,7 +1116,7 @@
 				lmargin=3cm,%
 				rmargin=3cm,%
 				nofoot,%
-				headsep=15pt,%
+				headsep=30pt,%
 				includehead}
 }{}
 \ifthenelse{\boolean{GD@isPlainVersion}}{%
@@ -683,7 +1125,7 @@
 		lmargin=3cm,%
 		rmargin=3cm,%
 		nofoot,%
-		headsep=15pt,%
+		headsep=30pt,%
 		includehead}
 }{}
 \ifthenelse{\boolean{GD@isPaperVersion}}{%
@@ -692,11 +1134,11 @@
 				lmargin=3cm,%
 				rmargin=2cm,%
 				nofoot,%
-				headsep=15pt,%
+				headsep=30pt,%
 				includehead}
 }{}
-\ifthenelse{\boolean{GD@needsBigHeadSep}}{%
-	\headsep=30pt
+\ifthenelse{\boolean{GD@needsSmallHeadSep}}{%
+	\headsep=15pt
 }{}
 \parindent=15pt
 \parskip=7pt plus 1pt minus 1pt
@@ -707,9 +1149,15 @@
 \allowdisplaybreaks
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 %	Nous ajoutons une touche d'uniformit\'e en modifiant les ent\^etes de sections, en descendant
 %	la hi\'erarchie jusqu'au +\paragraph+. Entres autres, nous assignons la police +\sffamily+
 %	aux ent\^etes, police que nous utiliserons \'egalement pour les th\'eor\`emes et +proof+.
+% \else
+%	We add a touch of consistency by modifying the section headers, going down the hierarchy all 
+%	the way down to +\paragraph+. Among other changes, we assign the font +\sffamily+ to the headers, 
+%	theorems, and proof.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -740,7 +1188,11 @@
 \@listi
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 %	Nous redimensionnons les immenses tableaux qui dépassent des marges.
+% \else
+%	We resize oversized tables that extend past the margins.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -754,8 +1206,13 @@
 }{}
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 %	Finalement, nous ajustons la mise en forme des th\'eor\`emes et de
 %	l'environnement +proof+ afin qu'elle soit uniforme avec tout le reste.
+% \else
+% 	Finally, we adjust the formatting of the theorems and of the +proof+ 
+%	environment so they are consistent with everything else.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -782,19 +1239,36 @@
 }
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 % \subsection{Commandes privées de la classe}
 %
 %	Les commandes priv\'ees jouent deux r\^oles distincts : 1) stocker et 
 %	r\'eutiliser les m\'etadonn\'ees du document; 2) d\'ecortiquer de
 %	larges portions de codes afin d'en \'eviter la r\'ep\'etition.
+% \else
+% \subsection{Private class commands}
 %
+%	Private commands play two separate roles: 1) storing and reusing the 
+%	document’s metadata; 2) isolate large blocks of code to prevent code duplication.
+% \fi
+%
+% \ifnum\frenchdoc=1
 % \subsubsection{M\'etadonn\'ees}
+% \else
+% \subsubsection{Metadata}
+% \fi
 % \label{ann:private-meta}
 %
+% \ifnum\frenchdoc=1
 %	Les commandes ci-dessous stockent les m\'etadonn\'ees inscrites dans
 %	les commandes publiques correspondantes et populent diff\'erentes
 %	parties du cahier, comme les ent\^etes, la page couverture et la page
 % 	titre.
+% \else
+%	The following commands store the metadata in the associated public 
+%	commands and populate different parts of the paper such as the headers, 
+%	cover page and title page.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -812,6 +1286,7 @@
 \newcommand{\gd@revised}{}
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 % \subsubsection{Page couverture et page titre}
 %
 %	La page couverture et la page titre changent en fonction non seulement
@@ -825,6 +1300,18 @@
 %	l'exception de +gdplain+. Les commandes suivantes servent \`a son affichage.
 %	La portion inf\'erieure de la page est diff\'erente si l'option
 % 	+gdpostpub+ est utilis\'ee.
+% \else
+% \subsubsection{Cover and title pages}
+%
+%	The cover page and the title page change according to the version of the 
+%	paper being generated and its publication stage. Rather than duplicating 
+%	code, the cover and title pages have been separated into sections that are 
+%	called up with the criteria mentioned above.
+%
+%	The cover page displays in every version of the paper except +gdplain+.
+%	The following commands define its appearance. The bottom part of the page 
+%	is different if the +gdpostpub+ option is used.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -837,34 +1324,28 @@
 	\pagestyle{empty}
 	\begin{titlepage}
 		\sffamily
-		\ifthenelse{\boolean{GD@needsBigHeadSep}}{%
-			\vspace*{-35pt}
+		\ifthenelse{\boolean{GD@needsSmallHeadSep}}{%
+			\vspace*{35pt}
 		}{}
 		
 		{\noindent{\large\bfseries Les Cahiers du GERAD}\hfill ISSN:\quad
 			0711--2440}
+		\ifthenelse{\boolean{GD@isWebVersion}}{%	
+			
+			\vspace*{54pt}
+			{\noindent\LARGE\bfseries \gd@titre\par} %Title
+			
+			\vspace*{18pt}
+			{\noindent\Large\gd@auteurs@short\par}	
+		}{}
 		
-		\vspace*{7.5cm} \hspace*{\GD@titleminipage@hspace}
+		\vspace*{\GD@titleminipage@upper@vspace}
+		\hspace*{\GD@titleminipage@hspace}
 		\begin{minipage}[c][5.4cm][c]{7cm}
-			{\begin{tabular}{p{.5cm}|p{5.5cm}}
-					\multicolumn{2}{p{6.5cm}}{\normalsize\bfseries \gd@titre 
-						\ifthenelse{\boolean{GD@needsminitabs}}%
-							{\vspace*{12.5pt}}%
-							{\vspace*{10pt}}}\\
-					& \normalsize\gd@auteurs@short \\ %Initials. Name
-					& \ifthenelse{\boolean{GD@needsminitabs}}%
-						{\\*[15pt]}%
-						{\\*[12pt]}
-					&\normalsize G--\gd@annee--\gd@numero
-					\ifthenelse{\boolean{GD@needsminitabs}}%
-						{\\*[10pt]}%
-						{\\*[8pt]}
-					&\normalsize\gd@month\ \gd@annee
-					\ifthenelse{\boolean{GD@isRevised}}{%
-						\\
-						&\normalsize Revised: \gd@revised
-					}{}
-			\end{tabular}}
+			{\ifthenelse{\boolean{GD@isWebVersion}}%
+				{\GDcover@minipagetable@web}%
+				{\GDcover@minipagetable@paper}%
+			}
 		\end{minipage}
 		
 		\vfill
@@ -875,6 +1356,44 @@
 			\GDcover@bottom@regular
 		}		
 	\end{titlepage}
+}
+
+% Cover page minipage table (web version)
+\newcommand{\GDcover@minipagetable@web}{%
+	\begin{tabular}{p{.5cm}|p{5.5cm}}
+		& \normalsize G--\gd@annee--\gd@numero
+		\ifthenelse{\boolean{GD@needsminitabs}}%
+		{\\*[10pt]}%
+		{\\*[8pt]}
+		& \normalsize\gd@month\ \gd@annee
+		\ifthenelse{\boolean{GD@isRevised}}{%
+			\\
+			&\normalsize Revised: \gd@revised
+		}{}
+	\end{tabular}
+}
+
+% Cover page minipage table (paper version)
+\newcommand{\GDcover@minipagetable@paper}{%
+	\begin{tabular}{p{.5cm}|p{5.5cm}}
+		\multicolumn{2}{p{6.5cm}}{\normalsize\bfseries \gd@titre 
+			\ifthenelse{\boolean{GD@needsminitabs}}%
+			{\vspace*{12.5pt}}%
+			{\vspace*{10pt}}}\\
+		& \normalsize\gd@auteurs@short \\ %Initials. Name
+		& \ifthenelse{\boolean{GD@needsminitabs}}%
+		{\\*[15pt]}%
+		{\\*[12pt]}			
+		& \normalsize G--\gd@annee--\gd@numero
+		\ifthenelse{\boolean{GD@needsminitabs}}%
+		{\\*[10pt]}%
+		{\\*[8pt]}
+		& \normalsize\gd@month\ \gd@annee
+		\ifthenelse{\boolean{GD@isRevised}}{%
+			\\
+			&\normalsize Revised: \gd@revised
+		}{}
+	\end{tabular}
 }
 
 % Regular cover page bottom
@@ -1082,10 +1601,17 @@
 }
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 %	La page titre s'affiche dans toutes les versions du cahier, mais
 % 	diffère en fonction des versions. Étant donné qu'elle est contenue
 %	dans l'environnement +GDpagetitre+, les commandes internes pour son
 % 	affichage sont divisées en deux parties +@begin+ et +@end+.
+% \else
+%	The title page appears in all versions of the paper, but it varies 
+%	according to the version. Given that it is contained in the +GDpagetitre+ 
+%	environment, the internal commands for the title page’s display are 
+%	divided into two parts: +@begin+ and +@end+.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -1184,16 +1710,31 @@
 }
 %    \end{macrocode} 
 %
+% \ifnum\frenchdoc=1
 % \subsection{Commandes et environnements publics de la classe}
 %
 %	Les commandes publiques sont celles directement accessibles à l'utilisateur.
 %	Cependant, elles sont toutes li\'ees \`a une partie du cahier et ne peuvent
 %	donc pas \^etre r\'eutilis\'ees ou d\'eplac\'ees.
+% \else
+% \subsection{Public class commands and environments}
 %
+%	The public commands are those that can be directly accessed by the user. 
+%	They are, however, each linked to a specific part of the paper, and thus 
+%	cannot be reused or moved.
+% \fi
+%
+% \ifnum\frenchdoc=1
 % \subsubsection{M\'etadonn\'ees}
 % 	Les commandes suivantes sont celles o\`u l'utilisateur saisit les donn\'ees
 %	bibliographiques de son cahier. Elles modifient la valeur des commandes
 % 	priv\'ees correspondantes (voir la \autoref{ann:private-meta}).
+% \else
+% \subsubsection{Metadata}
+%	The following commands are those users use to enter their paper’s 
+%	bibliographical data. They modify the values of the corresponding private 
+%	commands (see \autoref{ann:private-meta}).
+% \fi
 %
 %    \begin{macrocode}
 
@@ -1226,12 +1767,21 @@
 }
 %    \end{macrocode}
 %
+% \ifnum\frenchdoc=1
 % \subsubsection{Subdivisions du document}
 %
 %	Chaque partie d'un cahier de recherche a ses particularit\'es, tant au niveau
 %	de la géométrie que de la mise en page (ent\^etes, pieds de page, etc.) Plut\^ot
 %	que d'engorger le gabarit avec de multiples lignes de code, quelques commandes
 % 	et environnements ont \'et\'e cr\'e\'es afin de les regrouper.
+% \else
+% \subsubsection{Document subdivisions}
+%
+%	Each part of the paper has specific characteristics in terms of geometry and 
+%	formatting (headers, footers, etc.). Rather than bloating the template with 
+%	multiple lines of code, a few commands and environments were created to group them 
+%	together.
+% \fi
 %
 %    \begin{macrocode}
 
@@ -1426,7 +1976,7 @@
 %% Bibliography: check that there are two dashes (--) between page numbers where
 %% necessary.
 %% Bibliography: avoid using italics and bold. Remove instances of \em and \it.
-\documentclass[gdweb,gdbighead]{geradwp}
+\documentclass[gdweb]{geradwp}
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% %%% Packages par défaut du cahier  %%%%%%%%%%%%%%
