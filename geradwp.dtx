@@ -25,7 +25,7 @@
 \ProvidesFile{geradwp.dtx}
 %</dtx>
 %<class>\NeedsTeXFormat{LaTeX2e}
-%<class>\ProvidesClass{geradwp}[2021/06/16 v1.0a1 Class for the Cahiers du GERAD series]
+%<class>\ProvidesClass{geradwp}[2021/08/04 v1.0a2 Class for the Cahiers du GERAD series]
 %<*driver>
 \documentclass[10pt,oneside,french,english]{ltxdoc}
 \usepackage[utf8]{inputenc}
@@ -106,7 +106,6 @@
 }
 \newcommand{\oui}{\color{green}\faCheck}
 
-\makeindex
 \makeglossary
 
 \begin{document}
@@ -114,8 +113,8 @@
 \end{document}
 %</driver>
 % \fi
-% \CheckSum{918}
-% \changes{1.0}{2021-06-16}{Initial release}
+% \CheckSum{931}
+% \changes{1.0}{2021-08-04}{Initial release}
 % \ifnum\frenchdoc=1
 % 	\title{Classe de documents \LaTeX\ pour la collection \cahiers}
 % 	\author{Benoit Hamel\thanks{Biblioth\`eque, HEC Montr\'eal} \and Karine Hébert\thanks{GERAD, HEC Montr\'eal}}
@@ -215,7 +214,7 @@
 %		\end{shaded*}	
 % \end{enumerate}
 %
-% La commande cr\'eera le fichier de classe +geradwp.cls+ ainsi que le gabarit +template.tex+ \`a
+% La commande cr\'eera le fichier de classe +geradwp.cls+ ainsi que le gabarit +geradwp.tex+ \`a
 % partir duquel vous pourrez r\'ediger votre rapport de recherche.
 % \else
 % The +.zip+ archive you downloaded contains these files:
@@ -242,7 +241,7 @@
 % \end{enumerate}
 %
 % This command will create the +geradwp.cls+ class file and the 
-% +template.tex+ template from which you can draft your working paper.
+% +geradwp.tex+ template from which you can draft your working paper.
 % \fi
 %
 % \ifnum\frenchdoc=1
@@ -481,6 +480,19 @@
 %	of the document.
 % \fi
 %
+% \subsubsection{cleveref}
+%
+% \ifnum\frenchdoc=1
+%	Le gabarit inclut d\'ej\`a le package +amsthm+ pour permettre le r\'ef\'erencement des th\'eor\`emes. Toutefois, 
+%	afin que ceux-ci apparaissent lorsqu’il y a utilisation du package +cleveref+, les d\'efinitions +\newtheorem+ doivent 
+%	\^etre plac\'ees \textbf{apr\`es} que le package +cleveref+ ait \'et\'e charg\'e (tel que sp\'ecifi\'e dans la section 14.1 de la 
+%	\lien{https://www.ctan.org/pkg/cleveref}{documentation de cleveref}).
+% \else
+%	The template already includes the +amsthm+ package to allow referencing of theorems. However, in order for them to 
+%	appear when using the +cleveref+ package, +\newtheorem+ definitions must be placed \textbf{after} the +cleveref+ package is loaded 
+%	(as specified in Section 14.1 of the \lien{https://www.ctan.org/pkg/cleveref}{cleveref package documentation}).
+% \fi
+%
 % \ifnum\frenchdoc=1
 % \subsection{Commandes}
 % \else
@@ -521,10 +533,10 @@
 %
 % \begin{DescribeMacro}{\GDauteursCourts}
 % \ifnum\frenchdoc=1
-%	La liste des auteurs du cahier sous la forme \emph{[Initiale du pr\'enom] [Nom de famille]} 
-%	(ex. : B Hamel, K H\'ebert). Le contenu de cette commande se retrouve sur la page couverture, sous le titre.
+%	La liste des auteurs du cahier sous la forme \emph{[Initiale du pr\'enom]. [Nom de famille]} 
+%	(ex. : B. Hamel, K. H\'ebert). Le contenu de cette commande se retrouve sur la page couverture, sous le titre.
 % \else
-%	List of authors, formatted as \emph{[First initial] [Last name]} (e.g.: B Hamel, K H\'ebert). 
+%	List of authors, formatted as \emph{[First initial]. [Last name]} (e.g.: B. Hamel, K. H\'ebert). 
 %	The contents of this command will be found on the title page, under the title.
 % \fi
 % \end{DescribeMacro}
@@ -884,8 +896,6 @@
 % \fi
 %
 % \StopEventually{
-%	\clearpage
-%	\printindex
 %	\clearpage
 %	\PrintChanges
 % }
@@ -1432,8 +1442,8 @@
 		
 		\scriptsize
 		\textbf{Suggested citation:} \gd@auteurs@short~(\gd@month\ \gd@annee). 
-		\gd@titre, Technical report, Les Cahiers du GERAD G--\gd@annee--
-		\gd@numero, GERAD, HEC Montr\'{e}al, Canada.\\
+		\gd@titre, Technical report, Les Cahiers du GERAD G--\gd@annee--\gd@numero, 
+		GERAD, HEC Montr\'{e}al, Canada.\\
 		
 		\textbf{Before citing this technical report,} please visit our website 
 		(\url{https://www.gerad.ca/en/papers/G-\gd@annee-\gd@numero}) to update 
@@ -1907,66 +1917,56 @@
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% %%%%%%%%%% Notes pour les auteurs %%%%%%%%%%%%%%%
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% La commande pour accéder aux images du document est: \graphicspath{{Figures/}}.
-%% Vous pouvez l'utiliser ou le changer dans la section "Options par défaut 
-%% du cahier".
-%% Ajouter toutes commandes additionnelles dans la section "Commandes de 
-%% l'auteur".
-%% Inscrire les champs manquants (titre, noms, coordonnées, résumé, mots-clés, 
-%% remerciements, etc.).
-%% Inscrire tous les titres en minuscules (sauf la première lettre du 
+%% Inscrire tous les titres en minuscules (sauf la première lettre du
 %% premier mot).
-%% Section, Table, Figure prennent une majuscule en anglais, 
+%% Section, Table, Figure prennent une majuscule en anglais,
 %% mais pas en français.
-%% Les tableaux se font avec Booktabs et ils sont écrits en \footnotesize. 
-%% (Booktabs crée des tableaux avec des lignes horizontales seulement et 
+%% Les tableaux se font avec Booktabs et ils sont écrits en \footnotesize.
+%% (Booktabs crée des tableaux avec des lignes horizontales seulement et
 %% plus d'espaces entre les lignes.)
-%% Pour éviter que des références ne se retrouvent seules au début d'une ligne, 
-%% on doit faire précéder les "\ref{...}" par "~", donc "~\ref{...}". 
+%% Pour éviter que des références ne se retrouvent seules au début d'une ligne,
+%% on doit faire précéder les "\ref{...}" par "~", donc "~\ref{...}".
 %% On fait de même avec "\cite{...}" qui devrait plutôt s'écrire "~\cite{...}".
-%% Vérifier que les chiffres (références ou non) n'apparaissent pas seuls 
+%% Vérifier que les chiffres (références ou non) n'apparaissent pas seuls
 %% au début d'une ligne.
-%% Enlever toutes les commandes d'espacement (\smallskip, \vspace, \\) à la fin 
+%% Enlever toutes les commandes d'espacement (\smallskip, \vspace, \\) à la fin
 %% des lignes et des paragraphes.
 %% "et al." ne s'écrit pas en italiques et a un point.
-%% Les titres des figures, tableaux et algorithmes prennent un point ou non, 
+%% Les titres des figures, tableaux et algorithmes prennent un point ou non,
 %% mais ils doivent être tous identiques.
 %% Pour les Tables, les titres sont placés en haut.
 %% Pour les Figures, les titres sont placés en-dessous.
 %% S'assurer que le chiffre de la note de bas de page soit après la ponctuation
 %% en anglais.
 %% Bibliographie : ajouter "\small" après le \begin{thebibliography}.
-%% Bibliographie : transférer le .bbl dans le fichier lui-même 
+%% Bibliographie : transférer le .bbl dans le fichier lui-même
 %% s'il y a un fichier .bib.
-%% Bibliographie : vérifier qu'il y a bien deux tirets (--) entre les numéros 
+%% Bibliographie : vérifier qu'il y a bien deux tirets (--) entre les numéros
 %% de pages quand c'est nécessaire.
-%% Bibliographie : éviter les caractères en italique et en gras. Enlever 
+%% Bibliographie : éviter les caractères en italique et en gras. Enlever
 %% les \em et \it.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% Notes for Authors  %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% The graphics path is {{Figures/}}. You either use it or change it in the 
-%% "Working paper default options" section below.
-%% Add any additional commands in the "Author commands" section.
-%% Fill out the missing fields (title, names, contact info, abstract, 
-%% keywords, acknowledgements, etc.).
 %% Write all titles in lowercase letters (aside from the first letter of the
 %% first word).
 %% Section, Table, Figure are capitalized in English, but not in French.
 %% Tables are done with Booktabs and are written in \footnotesize.
 %% (With Booktabs there's only horizontal lines and more space between
 %% the lines).
-%% To make sure references don't end up alone at the start of a line, 
-%% before each "\ref{...}" use "~", therefore:  "~\ref{...}". 
-%% The same thing applies to "\cite{...}", which should instead 
+%% To make sure references don't end up alone at the start of a line,
+%% before each "\ref{...}" use "~", therefore:  "~\ref{...}".
+%% The same thing applies to "\cite{...}", which should instead
 %% be written "~\cite{...}".
-%% Check that numbers (references or other) do not appear by themselves 
+%% Check that numbers (references or other) do not appear by themselves
 %% at the start of a line .
-%% Remove all spacing commands (\smallskip, \vspace, \\) at the end of 
+%% Remove all spacing commands (\smallskip, \vspace, \\) at the end of
 %% lines and paragraphs.
 %% "et al." must not be written in italics and must include a period after "al".
-%% Figure, table and algorithm titles may use a period or not, but must do so 
+%% Figure, table and algorithm titles may use a period or not, but must do so
 %% consistently throughout.
 %% Table titles are placed above the table.
 %% Figure titles are placed below the figure.
@@ -2025,7 +2025,7 @@
 \GDmois{Mai}{May}
 \GDannee{2021}
 \GDnumero{XX}
-\GDauteursCourts{B Hamel, K H\'ebert}
+\GDauteursCourts{B. Hamel, K. H\'ebert}
 \GDauteursCopyright{Hamel, H\'ebert}
 \GDpostpubcitation{Hamel, Benoit, Karine H\'ebert (2021). \og Un exemple de citation \fg, \emph{Journal of Journals}, vol. X issue Y, p. n-m}{https://www.gerad.ca/fr}
 \GDrevised{Mai 2021}
