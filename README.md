@@ -29,8 +29,7 @@ presentation standards required by the _Cahiers du GERAD_ series.
 
 ## ARCHIVE CONTENTS
 
-- geradwp.ins : the installation file of the
-  class;
+- geradwp.ins : the installation file of the class;
 - geradwp.dtx : the bilingual documented source code of the class;
 - geradwp.pdf : the English version of the class' documentation;
 - geradwp-fr.pdf : the French version of the class' documentation;

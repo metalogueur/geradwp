@@ -25,7 +25,7 @@
 \ProvidesFile{geradwp.dtx}
 %</dtx>
 %<class>\NeedsTeXFormat{LaTeX2e}
-%<class>\ProvidesClass{geradwp}[2021/08/04 v1.0a2 Class for the Cahiers du GERAD series]
+%<class>\ProvidesClass{geradwp}[2021/08/11 v1.0 Class for the Cahiers du GERAD series]
 %<*driver>
 \documentclass[10pt,oneside,french,english]{ltxdoc}
 \usepackage[utf8]{inputenc}
@@ -113,8 +113,8 @@
 \end{document}
 %</driver>
 % \fi
-% \CheckSum{931}
-% \changes{1.0}{2021-08-04}{Initial release}
+% \CheckSum{922}
+% \changes{1.0}{2021-08-11}{Initial release}
 % \ifnum\frenchdoc=1
 % 	\title{Classe de documents \LaTeX\ pour la collection \cahiers}
 % 	\author{Benoit Hamel\thanks{Biblioth\`eque, HEC Montr\'eal} \and Karine Hébert\thanks{GERAD, HEC Montr\'eal}}
@@ -170,8 +170,7 @@
 % \emph{packages} indiqu\'es dans le \autoref{tab:pre-loaded-pkgs} avant d'utiliser la classe \gdwp.
 %
 % Les utilisateurs d'\lien{https://www.overleaf.com/}{Overleaf} peuvent \'egalement utiliser cette classe 
-% [en demandant les fichiers n\'ecessaires
-% au GERAD].
+% en r\'ecup\'erant les fichiers sur le \lien{https://www.gerad.ca/fr/cahiers-procedure}{site du GERAD}.
 % \else
 % Using this class assumes you’ve already installed a \TeX\ distribution with an integrated code editor. 
 % In designing \gdwp, the \lien{https://www.tug.org/texlive/}{TeX Live 2020} distribution and the 
@@ -185,7 +184,7 @@
 % versions of the packages 
 % indicated in \autoref{tab:pre-loaded-pkgs} before using the \gdwp\ class.
 %
-% Users of \lien{https://www.overleaf.com/}{Overleaf} can also use this class by requesting the necessary files from GERAD.
+% Users of \lien{https://www.overleaf.com/}{Overleaf} can also use this class by downloading the necessary files from % the \lien{https://www.gerad.ca/fr/cahiers-procedure}{GERAD website}.
 % \fi
 %
 % \subsection{Installation}
@@ -1087,7 +1086,6 @@
 \newlength{\GD@affilitemsep}
 \newlength{\GD@affiltopsep}
 \newlength{\GD@titleminipage@hspace}
-\newlength{\GD@titleminipage@upper@vspace}
 \ifthenelse{\boolean{GD@isPlainVersion}}{%
 	\setlength{\GD@authitemsep}{0pt}
 	\setlength{\GD@authtopsep}{12pt}
@@ -1105,9 +1103,6 @@
 \ifthenelse{\boolean{GD@isWebVersion}}{%
 	\setlength{\GD@titleminipage@hspace}{227pt}
 }{}
-\ifthenelse{\boolean{GD@isWebVersion}}%
-{\setlength{\GD@titleminipage@upper@vspace}{75pt}}%
-{\setlength{\GD@titleminipage@upper@vspace}{197pt}}
 %    \end{macrocode}
 %
 % \ifnum\frenchdoc=1
@@ -1349,7 +1344,7 @@
 			{\noindent\Large\gd@auteurs@short\par}	
 		}{}
 		
-		\vspace*{\GD@titleminipage@upper@vspace}
+		\vfill
 		\hspace*{\GD@titleminipage@hspace}
 		\begin{minipage}[c][5.4cm][c]{7cm}
 			{\ifthenelse{\boolean{GD@isWebVersion}}%
@@ -1985,7 +1980,7 @@
 %% %%% ----- DO NOT MODIFY! --------- %%%%%%%%%%%%%%
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\PassOptionsToPackage{hyphens}{url} % TODO: is the url pkg loaded by hyperref?
+\PassOptionsToPackage{hyphens}{url}
 
 %% Choose one of the two following algorithm packages
 %% \usepackage{algorithm}

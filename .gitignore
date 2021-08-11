@@ -17,6 +17,7 @@ Figures/
 *.out
 *.synctex.gz
 *.toc
+*.zip
 notes_gabarits.md
 template.*
 tests.*
