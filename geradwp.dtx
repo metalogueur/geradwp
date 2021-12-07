@@ -25,7 +25,7 @@
 \ProvidesFile{geradwp.dtx}
 %</dtx>
 %<class>\NeedsTeXFormat{LaTeX2e}
-%<class>\ProvidesClass{geradwp}[2021/08/11 v1.0 Class for the Cahiers du GERAD series]
+%<class>\ProvidesClass{geradwp}[2021/12/07 v1.1 Class for the Cahiers du GERAD series]
 %<*driver>
 \documentclass[10pt,oneside,french,english]{ltxdoc}
 \usepackage[utf8]{inputenc}
@@ -63,6 +63,7 @@
 \definecolor{shadecolor}{rgb}{0.93,0.97,0.99}
 \definecolor{TFFrameColor}{rgb}{0,0.235,0.443}
 \definecolor{TFTitleColor}{rgb}{1,1,1}
+\definecolor{rouge}{RGB}{234,0,42}
 \hypersetup{
 	colorlinks=true,
 	allcolors=liens,
@@ -105,6 +106,12 @@
 	\href{#1}{\bfseries #2~\faExternalLink}
 }
 \newcommand{\oui}{\color{green}\faCheck}
+\newenvironment{GDwarning}[1]{%
+	\begin{leftbar}
+		\noindent{\Large {\color{rouge}\faExclamationCircle} \textbf{#1}} \\
+	}{%
+	\end{leftbar}
+}
 
 \makeglossary
 
@@ -113,7 +120,7 @@
 \end{document}
 %</driver>
 % \fi
-% \CheckSum{922}
+% \CheckSum{988}
 % \changes{1.0}{2021-08-11}{Initial release}
 % \ifnum\frenchdoc=1
 % 	\title{Classe de documents \LaTeX\ pour la collection \cahiers}
@@ -140,11 +147,12 @@
 %   le gabarit initialement	distribu\'e par le GERAD.
 % \else
 %	The \gdwp\ document class was designed to allow researchers who are 
-% 	\lien{https://www.gerad.ca/fr}{GERAD} members to write 
+% 	\lien{https://www.gerad.ca/en}{GERAD} members to write 
 %	their working papers, preprints and technical reports in line with the presentation 
 %	standards of \cahiers\ working paper series. This class and the 
 %	associated files replace the template that GERAD initially distributed.
 % \fi
+% \changes{1.1}{2021-11-25}{Updated GERAD URLs in abstract.}
 % \end{abstract}
 %
 % \ifnum\frenchdoc=1
@@ -156,11 +164,12 @@
 %
 % \subsection{Prerequisites}
 % \fi
+% \label{subsec:prereq}
 %
 % \ifnum\frenchdoc=1
 % L'utilisation de cette classe suppose que vous avez d\'ej\`a install\'e une distribution \TeX\ et
 % un \'editeur de code int\'egr\'e. Pour la conception de \gdwp, la distribution 
-% \lien{https://www.tug.org/texlive/}{TeX Live 2020} et l'\'editeur de code 
+% \lien{https://www.tug.org/texlive/}{TeX Live 2020 et 2021} et l'\'editeur de code 
 % \lien{https://www.texstudio.org/}{TeXstudio} ont \'et\'e utilis\'es.
 %
 % Si vous utilisez la distribution TeXLive ou \lien{http://www.tug.org/mactex/}{MacTeX} et que la compilation 
@@ -170,7 +179,15 @@
 % \emph{packages} indiqu\'es dans le \autoref{tab:pre-loaded-pkgs} avant d'utiliser la classe \gdwp.
 %
 % Les utilisateurs d'\lien{https://www.overleaf.com/}{Overleaf} peuvent \'egalement utiliser cette classe 
-% en r\'ecup\'erant les fichiers sur le \lien{https://www.gerad.ca/fr/cahiers-procedure}{site du GERAD}.
+% en r\'ecup\'erant les fichiers sur le \lien{https://www.gerad.ca/fr/publications/papers/cahiers-procedure}{site du GERAD}.
+% \begin{GDwarning}{\gdwp\ utilise la version 4 de +fancyhdr+}
+% 	\`A partir de la version 1.1 de \gdwp, la version 4 du \emph{package}
+% 	\lien{https://www.ctan.org/pkg/fancyhdr}{fancyhdr} est utilis\'ee. Cette version introduit de nouvelles commandes qui
+%	ne sont pas compatibles avec la version 3. Elle est disponible sur les \'editions 2021
+% 	de Tex Live et MacTeX, de m\^eme que sur Overleaf si vous utilisez la version 2021 de TeX Live.
+%
+%	Si vous utilisez une autre distribution \TeX, assurez-vous que vous avez la bonne version de +fancyhdr+.
+% \end{GDwarning}
 % \else
 % Using this class assumes you’ve already installed a \TeX\ distribution with an integrated code editor. 
 % In designing \gdwp, the \lien{https://www.tug.org/texlive/}{TeX Live 2020} distribution and the 
@@ -184,8 +201,20 @@
 % versions of the packages 
 % indicated in \autoref{tab:pre-loaded-pkgs} before using the \gdwp\ class.
 %
-% Users of \lien{https://www.overleaf.com/}{Overleaf} can also use this class by downloading the necessary files from % the \lien{https://www.gerad.ca/fr/cahiers-procedure}{GERAD website}.
+% Users of \lien{https://www.overleaf.com/}{Overleaf} can also use this class by downloading the necessary files from 
+% the \lien{https://www.gerad.ca/en/publications/papers/cahiers-procedure}{GERAD website}.
+% \begin{GDwarning}{\gdwp\ utilise maintenant la version 4 de +fancyhdr+}
+% 	Starting at \gdwp\ version 1.1, version 4 of the \lien{https://www.ctan.org/pkg/fancyhdr}{fancyhdr} is
+%	used. This version introduces new commands that are not backwards compatible
+%	with version 3. It is available with the 2021 editions of
+% 	Tex Live and MacTeX, as well as on Overleaf if you use the 2021 version of TeX Live.
+%
+%	If you are using another \TeX\ distribution, please make sure that you have the right version of
+%	+fancyhdr+.
+% \end{GDwarning}
 % \fi
+% \changes{1.1}{2021-11-25}{Updated GERAD URLs in Prerequisites subsection.}
+% \changes{1.1}{2021-12-07}{Added a warning concerning fancyhdr 4}
 %
 % \subsection{Installation}
 % 
@@ -284,6 +313,7 @@
 % \fi
 %
 % \subsection{Options}
+% \label{subsec:options}
 % \ifnum\frenchdoc=1
 %  Outre les options disponibles via la classe +article+, quelques options sont disponibles pour \gdwp.
 % \else
@@ -367,15 +397,31 @@
 % \fi
 % \end{DescribeMacro}
 %
+% \begin{DescribeMacro}{gdsupplement}
+% \ifnum\frenchdoc=1
+%	Lorsqu'un auteur souhaite ajouter un suppl\'ement de recherche ou une «annexe» tr\`es importante \`a
+% 	son cahier de recherche sans l'inclure dans le document principal, il peut ajouter cette partie dans un autre
+%	gabarit \gdwp\ vierge et y inclure l'option +gdsupplement+. Jumel\'ee avec la commande +\GDsupplementname+
+%	(voir la \autoref{sec:metadonnees}), l'option affichera clairement le nom du suppl\'ement dans les pages titre
+% 	et les ent\^etes du document suppl\'ementaire.
+% \else
+%	When authors want to add extra research data or an important ``appendix'' to their working paper without
+% 	including it in the main document, they can write that extra material in a blank \gdwp\ template with the
+%	+gdsupplement+ included. Combined with the +\GDsupplementname+ command (see \autoref{sec:metadonnees}), this 
+%	option will clearly show the supplement name on the title pages and page headers.
+% \fi
+% \end{DescribeMacro}
+%
 % \begin{DescribeMacro}{gdminitabs}
 % \ifnum\frenchdoc=1
 %	Il arrive parfois que des auteurs cr\'eent des tableaux si grands que ceux-ci d\'epassent d'une
-%	ou plusieurs marges. Dans de tels cas, l'option +gdneedsminitabs+ est utilis\'ee pour mettre les
+%	ou plusieurs marges. Dans de tels cas, l'option +gdminitabs+ est utilis\'ee pour mettre les
 %	tableaux du document en +footnotesize+.
 % \else
 %	Authors sometimes create tables so large that they extend beyond the margins. To solve this issue, 
-%	the +gdneedsminitabs+ option can be used to set the tables in the document to +footnotesize+.
+%	the +gdminitabs+ option can be used to set the tables in the document to +footnotesize+.
 % \fi
+% \changes{1.1}{2021-12-06}{Corrected the gdminitabs typo}
 % \end{DescribeMacro}
 %
 % \ifnum\frenchdoc=1
@@ -421,6 +467,7 @@
 %		enumitem					& \oui							&						& \\
 %		float						& \oui 							& 						& \\
 %		algorithm					&								& \oui					& \\
+%		algorithmic					&								& \oui					& \\
 %		algorithm2e					&								& \oui					& \\
 %		hyperref					&								& \oui					& colorlinks \\
 %									&								&						& citecolor=\{blue\} \\
@@ -438,46 +485,68 @@
 %
 % \subsubsection{babel}
 % \ifnum\frenchdoc=1
-% 	L'auteur de ces lignes ayant \'et\'e inform\'e par la maintenanci\`ere du gabarit originel que l'utilisation de babel
+% 	L'auteur de ces lignes ayant \'et\'e inform\'e par la maintenanci\`ere du gabarit originel que l'utilisation de
+%	babel
 % 	avec ce dernier causait de nombreux probl\`emes, il vous serait gr\'e de \textbf{ne pas utiliser le
-% 	\emph{package} babel avec ce nouveau gabarit}, et ce, jusqu'\`a ce que lesdits probl\`emes lui soient pr\'esent\'es
+% 	\emph{package} babel avec ce nouveau gabarit}, et ce, jusqu'\`a ce que lesdits probl\`emes lui soient
+% 	pr\'esent\'es
 % 	afin d'\^etre corrig\'es. Une version ult\'erieure de la classe vous permettra peut-\^etre de vous en servir.
 % \else
-%	The person maintaining the original template advised the author of this document class that using babel with the template 
-%	causes a number of problems, 
+%	The person maintaining the original template advised the author of this document class that using babel with the
+%	template causes a number of problems, 
 %	so \textbf{please do not use the babel package with this new template}, until these issues have been fixed. 
 %	A future release of the class may allow you to use it.
 % \fi
 %
-% \subsubsection{algorithm, algorithm2e}
+% \subsubsection{algorithm, algorithmic, algorithm2e}
 %
 % \ifnum\frenchdoc=1
-% 	\lien{https://www.ctan.org/pkg/algorithms}{algorithm} et \lien{https://www.ctan.org/pkg/algorithm2e}{algorithm2e} sont
-% 	deux \emph{packages} ayant leurs aficionados respectifs parmi les auteurs de \emph{Cahiers du GERAD}. Tous deux sont
-% 	accept\'es et charg\'es dans le pr\'eambule du gabarit. Il suffit de mettre en commentaire celui des deux qui ne
-% 	sera pas utilis\'e.
+% 	\lien{https://www.ctan.org/pkg/algorithms}{algorithm, algorithmic} et
+%	\lien{https://www.ctan.org/pkg/algorithm2e}{algorithm2e} sont
+% 	trois \emph{packages} ayant leurs aficionados respectifs parmi les auteurs de \emph{Cahiers du GERAD}. Tous trois
+%	sont
+% 	accept\'es et charg\'es dans le pr\'eambule du gabarit. Il suffit de mettre en commentaire ceux des trois qui ne
+% 	seront pas utilis\'es. \textbf{Notez que +algorithm+ et +algorithmic+ doivent toujours \^etre charg\'es ensemble},
+%	l'un ne fonctionnant pas sans l'autre. +algorithm2e+, quant \`a lui, est autosuffisant.
 %
-% 	Les deux \emph{packages} ne peuvent cependant pas \^etre charg\'es ensemble puisqu'ils entrent en conflit et cr\'eent
-% 	des bogues.
+% 	+algorithm+ et +algorithm2e+ ne peuvent pas \^etre charg\'es ensemble puisqu'ils entrent en conflit et
+%	cr\'eent des bogues.
+%
+%	Finalement, lorsque vous utilisez le couple +algorithm+ et +algorithmic+, veuillez s'il vous pla\^it mettre les
+% 	+\caption+ de vos algorithmes en +\footnotesize+.
 % \else
-%	\lien{https://www.ctan.org/pkg/algorithms}{algorithm} and \lien{https://www.ctan.org/pkg/algorithm2e}{algorithm2e} are 
-%	two different packages, each of which has its fans among the \emph{Cahiers du GERAD} authors. Both are accepted and 
-%	loaded in the preamble of the template. Simply comment out the one that will not be used.
+%	\lien{https://www.ctan.org/pkg/algorithms}{algorithm, algorithmic} and \lien{https://www.ctan.org/pkg/algorithm2e}{algorithm2e} are 
+%	three different packages, each of which has its fans among the \emph{Cahiers du GERAD} authors. All are accepted
+%	and loaded in the preamble of the template. Simply comment out those that will not be used.
+%	\textbf{Bear in mind that +algorithm+ and +algorithmic+ must be loaded together} as they don't work
+%	independently. +algorithm2e+, on the other hand, il self-sufficient.
 %
-%	The two packages are mutually exclusive and cannot both be loaded at once without causing bugs.
+%	+algorithm+ and +algorithm2e+ are mutually exclusive and cannot be both loaded at once without causing bugs.
+%
+%	Finally, when using the +algorithm+ and +algorithmic+ duo, please put your algorithms' +\caption+ in
+%	+\footnotesize+.
 % \fi
+% \changes{1.1}{2021-12-07}{Included algorithmic package in documentation}
+% \changes{1.1}{2021-12-07}{Added the caption footnotesize note}
 %
 % \subsubsection{float}
 %
 % \ifnum\frenchdoc=1
 % 	Le \emph{package} +float+ est charg\'e avec la classe \textbf{uniquement lorsque l'option +gdminitabs+ est utilis\'ee}, et ce,
-% 	afin de transformer les tableaux en +footnotesize+. Si vous avez besoin de ce \emph{package} et que vos tableaux
+% 	afin de transformer les tableaux en +footnotesize+. Si vous avez besoin de ce \emph{package} même si vos tableaux
 % 	sont raisonnablement petits, chargez-le dans le pr\'eambule de votre document.
+%
+%	Si vous utilisez le \emph{package} +algorithm+, +float+ est charg\'e par ce dernier. Il est donc inutile de le
+%	charger dans le pr\'ambule.
 % \else
 %	The +float+ package is loaded with the class \textbf{only when the +gdminitabs+ option is enabled}. When loaded, it resizes 
-%	the tables in +footnotesize+. If you need this package and the tables are reasonably small, you can load it in the preamble 
+%	the tables in +footnotesize+. If you need this package even if your tables are reasonably small, you can load it in the preamble 
 %	of the document.
+%	
+%	If you are using the +algorithm+ package, please note that it loads +float+, so there is no need to load it in
+% 	the preamble.
 % \fi
+% \changes{1.1}{2021-12-07}{Added the fact that algorithm loads float package}
 %
 % \subsubsection{cleveref}
 %
@@ -502,9 +571,11 @@
 % 	Les quelques commandes publiques qui ont \'et\'e cr\'e\'ees pour cette classe ont deux fonctions : renseigner les
 % 	m\'etadonn\'ees du cahier de recherche et faire de la mise en page.
 % \else
-% 	The handful of public commands that were created for this class have two purposes: formatting and filling in metadata 
+% 	The handful of public commands that were created for this class have two purposes: document layout and filling in metadata 
 %	for the working paper.
 % \fi
+% \changes{1.1}{2021-12-07}{All public commands have been translated in English}
+%
 %
 % \ifnum\frenchdoc=1
 % \subsubsection{M\'etadonn\'ees}
@@ -522,7 +593,7 @@
 %	data that will be found on the cover and title pages of the paper.
 % \fi
 %
-% \begin{DescribeMacro}{\GDtitre}
+% \begin{DescribeMacro}{\GDtitle}
 % \ifnum\frenchdoc=1
 %	Le titre du cahier de recherche. Celui-ci se retrouve \`a la fois sur la page couverture et la page titre.
 % \else
@@ -530,7 +601,7 @@
 % \fi
 % \end{DescribeMacro}
 %
-% \begin{DescribeMacro}{\GDauteursCourts}
+% \begin{DescribeMacro}{\GDauthorsShort}
 % \ifnum\frenchdoc=1
 %	La liste des auteurs du cahier sous la forme \emph{[Initiale du pr\'enom]. [Nom de famille]} 
 %	(ex. : B. Hamel, K. H\'ebert). Le contenu de cette commande se retrouve sur la page couverture, sous le titre.
@@ -540,7 +611,7 @@
 % \fi
 % \end{DescribeMacro}
 %
-% \begin{DescribeMacro}{\GDauteursCopyright}
+% \begin{DescribeMacro}{\GDauthorsCopyright}
 % \ifnum\frenchdoc=1
 %	La liste des noms de famille des auteurs \`a la mention des droits d'auteurs au bas de la page titre.
 % \else
@@ -548,7 +619,7 @@
 % \fi
 % \end{DescribeMacro}
 %
-% \begin{DescribeMacro}{\GDmois}
+% \begin{DescribeMacro}{\GDmonth}
 % \ifnum\frenchdoc=1
 %	Le mois de publication du cahier de recherche dans ses formes fran\c{c}aise et anglaise. Le mois en fran\c{c}ais
 %	est inscrit entre les premi\`eres accolades, celui en anglais, entre les deuxi\`emes.
@@ -558,7 +629,7 @@
 % \fi
 % \end{DescribeMacro}
 %
-% \begin{DescribeMacro}{\GDannee}
+% \begin{DescribeMacro}{\GDyear}
 % \ifnum\frenchdoc=1
 %	L'ann\'ee de publication du cahier sous la forme \emph{AAAA}.
 % \else
@@ -566,7 +637,7 @@
 % \fi
 % \end{DescribeMacro}
 %
-% \begin{DescribeMacro}{\GDnumero}
+% \begin{DescribeMacro}{\GDnumber}
 % \ifnum\frenchdoc=1
 %	Le num\'ero du cahier de recherche. Ce num\'ero est assign\'e par l'\'equipe du GERAD.
 % \else
@@ -581,6 +652,19 @@
 % \else
 %	When a working paper is revised by its authors, this command is used to display the revision date 
 % 	on the cover page.
+% \fi
+% \end{DescribeMacro}
+%
+% \begin{DescribeMacro}{\GDsupplementname}
+% \ifnum\frenchdoc=1
+%	Si vous r\'edigez un suppl\'ement de recherche ou une annexe \`a l'aide du gabarit \gdwp\ et que vous
+%	l'indiquez avec l'option +gdsupplement+ (voir \autoref{subsec:options}), la commande 
+%	+\GDsupplementname+ servira \`a nommer ledit suppl\'ement et la classe imprimera ce nom dans les pages
+%	titre et les ent\^etes du document.
+% \else
+%	If you write extra research data or an appendix using the \gdwp\ template and the +gdsupplement+ option
+%	(see \autoref{subsec:options}), the +\GDsupplementname+ command will serve as place holder for the
+%	supplement's name and the class will output it on the title pages and on page headers.
 % \fi
 % \end{DescribeMacro}
 %
@@ -604,22 +688,22 @@
 % 	supprim\'ees par des auteurs, des commandes ont \'et\'e cr\'e\'ees. Celles-ci marquent en m\^eme temps
 % 	les subdivisions du document.
 % \else
-% \subsubsection{Formatting}
+% \subsubsection{Document Layout}
 %
 %	To keep the template from getting cluttered and to keep authors from deleting critical formatting commands, 
 %	commands were created to mark each subdivision of the document.
 % \fi
 %
-% \begin{DescribeMacro}{\GDpageCouverture}
+% \begin{DescribeMacro}{\GDcoverpage}
 % \ifnum\frenchdoc=1
 %	Toute la page couverture d'un cahier de recherche est g\'en\'er\'ee \`a partir de cette commande.
 %	Elle est entre autres mise en forme avec les m\'etadonn\'ees des commandes cit\'ees \`a la
 %	\autoref{sec:metadonnees}. La page titre qui suit la page couverture est quant \`a elle g\'en\'er\'ee
-%	par l'environnement +GDpagetitre+ d\'ecrit \`a la \autoref{sec:environnements}.
+%	par l'environnement +GDtitlepage+ d\'ecrit \`a la \autoref{sec:environnements}.
 % \else
 % 	The entire cover page is generated with this command. It is largely formatted with the formatting 
 %	commands listed in \autoref{sec:metadonnees}. The title page that follows the cover is generated 
-%	by the +GDpagetitre+ environment described in \autoref{sec:environnements}.
+%	by the +GDtitlepage+ environment described in \autoref{sec:environnements}.
 % \fi
 % \end{DescribeMacro}
 %
@@ -668,7 +752,7 @@
 % \subsubsection{Title page}
 % \fi
 %
-% \begin{DescribeEnv}{GDpagetitre}
+% \begin{DescribeEnv}{GDtitlepage}
 % \ifnum\frenchdoc=1
 %	Toute la page titre est g\'en\'er\'ee par le biais de cet environnement. Les auteurs n'ont qu'\`a inscrire 
 %	leurs informations personnelles dans les environnements +GDauthlist+, +GDaffillist+ et +GDemaillist+ d\'ecrits
@@ -814,7 +898,7 @@
 % \fi
 %
 % \ifnum\frenchdoc=1
-% \subsection{\emph{Packages} par d\'efaut du cahier (lignes 104-117)}
+% \subsection{\emph{Packages} par d\'efaut du cahier (lignes 92-106)}
 %
 %	Tous les \emph{packages} qui ne sont pas charg\'es par d\'efaut dans le fichier de classe (voir le
 %	\autoref{tab:pre-loaded-pkgs}) sont charg\'es dans cette section. C'est dans cette section que vous pourrez
@@ -822,7 +906,7 @@
 %	vous devrez charger les \emph{packages} qui ont tendance \`a ne pas fonctionner ad\'equatement s'ils sont
 % 	charg\'es apr\`es le \emph{package} +hyperref+.
 % \else
-% \subsection{Default packages (lines 104-117)}
+% \subsection{Default packages (lines 92-106)}
 %
 %	All the packages that are not loaded by default in the class (see \autoref{tab:pre-loaded-pkgs}) 
 %	are loaded in this section. It’s in this section that the choice between the +algorithm+ and +algorithm2e+ 
@@ -831,7 +915,7 @@
 % \fi
 %
 % \ifnum\frenchdoc=1
-% \subsection{Options par d\'efaut du cahier (lignes 118-132)}
+% \subsection{Options par d\'efaut du cahier (lignes 107-136)}
 %
 %	Si vous nommez le r\'epertoire dans lequel vous compilerez vos figures diff\'eremment que le nom que nous
 % 	lui avons donn\'e par d\'efaut ou si vous avez plus d'un r\'epertoire de figures, vous pourrez inscrire
@@ -842,7 +926,7 @@
 %
 %	Dans tous les autres cas, veuillez ne pas modifier cette section.
 % \else
-% \subsection{Default options (lines 118-132)}
+% \subsection{Default options (lines 107-136)}
 %
 %	If the name of your folder containing your paper’s figures is named differently than the default name, 
 %	or if there are multiple folders with figures in them, this is where you can enter that information. 
@@ -853,7 +937,7 @@
 % \fi
 %
 % \ifnum\frenchdoc=1
-% \subsection{Commandes de l'auteur (lignes 133-141)}
+% \subsection{Commandes de l'auteur (lignes 137-145)}
 %
 %	Cette section vous appartient enti\`erement. Vous pouvez y charger les \emph{packages} n\'ecessaires \`a
 %	votre r\'edaction de m\^eme que leurs options.
@@ -861,7 +945,7 @@
 %	C'est \'egalement dans cette section que vous pouvez inscrire vos commandes, environnements et
 %	th\'eor\`emes personnalis\'es.
 % \else
-% \subsection{Author commands (lines 133-141)}
+% \subsection{Author commands (lines 137-145)}
 %
 %	This section belongs entirely to the author. This is where all the packages needed for the paper can be loaded, 
 %	as well as their options.
@@ -870,26 +954,26 @@
 % \fi
 %
 % \ifnum\frenchdoc=1
-% \subsection{Métadonn\'ees du cahier (lignes 143-155)}
+% \subsection{Métadonn\'ees du cahier (lignes 147-183)}
 %
-%	Cette section, dont une partie est à la fin du pr\'eambule et l'autre dans l'environnement +GDpagetitre+, au
+%	Cette section, dont une partie est à la fin du pr\'eambule et l'autre dans l'environnement +GDtitlepage+, au
 %	d\'ebut du document, est l'endroit o\`u vous devrez inscrire toutes les m\'etadonn\'ees bibliographiques
 %	de votre cahier.
 % \else
-% \subsection{Metadata (lines 143-155)}
+% \subsection{Metadata (lines 147-183)}
 %
-%	This section is divided in two: the first is at the end of the preamble, and the second in the +GDpagetitre+ 
+%	This section is divided in two: the first is at the end of the preamble, and the second in the +GDtitlepage+ 
 %	environment located at the beginning of the document. This is where all the bibliographical metadata for the 
 %	paper should be.
 % \fi
 %
 % \ifnum\frenchdoc=1
-% \subsection{R\'esum\'es, mots-cl\'es, remerciements, article (lignes 156 et suivantes)}
+% \subsection{R\'esum\'es, mots-cl\'es, remerciements, article (lignes 185 et suivantes)}
 %
 %	Ces deux derni\`eres sections sont, bien entendu, les endroits o\`u vous r\'edigerez votre cahier de
 %	recherche...
 % \else
-% \subsection{Abstracts, keywords, acknowledgements, article (starting at line 156)}
+% \subsection{Abstracts, keywords, acknowledgements, article (starting at line 185)}
 %
 %	These last two sections are, of course, where the body of the article will be.
 % \fi
@@ -931,6 +1015,7 @@
 %	it configures some parts of the formatting. Once the variables have been created, default values 
 %	are set.
 % \fi
+% \changes{1.1}{2021-12-03}{Added isSupplement boolean and default value}
 %
 %    \begin{macrocode}
 %<*class>
@@ -943,6 +1028,7 @@
 \newboolean{GD@needsSmallHeadSep}
 \newboolean{GD@isFinalImpression}
 \newboolean{GD@isPostPublication}
+\newboolean{GD@isSupplement}
 \newboolean{GD@isRevised}
 \newboolean{GD@needsminitabs}
 
@@ -952,6 +1038,7 @@
 \setboolean{GD@needsSmallHeadSep}{false}
 \setboolean{GD@isFinalImpression}{false}
 \setboolean{GD@isPostPublication}{false}
+\setboolean{GD@isSupplement}{false}
 \setboolean{GD@isRevised}{false}
 \setboolean{GD@needsminitabs}{false}
 %    \end{macrocode}
@@ -967,6 +1054,7 @@
 %	The few class options are declared here. They essentially change some boolean values 
 %	and pass some options to the +article+ class.
 % \fi
+% \changes{1.1}{2021-12-03}{Added new gdsupplement option}
 %
 %    \begin{macrocode}
 
@@ -997,6 +1085,9 @@
 }
 \DeclareOption{gdpostpub}{%
 	\setboolean{GD@isPostPublication}{true}
+}
+\DeclareOption{gdsupplement}{%
+	\setboolean{GD@isSupplement}{true}
 }
 \DeclareOption{gdrevised}{%
 	\setboolean{GD@isRevised}{true}
@@ -1077,6 +1168,7 @@
 %	We begin by defining the lengths of the document. These can change from 
 %	one version of the paper to another.
 % \fi
+% \changes{1.1}{2021-12-02}{Added new cover page vspace length}
 %
 %    \begin{macrocode}
 
@@ -1086,6 +1178,7 @@
 \newlength{\GD@affilitemsep}
 \newlength{\GD@affiltopsep}
 \newlength{\GD@titleminipage@hspace}
+\newlength{\GD@coverpage@vspace}
 \ifthenelse{\boolean{GD@isPlainVersion}}{%
 	\setlength{\GD@authitemsep}{0pt}
 	\setlength{\GD@authtopsep}{12pt}
@@ -1274,20 +1367,23 @@
 %	commands and populate different parts of the paper such as the headers, 
 %	cover page and title page.
 % \fi
+% \changes{1.1}{2021-12-03}{Added internal supplement name command}
+% \changes{1.1}{2021-12-07}{Translated all commands to english}
 %
 %    \begin{macrocode}
 
 % Class Private Commands %
 % Metadata %
-\newcommand{\gd@annee}{}
-\newcommand{\gd@mois}{}
-\newcommand{\gd@month}{}
-\newcommand{\gd@numero}{}
-\newcommand{\gd@titre}{}
-\newcommand{\gd@auteurs@short}{}
-\newcommand{\gd@auteurs@copyright}{}
+\newcommand{\gd@year}{}
+\newcommand{\gd@month@fr}{}
+\newcommand{\gd@month@en}{}
+\newcommand{\gd@number}{}
+\newcommand{\gd@title}{}
+\newcommand{\gd@authors@short}{}
+\newcommand{\gd@authors@copyright}{}
 \newcommand{\gd@postpubcitation}{}
 \newcommand{\gd@postpubcitation@url}{}
+\newcommand{\gd@supplementname}{}
 \newcommand{\gd@revised}{}
 %    \end{macrocode}
 %
@@ -1317,6 +1413,10 @@
 %	The following commands define its appearance. The bottom part of the page 
 %	is different if the +gdpostpub+ option is used.
 % \fi
+% \changes{1.1}{2021-12-02}{Added new vspace length for paper version only}
+% \changes{1.1}{2021-12-02}{Added vfill for web version only}
+% \changes{1.1}{2012-12-03}{Added supplement name to web version cover page}
+% \changes{1.1}{2021-12-03}{Added supplement name in paper cover page minipage}
 %
 %    \begin{macrocode}
 
@@ -1338,13 +1438,18 @@
 		\ifthenelse{\boolean{GD@isWebVersion}}{%	
 			
 			\vspace*{54pt}
-			{\noindent\LARGE\bfseries \gd@titre\par} %Title
-			
+			{\noindent\LARGE\bfseries \gd@title\par} %Title
+			\ifthenelse{\boolean{GD@isSupplement}}%
+				{{\noindent\LARGE\textsc{\gd@supplementname}\par}}{}
 			\vspace*{18pt}
-			{\noindent\Large\gd@auteurs@short\par}	
+			{\noindent\Large\gd@authors@short\par}
+			
+			\vfill	
 		}{}
 		
-		\vfill
+		\ifthenelse{\boolean{GD@isPaperVersion}}{%
+			\vspace*{\GD@coverpage@vspace}
+		}{}
 		\hspace*{\GD@titleminipage@hspace}
 		\begin{minipage}[c][5.4cm][c]{7cm}
 			{\ifthenelse{\boolean{GD@isWebVersion}}%
@@ -1366,11 +1471,11 @@
 % Cover page minipage table (web version)
 \newcommand{\GDcover@minipagetable@web}{%
 	\begin{tabular}{p{.5cm}|p{5.5cm}}
-		& \normalsize G--\gd@annee--\gd@numero
+		& \normalsize G--\gd@year--\gd@number
 		\ifthenelse{\boolean{GD@needsminitabs}}%
 		{\\*[10pt]}%
 		{\\*[8pt]}
-		& \normalsize\gd@month\ \gd@annee
+		& \normalsize\gd@month@en\ \gd@year
 		\ifthenelse{\boolean{GD@isRevised}}{%
 			\\
 			&\normalsize Revised: \gd@revised
@@ -1381,19 +1486,21 @@
 % Cover page minipage table (paper version)
 \newcommand{\GDcover@minipagetable@paper}{%
 	\begin{tabular}{p{.5cm}|p{5.5cm}}
-		\multicolumn{2}{p{6.5cm}}{\normalsize\bfseries \gd@titre 
+		\multicolumn{2}{p{6.5cm}}{\normalsize\bfseries \gd@title 
 			\ifthenelse{\boolean{GD@needsminitabs}}%
 			{\vspace*{12.5pt}}%
 			{\vspace*{10pt}}}\\
-		& \normalsize\gd@auteurs@short \\ %Initials. Name
+		\ifthenelse{\boolean{GD@isSupplement}}%
+			{& \textsc{\gd@supplementname}\\*[10pt]}{}
+		& \normalsize\gd@authors@short \\ %Initials. Name
 		& \ifthenelse{\boolean{GD@needsminitabs}}%
 		{\\*[15pt]}%
 		{\\*[12pt]}			
-		& \normalsize G--\gd@annee--\gd@numero
+		& \normalsize G--\gd@year--\gd@number
 		\ifthenelse{\boolean{GD@needsminitabs}}%
 		{\\*[10pt]}%
 		{\\*[8pt]}
-		& \normalsize\gd@month\ \gd@annee
+		& \normalsize\gd@month@en\ \gd@year
 		\ifthenelse{\boolean{GD@isRevised}}{%
 			\\
 			&\normalsize Revised: \gd@revised
@@ -1417,12 +1524,12 @@
 		
 		\medskip
 		\scriptsize
-		\textbf{Citation sugg\'{e}r\'{e}e :} \gd@auteurs@short~(\gd@mois\ 
-		\gd@annee). \gd@titre, Rapport technique, Les Cahiers du GERAD G--
-		\gd@annee--\gd@numero, GERAD, HEC Montr\'{e}al, Canada.\\
+		\textbf{Citation sugg\'{e}r\'{e}e :} \gd@authors@short~(\gd@month@fr\ 
+		\gd@year). \gd@title, Rapport technique, Les Cahiers du GERAD G--
+		\gd@year--\gd@number, GERAD, HEC Montr\'{e}al, Canada.\\
 		
 		\textbf{Avant de citer ce rapport technique,} veuillez visiter notre 
-		site Web (\url{https://www.gerad.ca/fr/papers/G-\gd@annee-\gd@numero}) 
+		site Web (\url{https://www.gerad.ca/fr/papers/G-\gd@year-\gd@number}) 
 		afin de mettre \`a jour vos donn\'ees de r\'ef\'erence, s'il a \'et\'e 
 		publi\'e dans une revue scientifique.\par
 	\end{minipage}
@@ -1436,12 +1543,12 @@
 		added.\\ \\
 		
 		\scriptsize
-		\textbf{Suggested citation:} \gd@auteurs@short~(\gd@month\ \gd@annee). 
-		\gd@titre, Technical report, Les Cahiers du GERAD G--\gd@annee--\gd@numero, 
+		\textbf{Suggested citation:} \gd@authors@short~(\gd@month@en\ \gd@year). 
+		\gd@title, Technical report, Les Cahiers du GERAD G--\gd@year--\gd@number, 
 		GERAD, HEC Montr\'{e}al, Canada.\\
 		
 		\textbf{Before citing this technical report,} please visit our website 
-		(\url{https://www.gerad.ca/en/papers/G-\gd@annee-\gd@numero}) to update 
+		(\url{https://www.gerad.ca/en/papers/G-\gd@year-\gd@number}) to update 
 		your reference data, if it has been published in a scientific journal.
 		\par
 	\end{minipage}
@@ -1459,8 +1566,8 @@
 		
 		\medskip
 		D\'ep\^ot l\'egal -- Biblioth\`eque et Archives nationales du Qu\'ebec,
-		\gd@annee\\
-		\phantom{Depot legal} -- Biblioth\`eque et Archives Canada, \gd@annee
+		\gd@year\\
+		\phantom{Depot legal} -- Biblioth\`eque et Archives Canada, \gd@year
 		\par
 	\end{minipage}
 	\hfill
@@ -1473,8 +1580,8 @@
 		
 		\medskip
 		Legal deposit -- Biblioth\`eque et Archives nationales du Qu\'ebec, 
-		\gd@annee\\
-		\phantom{Legal deposit} -- Library and Archives Canada, \gd@annee\par
+		\gd@year\\
+		\phantom{Legal deposit} -- Library and Archives Canada, \gd@year\par
 	\end{minipage}
 	
 	\hrule
@@ -1609,14 +1716,17 @@
 % \ifnum\frenchdoc=1
 %	La page titre s'affiche dans toutes les versions du cahier, mais
 % 	diffère en fonction des versions. Étant donné qu'elle est contenue
-%	dans l'environnement +GDpagetitre+, les commandes internes pour son
+%	dans l'environnement +GDtitlepage+, les commandes internes pour son
 % 	affichage sont divisées en deux parties +@begin+ et +@end+.
 % \else
 %	The title page appears in all versions of the paper, but it varies 
-%	according to the version. Given that it is contained in the +GDpagetitre+ 
+%	according to the version. Given that it is contained in the +GDtitlepage+ 
 %	environment, the internal commands for the title page’s display are 
 %	divided into two parts: +@begin+ and +@end+.
 % \fi
+% \changes{1.1}{2021-12-03}{Added supplement name to title page}
+% \changes{1.1}{2021-12-06}{Added the Revised prefix}
+% \changes{1.1}{2021-12-06}{Changed plain title page's month for english}
 %
 %    \begin{macrocode}
 
@@ -1631,7 +1741,11 @@
 	}
 	\parindent=0pt
 	\sffamily
-	{\LARGE\bfseries \gd@titre\par} %Title
+	{\LARGE\bfseries \gd@title\par} %Title
+	\ifthenelse{\boolean{GD@isSupplement}}%
+		{\vspace{14pt}
+			{\LARGE\textsc{\gd@supplementname}\par}
+		}{}
 	\begin{minipage}[t][10cm][l]{7.5cm}	
 		\vspace*{55pt}
 }
@@ -1640,14 +1754,14 @@
 	\vfill
 \end{minipage}
 \vfill
-{\bfseries \gd@month\ \gd@annee}\\*
+{\bfseries \gd@month@en\ \gd@year}\\*
 \ifthenelse{\boolean{GD@isRevised}}%
-	{\\ \gd@revised \\}%
+	{\\ Revised: \gd@revised \\}%
 	{}
 {\bfseries Les Cahiers du GERAD}\\
-{\bfseries G--\gd@annee--\gd@numero}\\
-{\footnotesize Copyright \copyright\ \gd@annee\ GERAD, 
-	\gd@auteurs@copyright}
+{\bfseries G--\gd@year--\gd@number}\\
+{\footnotesize Copyright \copyright\ \gd@year\ GERAD, 
+	\gd@authors@copyright}
 \vspace*{0.05cm}
 
 \hrule
@@ -1705,12 +1819,14 @@
 \newcommand{\GD@plain@titlepage@begin}{%
 	\thispagestyle{empty}
 	\sffamily
-	{\sffamily\LARGE\bfseries\noindent\gd@titre\par}
+	{\sffamily\LARGE\bfseries\noindent\gd@title\par}
+	\ifthenelse{\boolean{GD@isSupplement}}%
+	{{\noindent\LARGE\textsc{\gd@supplementname}\par}}{}
 }
 
 \newcommand{\GD@plain@pagetitle@end}{%
 	\vspace*{12pt}
-	{\noindent\gd@mois\ \gd@annee}
+	{\noindent\gd@month@en\ \gd@year}
 	\vspace*{30pt}
 }
 %    \end{macrocode} 
@@ -1729,6 +1845,32 @@
 %	cannot be reused or moved.
 % \fi
 %
+%
+% \ifnum\frenchdoc=1
+% \subsubsection{Mise en forme du document}
+%	La quantit\'e de versions possibles d'un gabarit \gdwp\ impose que certaines
+%	commandes internes de mise en forme puissent \^etre modifi\'ees simplement par
+%	le biais de commandes publiques, disponibles dans le pr\'eambule. Cela facilite
+%	le travail des responsables de l'\'edition et emp\^eche la multiplication de
+%	versions maison de la classe\footnote{Toute r\'ef\'erence \`a une personne r\'eelle est %
+%	totalement fortuite.}.
+% \else
+% \subsubsection{Document layout}
+%	The number of a \gdwp\ template's possible versions imply that some internal document
+%	layout commands must be easily changed via public commands, available in the template's
+% 	preamble. This allows more efficient work on the publisher's side and prevents the
+%	multiplication of homemade versions of the class\footnote{Any reference to a real-life person %
+%	is pure coincidence.}.
+% \fi
+% \changes{1.1}{2021-12-02}{Added new GDcoverpagewhitespace command to change cover page vspace}
+%
+%    \begin{macrocode}
+
+% Layout public commands
+\newcommand{\GDcoverpagewhitespace}[1]{%
+	\setlength{\GD@coverpage@vspace}{#1}
+}
+%    \end{macrocode}
 % \ifnum\frenchdoc=1
 % \subsubsection{M\'etadonn\'ees}
 % 	Les commandes suivantes sont celles o\`u l'utilisateur saisit les donn\'ees
@@ -1740,32 +1882,36 @@
 %	bibliographical data. They modify the values of the corresponding private 
 %	commands (see \autoref{ann:private-meta}).
 % \fi
+% \changes{1.1}{2021-12-03}{Added public GDsupplementname command}
 %
 %    \begin{macrocode}
 
 % Metadata public commands
-\newcommand{\GDannee}[1]{%
-	\renewcommand{\gd@annee}{#1}
+\newcommand{\GDyear}[1]{%
+	\renewcommand{\gd@year}{#1}
 }
-\newcommand{\GDmois}[2]{%
-	\renewcommand{\gd@mois}{#1}
-	\renewcommand{\gd@month}{#2}
+\newcommand{\GDmonth}[2]{%
+	\renewcommand{\gd@month@fr}{#1}
+	\renewcommand{\gd@month@en}{#2}
 }
-\newcommand{\GDnumero}[1]{%
-	\renewcommand{\gd@numero}{#1}
+\newcommand{\GDnumber}[1]{%
+	\renewcommand{\gd@number}{#1}
 }
-\newcommand{\GDtitre}[1]{%
-	\renewcommand{\gd@titre}{#1}
+\newcommand{\GDtitle}[1]{%
+	\renewcommand{\gd@title}{#1}
 }
-\newcommand{\GDauteursCourts}[1]{%
-	\renewcommand{\gd@auteurs@short}{#1}
+\newcommand{\GDauthorsShort}[1]{%
+	\renewcommand{\gd@authors@short}{#1}
 }
-\newcommand{\GDauteursCopyright}[1]{%
-	\renewcommand{\gd@auteurs@copyright}{#1}
+\newcommand{\GDauthorsCopyright}[1]{%
+	\renewcommand{\gd@authors@copyright}{#1}
 }
 \newcommand{\GDpostpubcitation}[2]{%
 	\renewcommand{\gd@postpubcitation}{#1}
 	\renewcommand{\gd@postpubcitation@url}{#2}
+}
+\newcommand{\GDsupplementname}[1]{%
+	\renewcommand{\gd@supplementname}{#1}
 }
 \newcommand{\GDrevised}[1]{%
 	\renewcommand{\gd@revised}{#1}
@@ -1787,16 +1933,18 @@
 %	multiple lines of code, a few commands and environments were created to group them 
 %	together.
 % \fi
+% \changes{1.1}{2021-12-03}{Added supplement name in header}
+% \changes{1.1}{2021-12-03}{Replaced all fancyhdr v3 commands by v4 commands}
 %
 %    \begin{macrocode}
 
 % Cover page
-\newcommand{\GDpageCouverture}{%
+\newcommand{\GDcoverpage}{%
 	\ifthenelse{\boolean{GD@isPlainVersion}}{}{\GD@cover}
 }
 
 % Title page
-\newenvironment{GDpagetitre}{
+\newenvironment{GDtitlepage}{
 	\ifthenelse{\boolean{GD@isPlainVersion}}%
 		{\GD@plain@titlepage@begin}%
 		{\GD@titlepage@begin}	
@@ -1841,29 +1989,33 @@
 		\setcounter{page}{2}
 		\renewcommand{\thepage}{\roman{page}}
 		\pagestyle{fancy}
-		\lhead[
-		\textcolor{gris}{\sffamily{\,}\thepage}\hfill
-		\textcolor{gris}{\sffamily G--\gd@annee--\gd@numero}\hfill %
-		\ifthenelse{\boolean{GD@isRevised}}%
-			{{ -- \itshape Revised}}%
-			{}
-		\textcolor{gris}{\sffamily Les Cahiers du GERAD}
-		{\large\strut}\color{gris}{\hrule}
-		]
-		{
+		\fancyhead[LO]{%
 			\textcolor{gris}{\sffamily{\,} Les Cahiers du GERAD}\hfill
-			\textcolor{gris}{\sffamily G--\gd@annee--\gd@numero}\hfill %
+			\textcolor{gris}{\sffamily G--\gd@year--\gd@number}%
+			\ifthenelse{\boolean{GD@isSupplement}}%
+			{\textcolor{gris}{\sffamily\ -- \itshape \gd@supplementname}}%
+			{} %
 			\ifthenelse{\boolean{GD@isRevised}}%
-				{{ -- \itshape Revised}}%
-				{}
+			{\textcolor{gris}{\sffamily\ -- \itshape Revised}}%
+			{}\hfill
 			\textcolor{gris}{\sffamily\thepage}
 			{\large\strut}\color{gris}{\hrule}
 		}
-		\chead[]{}
-		\rhead[]{}
-		\lfoot[]{}
-		\cfoot[]{}
-		\rfoot[]{}	
+		\fancyhead[LE]{%
+			\textcolor{gris}{\sffamily{\,}\thepage}\hfill
+			\textcolor{gris}{\sffamily G--\gd@year--\gd@number}%
+			\ifthenelse{\boolean{GD@isSupplement}}%
+			{\textcolor{gris}{\sffamily\ -- \itshape \gd@supplementname}}%
+			{} %
+			\ifthenelse{\boolean{GD@isRevised}}%
+			{\textcolor{gris}{\sffamily\ -- \itshape Revised}}%
+			{}\hfill
+			\textcolor{gris}{\sffamily Les Cahiers du GERAD}
+			{\large\strut}\color{gris}{\hrule}
+		}
+		\fancyhead[C]{}
+		\fancyhead[R]{}
+		\fancyfoot{}	
 		\renewcommand{\headrulewidth}{0pt}
 		\renewcommand{\footrulewidth}{0pt}
 		\rmfamily
@@ -1983,8 +2135,11 @@
 \PassOptionsToPackage{hyphens}{url}
 
 %% Choose one of the two following algorithm packages
-%% \usepackage{algorithm}
-\usepackage{algorithm2e}
+%% \usepackage[ruled]{algorithm}
+%% \usepackage{algorithmic}
+% \changes{1.1}{2021-12-07}{Added package algorithmic in preamble}
+\usepackage[ruled, linesnumbered]{algorithm2e}
+% \changes{1.1}{2021-12-06}{Added options to algorithm packages}
 \usepackage{hyperref}
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1994,6 +2149,8 @@
 %% %%% ----- DO NOT MODIFY! -------- %%%%%%%%%%%%%%%
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\GDcoverpagewhitespace{6.8cm}
+% \changes{1.1}{2021-12-02}{Added new white space command for paper version}
 \graphicspath{{Figures/}} % graphicx pkg setup
 \hypersetup{colorlinks,%
 	citecolor={blue}, % Change for "black" with natbib
@@ -2001,6 +2158,21 @@
 	linkcolor={blue},
 	breaklinks={true}
 }
+
+%% Algorithm caption customizations
+\makeatletter
+\ifthenelse{\isundefined{\ALG@name}}{}%
+{%
+	\renewcommand{\ALG@name}{\sffamily\footnotesize Algorithm}
+}
+\makeatother
+%% Algorithm2e caption customizations
+\ifthenelse{\isundefined{\SetAlCapNameFnt}}{}%
+{%	
+	\SetAlCapNameFnt{\footnotesize}
+	\SetAlCapFnt{\sffamily\footnotesize}
+}
+% \changes{1.1}{2021-12-07}{Added algorithm caption customizations}
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% %%%%%% Début - commandes de l'auteur %%%%%%%%%%%%
@@ -2016,20 +2188,22 @@
 %% %%%%%%%%%% Métadonnées du cahier  %%%%%%%%%%%%%%%
 %% %%%%%%%%%% Working paper metadata %%%%%%%%%%%%%%%
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\GDtitre{This is a title}
-\GDmois{Mai}{May}
-\GDannee{2021}
-\GDnumero{XX}
-\GDauteursCourts{B. Hamel, K. H\'ebert}
-\GDauteursCopyright{Hamel, H\'ebert}
+\GDtitle{This is a title}
+\GDmonth{Mai}{May}
+\GDyear{2021}
+\GDnumber{XX}
+\GDauthorsShort{B. Hamel, K. H\'ebert}
+\GDauthorsCopyright{Hamel, H\'ebert}
 \GDpostpubcitation{Hamel, Benoit, Karine H\'ebert (2021). \og Un exemple de citation \fg, \emph{Journal of Journals}, vol. X issue Y, p. n-m}{https://www.gerad.ca/fr}
+\GDsupplementname{Internet Appendix}
+% \changes{1.1}{2021-12-03}{Added GDsupplementname to template preamble}
 \GDrevised{Mai 2021}
 
 \begin{document}	
 	
-	\GDpageCouverture
+	\GDcoverpage
 	
-	\begin{GDpagetitre}
+	\begin{GDtitlepage}
 		
 		\begin{GDauthlist}
 			\GDauthitem{Benoit Hamel \ref{affil:bib}}
@@ -2047,7 +2221,7 @@
 			\GDemailitem{karine.hebert@gerad.ca}
 		\end{GDemaillist}
 		
-	\end{GDpagetitre}
+	\end{GDtitlepage}
 	
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% %%%%%%%%% Résumés, mots-clés, remerciements %%%%%%%%%%%
