@@ -27,7 +27,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\ProvidesClass{geradwp}[2021/12/07 v1.1 Class for the Cahiers du GERAD series]
 %<*driver>
-\documentclass[10pt,oneside,french,english]{ltxdoc}
+\documentclass[10pt,oneside,english,french]{ltxdoc}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{babel}
@@ -120,7 +120,7 @@
 \end{document}
 %</driver>
 % \fi
-% \CheckSum{988}
+% \CheckSum{1018}
 % \changes{1.0}{2021-08-11}{Initial release}
 % \ifnum\frenchdoc=1
 % 	\title{Classe de documents \LaTeX\ pour la collection \cahiers}
@@ -168,7 +168,7 @@
 %
 % \ifnum\frenchdoc=1
 % L'utilisation de cette classe suppose que vous avez d\'ej\`a install\'e une distribution \TeX\ et
-% un \'editeur de code int\'egr\'e. Pour la conception de \gdwp, la distribution 
+% un \'editeur de code int\'egr\'e. Pour la conception de \gdwp, les distributions 
 % \lien{https://www.tug.org/texlive/}{TeX Live 2020 et 2021} et l'\'editeur de code 
 % \lien{https://www.texstudio.org/}{TeXstudio} ont \'et\'e utilis\'es.
 %
@@ -190,7 +190,7 @@
 % \end{GDwarning}
 % \else
 % Using this class assumes you’ve already installed a \TeX\ distribution with an integrated code editor. 
-% In designing \gdwp, the \lien{https://www.tug.org/texlive/}{TeX Live 2020} distribution and the 
+% In designing \gdwp, the \lien{https://www.tug.org/texlive/}{TeX Live 2020 and 2021} distributions and the 
 % \lien{https://www.texstudio.org/}{TeXstudio} editor were used. 
 %
 % If you are using TeXLive or \lien{http://www.tug.org/mactex/}{MacTeX} and your document compilation 
@@ -203,7 +203,7 @@
 %
 % Users of \lien{https://www.overleaf.com/}{Overleaf} can also use this class by downloading the necessary files from 
 % the \lien{https://www.gerad.ca/en/publications/papers/cahiers-procedure}{GERAD website}.
-% \begin{GDwarning}{\gdwp\ utilise maintenant la version 4 de +fancyhdr+}
+% \begin{GDwarning}{\gdwp\ makes use of +fancyhdr+ version 4}
 % 	Starting at \gdwp\ version 1.1, version 4 of the \lien{https://www.ctan.org/pkg/fancyhdr}{fancyhdr} is
 %	used. This version introduces new commands that are not backwards compatible
 %	with version 3. It is available with the 2021 editions of
@@ -407,7 +407,7 @@
 % \else
 %	When authors want to add extra research data or an important ``appendix'' to their working paper without
 % 	including it in the main document, they can write that extra material in a blank \gdwp\ template with the
-%	+gdsupplement+ included. Combined with the +\GDsupplementname+ command (see \autoref{sec:metadonnees}), this 
+%	+gdsupplement+ option included. Combined with the +\GDsupplementname+ command (see \autoref{sec:metadonnees}), this 
 %	option will clearly show the supplement name on the title pages and page headers.
 % \fi
 % \end{DescribeMacro}
@@ -2052,6 +2052,51 @@
 		\rmfamily
 	}
 }
+%    \end{macrocode}
+%
+% \ifnum\frenchdoc=1
+% \subsection{Commandes et environnements obsol\`etes}
+%	Dans la version 1.1 de \gdwp, toutes les commandes et environnements qui avaient un nom
+%	fran\c{c}ais ont \'et\'e traduits en anglais dans un souci d'uniformit\'e
+%	et pour faciliter la compr\'ehension des noms par le plus grand nombre
+%	d'utilisateurs.
+%
+%	Les commandes et environnements fran\c{c}ais sont maintenus, mais seulement pour permettre
+%	la r\'etrocompatibilit\'e du gabarit de la version 1.0 avec la d\'efinition
+%	de classe des versions subs\'equentes. Une fois que cette version du gabarit
+%	ne sera plus en circulation, tout ce qui est obsol\`ete sera retir\'e
+%	de la classe.
+% \else
+% \subsection{Deprecated commands and environments}
+%	In \gdwp\ version 1.1, all commands and environments that had French names have been translated
+%	in English for consistency reasons and to make sure that the they could
+%	be directly understood by most users.
+%
+%	The French commands and environments are preserved only to ensure backwards compatibility
+%	between version 1.0 of the template and subsequent versions of the class.
+%	Once that version of the template stops circulating, everything that is deprecated will be
+%	removed from the class.
+% \fi
+%
+%    \begin{macrocode}
+
+\newcommand{\GDtitre}[1]{\GDtitle{#1}}
+\newcommand{\GDmois}[2]{\GDmonth{#1}{#2}}
+\newcommand{\GDannee}[1]{\GDyear{#1}}
+\newcommand{\GDnumero}[1]{\GDnumber{#1}}
+\newcommand{\GDauteursCourts}[1]{\GDauthorsShort{#1}}
+\newcommand{\GDauteursCopyright}[1]{\GDauthorsCopyright{#1}}
+\newcommand{\GDpageCouverture}{\GDcoverpage}
+\newenvironment{GDpagetitre}{
+	\ifthenelse{\boolean{GD@isPlainVersion}}%
+	{\GD@plain@titlepage@begin}%
+	{\GD@titlepage@begin}	
+}{
+	\ifthenelse{\boolean{GD@isPlainVersion}}%
+	{\GD@plain@pagetitle@end}%
+	{\GD@titlepage@end}	
+}
+
 %</class>
 %    \end{macrocode}
 %
@@ -2061,6 +2106,8 @@
 % \iffalse
 % ^^A Code du gabarit
 %<*template>
+%% Template version 1.1
+%%
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% %%%%%%%%%% Notes pour les auteurs %%%%%%%%%%%%%%%
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
