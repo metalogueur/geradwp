@@ -1,6 +1,6 @@
 % \iffalse
 %
-% Copyright 2021 GERAD, HEC Montreal
+% Copyright 2022 GERAD, HEC Montreal
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3c
@@ -25,9 +25,9 @@
 \ProvidesFile{geradwp.dtx}
 %</dtx>
 %<class>\NeedsTeXFormat{LaTeX2e}
-%<class>\ProvidesClass{geradwp}[2021/12/07 v1.1 Class for the Cahiers du GERAD series]
+%<class>\ProvidesClass{geradwp}[2022/01/28 v1.1 Class for the Cahiers du GERAD series]
 %<*driver>
-\documentclass[10pt,oneside,english,french]{ltxdoc}
+\documentclass[10pt,oneside,french,english]{ltxdoc}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{babel}
@@ -120,7 +120,7 @@
 \end{document}
 %</driver>
 % \fi
-% \CheckSum{1018}
+% \CheckSum{1052}
 % \changes{1.0}{2021-08-11}{Initial release}
 % \ifnum\frenchdoc=1
 % 	\title{Classe de documents \LaTeX\ pour la collection \cahiers}
@@ -441,6 +441,7 @@
 %	can choose to use whichever packages they will need, taking into account their features (see below). Care should 
 %	be taken not to reload any of them or to change any of the default options.
 % \fi
+% \changes{1.1}{2022-01-28}{Changed color package for xcolor}
 %
 % \begin{table}[tbh]
 %	\begin{tabularx}{\textwidth}{Xccl}
@@ -463,7 +464,7 @@
 %		multirow					& \oui							&						& \\
 %		array						& \oui							&						& \\
 %		caption						& \oui							&						& font=\{footnotesize,bf,sf\} \\
-%		color						& \oui							&						& \\
+%		xcolor						& \oui							&						& \\
 %		enumitem					& \oui							&						& \\
 %		float						& \oui 							& 						& \\
 %		algorithm					&								& \oui					& \\
@@ -1146,14 +1147,13 @@
 \RequirePackage{multirow}
 \RequirePackage{array}
 \RequirePackage[font={footnotesize,bf,sf}]{caption}
-\RequirePackage{color}
+\RequirePackage{xcolor}
 \RequirePackage{enumitem}
 \ifthenelse{\boolean{GD@needsminitabs}}{%
 	\RequirePackage{float}
 }{}
 
 % Required Packages Setup %
-\definecolor{gris}{rgb}{0.44,0.44,0.44} % color pkg setup
 \captionsetup[table]{skip=5pt} % caption pkg setup
 %    \end{macrocode}
 %
@@ -1204,7 +1204,7 @@
 % \else
 %	We then set up the geometry of the document, which varies from one version to another.
 % \fi
-%
+% \changes{1.1}{2022-01-18}{Removed nofoot option from plain geometry}%
 %    \begin{macrocode}
 
 % Geometry %
@@ -1222,7 +1222,6 @@
 		bmargin=2cm,%
 		lmargin=3cm,%
 		rmargin=3cm,%
-		nofoot,%
 		headsep=30pt,%
 		includehead}
 }{}
@@ -1384,7 +1383,9 @@
 \newcommand{\gd@postpubcitation}{}
 \newcommand{\gd@postpubcitation@url}{}
 \newcommand{\gd@supplementname}{}
-\newcommand{\gd@revised}{}
+\newcommand{\gd@revised@year}{}
+\newcommand{\gd@revised@month@fr}{}
+\newcommand{\gd@revised@month@en}{}
 %    \end{macrocode}
 %
 % \ifnum\frenchdoc=1
@@ -1417,6 +1418,7 @@
 % \changes{1.1}{2021-12-02}{Added vfill for web version only}
 % \changes{1.1}{2012-12-03}{Added supplement name to web version cover page}
 % \changes{1.1}{2021-12-03}{Added supplement name in paper cover page minipage}
+% \changes{1.1}{2021-12-13}{Fixed GDcover@bottom@postpub}
 %
 %    \begin{macrocode}
 
@@ -1440,7 +1442,7 @@
 			\vspace*{54pt}
 			{\noindent\LARGE\bfseries \gd@title\par} %Title
 			\ifthenelse{\boolean{GD@isSupplement}}%
-				{{\noindent\LARGE\textsc{\gd@supplementname}\par}}{}
+				{{\noindent\LARGE\gd@supplementname\par}}{}
 			\vspace*{18pt}
 			{\noindent\Large\gd@authors@short\par}
 			
@@ -1478,7 +1480,7 @@
 		& \normalsize\gd@month@en\ \gd@year
 		\ifthenelse{\boolean{GD@isRevised}}{%
 			\\
-			&\normalsize Revised: \gd@revised
+			&\normalsize Revised: \gd@revised@month@en\ \gd@revised@year
 		}{}
 	\end{tabular}
 }
@@ -1491,7 +1493,7 @@
 			{\vspace*{12.5pt}}%
 			{\vspace*{10pt}}}\\
 		\ifthenelse{\boolean{GD@isSupplement}}%
-			{& \textsc{\gd@supplementname}\\*[10pt]}{}
+			{& \gd@supplementname\\*[10pt]}{}
 		& \normalsize\gd@authors@short \\ %Initials. Name
 		& \ifthenelse{\boolean{GD@needsminitabs}}%
 		{\\*[15pt]}%
@@ -1503,7 +1505,7 @@
 		& \normalsize\gd@month@en\ \gd@year
 		\ifthenelse{\boolean{GD@isRevised}}{%
 			\\
-			&\normalsize Revised: \gd@revised
+			&\normalsize Revised: \gd@revised@month@en\ \gd@revised@year
 		}{}
 	\end{tabular}
 }
@@ -1525,8 +1527,12 @@
 		\medskip
 		\scriptsize
 		\textbf{Citation sugg\'{e}r\'{e}e :} \gd@authors@short~(\gd@month@fr\ 
-		\gd@year). \gd@title, Rapport technique, Les Cahiers du GERAD G--
-		\gd@year--\gd@number, GERAD, HEC Montr\'{e}al, Canada.\\
+		\gd@year). \gd@title, 
+		\ifthenelse{\boolean{GD@isSupplement}}{\gd@supplementname .}{}
+		Rapport technique, Les Cahiers du GERAD G--
+		\gd@year--\gd@number, GERAD, HEC Montr\'{e}al, Canada.
+		\ifthenelse{\boolean{GD@isRevised}}%
+		{ Version r\'evis\'ee: \gd@revised@month@fr\ \gd@revised@year}{}\\
 		
 		\textbf{Avant de citer ce rapport technique,} veuillez visiter notre 
 		site Web (\url{https://www.gerad.ca/fr/papers/G-\gd@year-\gd@number}) 
@@ -1544,8 +1550,12 @@
 		
 		\scriptsize
 		\textbf{Suggested citation:} \gd@authors@short~(\gd@month@en\ \gd@year). 
-		\gd@title, Technical report, Les Cahiers du GERAD G--\gd@year--\gd@number, 
-		GERAD, HEC Montr\'{e}al, Canada.\\
+		\gd@title, 
+		\ifthenelse{\boolean{GD@isSupplement}}{\gd@supplementname .}{}
+		Technical report, Les Cahiers du GERAD G--\gd@year--\gd@number, 
+		GERAD, HEC Montr\'{e}al, Canada.
+		\ifthenelse{\boolean{GD@isRevised}}%
+		{ Revised version: \gd@revised@month@en\ \gd@revised@year}{}\\
 		
 		\textbf{Before citing this technical report,} please visit our website 
 		(\url{https://www.gerad.ca/en/papers/G-\gd@year-\gd@number}) to update 
@@ -1653,10 +1663,8 @@
 	\hrule
 	\smallskip
 	
-	\noindent
-	\begin{minipage}[t][2.1cm][l]{7.5cm}
+	\noindent\begin{minipage}[t][2.1cm][l]{7.5cm}
 		\scriptsize
-		\medskip
 		La publication de ces rapports de recherche est rendue possible gr\^ace
 		au soutien de HEC Montr\'eal, Polytechnique Montr\'eal, Universit\'e 
 		McGill, Universit\'e du Qu\'ebec \`a Montr\'eal, ainsi que du Fonds de 
@@ -1664,13 +1672,13 @@
 		
 		\medskip
 		D\'ep\^ot l\'egal -- Biblioth\`eque et Archives nationales du Qu\'ebec,
-		2020\\
-		\phantom{Depot legal} -- Biblioth\`eque et Archives Canada, 2020\par
+		\gd@year\\
+		\phantom{Depot legal} -- Biblioth\`eque et Archives Canada, \gd@year
+		\par
 	\end{minipage}
 	\hfill
 	\begin{minipage}[t][2.1cm][l]{7.5cm}
 		\scriptsize
-		\medskip
 		The publication of these research reports is made possible
 		thanks to the support of HEC Montr\'eal, Polytechnique Montr\'eal, 
 		McGill University, Universit\'e du Qu\'ebec \`a Montr\'eal, as well as 
@@ -1678,8 +1686,8 @@
 		
 		\medskip
 		Legal deposit -- Biblioth\`eque et Archives nationales du Qu\'ebec, 
-		2020\\
-		\phantom{Legal deposit} -- Library and Archives Canada, 2020\par
+		\gd@year\\
+		\phantom{Legal deposit} -- Library and Archives Canada, \gd@year\par
 	\end{minipage}
 	
 	\hrule
@@ -1743,8 +1751,7 @@
 	\sffamily
 	{\LARGE\bfseries \gd@title\par} %Title
 	\ifthenelse{\boolean{GD@isSupplement}}%
-		{\vspace{14pt}
-			{\LARGE\textsc{\gd@supplementname}\par}
+		{{\LARGE\gd@supplementname\par}
 		}{}
 	\begin{minipage}[t][10cm][l]{7.5cm}	
 		\vspace*{55pt}
@@ -1756,7 +1763,7 @@
 \vfill
 {\bfseries \gd@month@en\ \gd@year}\\*
 \ifthenelse{\boolean{GD@isRevised}}%
-	{\\ Revised: \gd@revised \\}%
+	{Revised: \gd@revised@month@en\ \gd@revised@year \\}%
 	{}
 {\bfseries Les Cahiers du GERAD}\\
 {\bfseries G--\gd@year--\gd@number}\\
@@ -1821,12 +1828,14 @@
 	\sffamily
 	{\sffamily\LARGE\bfseries\noindent\gd@title\par}
 	\ifthenelse{\boolean{GD@isSupplement}}%
-	{{\noindent\LARGE\textsc{\gd@supplementname}\par}}{}
+	{{\noindent\LARGE\gd@supplementname\par}}{}
 }
 
 \newcommand{\GD@plain@pagetitle@end}{%
 	\vspace*{12pt}
 	{\noindent\gd@month@en\ \gd@year}
+	\ifthenelse{\boolean{GD@isRevised}}%
+	{\\ {\noindent Revised: \gd@revised@month@en\ \gd@revised@year}}{}
 	\vspace*{30pt}
 }
 %    \end{macrocode} 
@@ -1913,8 +1922,10 @@
 \newcommand{\GDsupplementname}[1]{%
 	\renewcommand{\gd@supplementname}{#1}
 }
-\newcommand{\GDrevised}[1]{%
-	\renewcommand{\gd@revised}{#1}
+\newcommand{\GDrevised}[3]{%
+	\renewcommand{\gd@revised@month@fr}{#1}
+	\renewcommand{\gd@revised@month@en}{#2}
+	\renewcommand{\gd@revised@year}{#3}
 }
 %    \end{macrocode}
 %
@@ -1990,28 +2001,28 @@
 		\renewcommand{\thepage}{\roman{page}}
 		\pagestyle{fancy}
 		\fancyhead[LO]{%
-			\textcolor{gris}{\sffamily{\,} Les Cahiers du GERAD}\hfill
-			\textcolor{gris}{\sffamily G--\gd@year--\gd@number}%
+			\textcolor{gray}{\sffamily{\,} Les Cahiers du GERAD}\hfill
+			\textcolor{gray}{\sffamily G--\gd@year--\gd@number}%
 			\ifthenelse{\boolean{GD@isSupplement}}%
-			{\textcolor{gris}{\sffamily\ -- \itshape \gd@supplementname}}%
+			{\textcolor{gray}{\sffamily\ -- \itshape \gd@supplementname}}%
 			{} %
 			\ifthenelse{\boolean{GD@isRevised}}%
-			{\textcolor{gris}{\sffamily\ -- \itshape Revised}}%
+			{\textcolor{gray}{\sffamily\ -- \itshape Revised}}%
 			{}\hfill
-			\textcolor{gris}{\sffamily\thepage}
-			{\large\strut}\color{gris}{\hrule}
+			\textcolor{gray}{\sffamily\thepage}
+			{\large\strut}\color{gray}{\hrule}
 		}
 		\fancyhead[LE]{%
-			\textcolor{gris}{\sffamily{\,}\thepage}\hfill
-			\textcolor{gris}{\sffamily G--\gd@year--\gd@number}%
+			\textcolor{gray}{\sffamily{\,}\thepage}\hfill
+			\textcolor{gray}{\sffamily G--\gd@year--\gd@number}%
 			\ifthenelse{\boolean{GD@isSupplement}}%
-			{\textcolor{gris}{\sffamily\ -- \itshape \gd@supplementname}}%
+			{\textcolor{gray}{\sffamily\ -- \itshape \gd@supplementname}}%
 			{} %
 			\ifthenelse{\boolean{GD@isRevised}}%
-			{\textcolor{gris}{\sffamily\ -- \itshape Revised}}%
+			{\textcolor{gray}{\sffamily\ -- \itshape Revised}}%
 			{}\hfill
-			\textcolor{gris}{\sffamily Les Cahiers du GERAD}
-			{\large\strut}\color{gris}{\hrule}
+			\textcolor{gray}{\sffamily Les Cahiers du GERAD}
+			{\large\strut}\color{gray}{\hrule}
 		}
 		\fancyhead[C]{}
 		\fancyhead[R]{}
@@ -2185,8 +2196,9 @@
 %% \usepackage[ruled]{algorithm}
 %% \usepackage{algorithmic}
 % \changes{1.1}{2021-12-07}{Added package algorithmic in preamble}
-\usepackage[ruled, linesnumbered]{algorithm2e}
+\usepackage[ruled,linesnumbered]{algorithm2e}
 % \changes{1.1}{2021-12-06}{Added options to algorithm packages}
+\usepackage[french]{babel}
 \usepackage{hyperref}
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2241,10 +2253,11 @@
 \GDnumber{XX}
 \GDauthorsShort{B. Hamel, K. H\'ebert}
 \GDauthorsCopyright{Hamel, H\'ebert}
-\GDpostpubcitation{Hamel, Benoit, Karine H\'ebert (2021). \og Un exemple de citation \fg, \emph{Journal of Journals}, vol. X issue Y, p. n-m}{https://www.gerad.ca/fr}
+\GDpostpubcitation{Hamel, Benoit, Karine H\'ebert (2021). ``Un exemple de citation'', \emph{Journal of Journals}, vol. X issue Y, p. n-m}{https://www.gerad.ca/fr}
 \GDsupplementname{Internet Appendix}
 % \changes{1.1}{2021-12-03}{Added GDsupplementname to template preamble}
-\GDrevised{Mai 2021}
+\GDrevised{Mai}{May}{2021}
+% \changes{1.1}{2021-12-15}{Replaced original GDrevised by its bilingual version}
 
 \begin{document}	
 	
